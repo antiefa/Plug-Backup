@@ -1,0 +1,2616 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the plugbackup package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: plugbackup 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-16 13:02+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: plugbackup/app.py:58
+msgid "Show the version and exit"
+msgstr ""
+
+#: plugbackup/app.py:60
+msgid "Check system components and exit"
+msgstr ""
+
+#: plugbackup/app.py:62
+msgid "List profiles and their drives, then exit"
+msgstr ""
+
+#: plugbackup/app.py:64
+msgid "Back up the profile with this name or ID without a window"
+msgstr ""
+
+#: plugbackup/app.py:64
+msgid "PROFILE"
+msgstr ""
+
+#: plugbackup/app.py:66
+msgid "Start minimized to the tray"
+msgstr ""
+
+#: plugbackup/app.py:233
+msgid "backing up"
+msgstr ""
+
+#: plugbackup/app.py:235
+msgid "starting soon"
+msgstr ""
+
+#: plugbackup/app.py:237 plugbackup/ui/sidebar.py:26
+msgid "drive not connected"
+msgstr ""
+
+#: plugbackup/app.py:239
+msgid "drive connected, locked"
+msgstr ""
+
+#: plugbackup/app.py:242 plugbackup/ui/sidebar.py:28
+msgid "drive connected"
+msgstr ""
+
+#: plugbackup/app.py:246
+#, python-format
+msgid "copy is up to date (checked at %s)"
+msgstr ""
+
+#: plugbackup/app.py:248
+#, python-format
+msgid "last run at %s: %s"
+msgstr ""
+
+#: plugbackup/app.py:269
+msgid "Automatic backup is paused"
+msgstr ""
+
+#: plugbackup/app.py:270
+msgid "No connected drives"
+msgstr ""
+
+#: plugbackup/app.py:287
+#, python-format
+msgid "Could not change the “Start at login” setting: %s"
+msgstr ""
+
+#: plugbackup/app.py:344
+#, python-format
+msgid "Could not restore settings: %s"
+msgstr ""
+
+#: plugbackup/app.py:359
+#, python-format
+msgid "Could not restore profiles: %s"
+msgstr ""
+
+#: plugbackup/app.py:380
+msgid ""
+"Back up selected folders to removable drives with one click or automatically "
+"when the drive is inserted."
+msgstr ""
+
+#: plugbackup/core/deps.py:81
+msgid "Interface"
+msgstr ""
+
+#: plugbackup/core/deps.py:84 plugbackup/core/deps.py:87
+msgid "Drive detection"
+msgstr ""
+
+#: plugbackup/core/deps.py:87
+msgid "UDisks2 service (udisks2)"
+msgstr ""
+
+#: plugbackup/core/deps.py:88
+msgid "The org.freedesktop.UDisks2 service is not available on the system bus"
+msgstr ""
+
+#: plugbackup/core/deps.py:93
+msgid "Copying"
+msgstr ""
+
+#: plugbackup/core/deps.py:96
+msgid "Notifications"
+msgstr ""
+
+#: plugbackup/core/deps.py:105
+msgid "Neither XApp nor AyatanaAppIndicator3 is installed"
+msgstr ""
+
+#: plugbackup/core/deps.py:107
+msgid "Tray icon"
+msgstr ""
+
+#: plugbackup/core/deps.py:112 plugbackup/core/deps.py:115
+msgid "Password storage"
+msgstr ""
+
+#: plugbackup/core/deps.py:115
+msgid "Keyring service (Secret Service)"
+msgstr ""
+
+#: plugbackup/core/deps.py:116
+msgid "No Secret Service on the session bus (for example, gnome-keyring)"
+msgstr ""
+
+#: plugbackup/core/deps.py:121
+msgid "Encrypted drives (LUKS)"
+msgstr ""
+
+#: plugbackup/core/deps.py:125 plugbackup/core/deps.py:128
+msgid "Encrypted folder (gocryptfs)"
+msgstr ""
+
+#: plugbackup/core/fsinfo.py:39
+msgid "Files of 4 GiB (4,294,967,296 bytes) and larger do not fit."
+msgstr ""
+
+#: plugbackup/core/fsinfo.py:40 plugbackup/core/fsinfo.py:43
+msgid "Linux permissions and symbolic links are not preserved."
+msgstr ""
+
+#: plugbackup/core/fsinfo.py:45
+msgid "Linux permissions are not preserved."
+msgstr ""
+
+#: plugbackup/core/fsinfo.py:49 plugbackup/ui/volumes_view.py:185
+msgid "This file system has not been tested with Plug & Backup."
+msgstr ""
+
+#: plugbackup/core/profiles.py:326
+msgid "The backup folder name on the drive is empty."
+msgstr ""
+
+#: plugbackup/core/profiles.py:328
+msgid "The backup folder on the drive must be a single folder name."
+msgstr ""
+
+#: plugbackup/core/profiles.py:330 plugbackup/core/profiles.py:345
+#, python-format
+msgid "“%s” is a reserved service name."
+msgstr ""
+
+#: plugbackup/core/profiles.py:337
+msgid "The destination folder on the drive is empty."
+msgstr ""
+
+#: plugbackup/core/profiles.py:339
+msgid ""
+"The destination must be a folder inside the backup folder, not an absolute "
+"path."
+msgstr ""
+
+#: plugbackup/core/profiles.py:342
+msgid "The destination must not contain “..”."
+msgstr ""
+
+#: plugbackup/core/profiles.py:354
+msgid "Choose a folder on this computer to back up."
+msgstr ""
+
+#: plugbackup/core/profiles.py:356
+msgid "The source folder must be an absolute path."
+msgstr ""
+
+#: plugbackup/core/profiles.py:360
+msgid "A system folder cannot be backed up as a whole."
+msgstr ""
+
+#: plugbackup/core/profiles.py:362
+msgid "The source folder does not exist."
+msgstr ""
+
+#: plugbackup/core/profiles.py:364
+msgid "The source is not a folder."
+msgstr ""
+
+#: plugbackup/core/profiles.py:366
+msgid "The source folder cannot be read."
+msgstr ""
+
+#: plugbackup/core/profiles.py:369
+msgid "The source folder is on the backup drive itself."
+msgstr ""
+
+#: plugbackup/core/profiles.py:372
+msgid ""
+"The source folder contains the backup drive; the copy would include itself."
+msgstr ""
+
+#: plugbackup/core/profiles.py:381
+#, python-format
+msgid "The destination overlaps with another job (“%s”)."
+msgstr ""
+
+#: plugbackup/core/profiles.py:385
+msgid "The source overlaps with another job; some files will be copied twice."
+msgstr ""
+
+#: plugbackup/core/profiles.py:389
+msgid ""
+"Mirror mode: files deleted on this computer are deleted from the copy too, "
+"and changed files replace their previous versions — they cannot be got back."
+msgstr ""
+
+#: plugbackup/core/profiles.py:392
+msgid "The file size limit must be a positive number."
+msgstr ""
+
+#: plugbackup/core/profiles.py:395
+msgid "An exclusion pattern must be a single line."
+msgstr ""
+
+#: plugbackup/core/profiles.py:403
+msgid "Enter a profile name."
+msgstr ""
+
+#: plugbackup/core/profiles.py:406
+msgid "The countdown must be between 0 and 600 seconds."
+msgstr ""
+
+#: plugbackup/core/profiles.py:408
+msgid "Versions must be kept for at least one day."
+msgstr ""
+
+#. TRANSLATORS: folder name in the home folder for files restored into another place
+#: plugbackup/core/restore.py:33
+msgid "Restored"
+msgstr ""
+
+#: plugbackup/core/restore.py:95
+msgid "Plug & Backup — files set aside during a restore"
+msgstr ""
+
+#: plugbackup/core/restore.py:98
+#, python-format
+msgid "Restored at: %s"
+msgstr ""
+
+#: plugbackup/core/restore.py:99
+#, python-format
+msgid "From the copy: %s"
+msgstr ""
+
+#: plugbackup/core/restore.py:100
+#, python-format
+msgid "Into the folder: %s"
+msgstr ""
+
+#: plugbackup/core/restore.py:101
+msgid ""
+"These are the versions of files that were in the folder on this computer "
+"BEFORE the restore and that the restore overwrote. Paths inside this folder "
+"are the same as in the target folder. To get a file back, copy it from here "
+"to the target folder."
+msgstr ""
+
+#: plugbackup/ui/auto_controller.py:146
+msgid "Drive conflict"
+msgstr ""
+
+#: plugbackup/ui/auto_controller.py:146
+#, python-format
+msgid ""
+"Two connected drives have the same identifier; automatic backup of “%s” will "
+"not start."
+msgstr ""
+
+#: plugbackup/ui/auto_controller.py:173 plugbackup/ui/auto_controller.py:194
+#: plugbackup/ui/auto_controller.py:269 plugbackup/ui/auto_controller.py:333
+#, python-format
+msgid "Automatic backup: %s"
+msgstr ""
+
+#: plugbackup/ui/auto_controller.py:176
+#, python-format
+msgid ""
+"Automatic backup of profile “%s” will start after the encrypted folder is "
+"opened."
+msgstr ""
+
+#: plugbackup/ui/auto_controller.py:198
+#, python-format
+msgid ""
+"Automatic backup of profile “%s” will start after the drive is unlocked."
+msgstr ""
+
+#: plugbackup/ui/auto_controller.py:247
+#, python-format
+msgid "New drive: %s"
+msgstr ""
+
+#: plugbackup/ui/auto_controller.py:248
+msgid "Create a backup profile for it?"
+msgstr ""
+
+#: plugbackup/ui/auto_controller.py:249
+msgid "Create profile"
+msgstr ""
+
+#: plugbackup/ui/auto_controller.py:250
+msgid "Don’t ask for this drive"
+msgstr ""
+
+#: plugbackup/ui/auto_controller.py:265
+#, python-format
+msgid "Starts in %d s."
+msgstr ""
+
+#: plugbackup/ui/auto_controller.py:267
+#, python-format
+msgid "Files to change: %d (%s)."
+msgstr ""
+
+#: plugbackup/ui/auto_controller.py:271 plugbackup/ui/common.py:58
+#: plugbackup/ui/encryption.py:43 plugbackup/ui/encryption.py:145
+#: plugbackup/ui/import_dialog.py:16 plugbackup/ui/job_dialog.py:23
+#: plugbackup/ui/main_window.py:210 plugbackup/ui/profile_actions.py:586
+#: plugbackup/ui/profile_actions.py:627 plugbackup/ui/profile_dialog.py:27
+#: plugbackup/ui/profile_view.py:612 plugbackup/ui/restore_dialog.py:41
+#: plugbackup/ui/restore_dialog.py:135 plugbackup/ui/unlock.py:57
+msgid "Cancel"
+msgstr ""
+
+#: plugbackup/ui/auto_controller.py:272
+msgid "Now"
+msgstr ""
+
+#: plugbackup/ui/auto_controller.py:326
+#, python-format
+msgid "Result: %s"
+msgstr ""
+
+#: plugbackup/ui/auto_controller.py:328
+#, python-format
+msgid "Copied files: %d"
+msgstr ""
+
+#: plugbackup/ui/auto_controller.py:334 plugbackup/ui/main_window.py:69
+#: plugbackup/ui/run_dialogs.py:112
+msgid "Details"
+msgstr ""
+
+#: plugbackup/ui/auto_controller.py:355 plugbackup/ui/volumes_view.py:249
+#, python-format
+msgid "The encrypted folder on the drive is in use: %s"
+msgstr ""
+
+#: plugbackup/ui/auto_controller.py:361
+msgid "Could not eject the drive"
+msgstr ""
+
+#: plugbackup/ui/auto_controller.py:363
+msgid "The drive can be removed"
+msgstr ""
+
+#: plugbackup/ui/auto_controller.py:365
+msgid "The drive is unmounted"
+msgstr ""
+
+#: plugbackup/ui/auto_controller.py:365
+msgid ""
+"The device was not powered off: another partition on it is still in use."
+msgstr ""
+
+#: plugbackup/ui/common.py:10
+msgid "Mirror with version history"
+msgstr ""
+
+#: plugbackup/ui/common.py:11
+msgid "Mirror"
+msgstr ""
+
+#: plugbackup/ui/common.py:12
+msgid "Accumulate"
+msgstr ""
+
+#: plugbackup/ui/common.py:15
+msgid ""
+"The copy matches the folder; deleted and replaced files are moved to the "
+"version history on the drive and kept for the set number of days."
+msgstr ""
+
+#: plugbackup/ui/common.py:17
+msgid ""
+"The copy matches the folder exactly: files deleted on this computer are "
+"permanently deleted from the copy."
+msgstr ""
+
+#: plugbackup/ui/common.py:19
+msgid ""
+"New and changed files are copied; nothing is ever deleted from the copy."
+msgstr ""
+
+#: plugbackup/ui/common.py:22
+msgid "By size and modification time (fast)"
+msgstr ""
+
+#: plugbackup/ui/common.py:23
+msgid "By content (slow, reads every file)"
+msgstr ""
+
+#: plugbackup/ui/common.py:26
+msgid "Automatic: keep as links on ext4, skip on other file systems"
+msgstr ""
+
+#: plugbackup/ui/common.py:27
+msgid "Skip links"
+msgstr ""
+
+#: plugbackup/ui/common.py:28
+msgid "Copy what the link points to"
+msgstr ""
+
+#: plugbackup/ui/common.py:34
+msgid "This drive is not bound to the profile."
+msgstr ""
+
+#: plugbackup/ui/common.py:35 plugbackup/ui/profile_view.py:487
+msgid "The drive is encrypted and locked."
+msgstr ""
+
+#: plugbackup/ui/common.py:36
+msgid "The drive is not mounted."
+msgstr ""
+
+#: plugbackup/ui/common.py:37 plugbackup/ui/common.py:38
+msgid "The mounted file system does not match the profile’s drive."
+msgstr ""
+
+#: plugbackup/ui/common.py:39
+msgid "Only a subfolder of the drive is mounted."
+msgstr ""
+
+#: plugbackup/ui/common.py:40
+msgid "The drive is mounted read-only."
+msgstr ""
+
+#: plugbackup/ui/common.py:41
+msgid "You do not have permission to write to the drive."
+msgstr ""
+
+#: plugbackup/ui/common.py:42
+msgid "The backup folder name is invalid."
+msgstr ""
+
+#: plugbackup/ui/common.py:43
+msgid ""
+"The backup folder on the drive is a link to somewhere else; it will not be "
+"used."
+msgstr ""
+
+#: plugbackup/ui/common.py:44
+msgid ""
+"Something that is not a folder has the backup folder’s name on the drive."
+msgstr ""
+
+#: plugbackup/ui/common.py:45 plugbackup/ui/run_texts.py:103
+msgid "The profile’s encrypted folder has not been created on this drive yet."
+msgstr ""
+
+#: plugbackup/ui/common.py:46
+msgid "The profile’s encrypted folder is closed."
+msgstr ""
+
+#: plugbackup/ui/common.py:47
+msgid "The backup folder on the drive belongs to another profile."
+msgstr ""
+
+#: plugbackup/ui/common.py:48
+msgid "The profile marker on the drive is damaged."
+msgstr ""
+
+#: plugbackup/ui/common.py:49
+msgid ""
+"The backup folder on the drive already contains data without a profile "
+"marker."
+msgstr ""
+
+#: plugbackup/ui/common.py:51
+#, python-format
+msgid "The drive cannot be used right now (%s)."
+msgstr ""
+
+#: plugbackup/ui/deps_dialog.py:11
+msgid "Available"
+msgstr ""
+
+#: plugbackup/ui/deps_dialog.py:13
+msgid "Required component is missing"
+msgstr ""
+
+#: plugbackup/ui/deps_dialog.py:15
+msgid "Unavailable — the feature is turned off"
+msgstr ""
+
+#: plugbackup/ui/deps_dialog.py:41 plugbackup/ui/main_window.py:43
+msgid "System check"
+msgstr ""
+
+#: plugbackup/ui/deps_dialog.py:42 plugbackup/ui/main_window.py:253
+#: plugbackup/ui/profile_view.py:557 plugbackup/ui/restore_dialog.py:135
+#: plugbackup/ui/run_dialogs.py:96 plugbackup/ui/run_dialogs.py:222
+#: plugbackup/ui/run_dialogs.py:235
+msgid "Close"
+msgstr ""
+
+#: plugbackup/ui/encryption.py:24
+msgid ""
+"File contents and names are encrypted, but the number of files, their "
+"approximate sizes, the folder structure and modification times can be seen "
+"without the password."
+msgstr ""
+
+#: plugbackup/ui/encryption.py:30
+msgid ""
+"The gocryptfs package is not installed. Install it with: sudo apt install "
+"gocryptfs"
+msgstr ""
+
+#: plugbackup/ui/encryption.py:31
+#, python-format
+msgid "The installed gocryptfs is too old; version %s or newer is needed."
+msgstr ""
+
+#: plugbackup/ui/encryption.py:33
+msgid "FUSE is not installed. Install it with: sudo apt install fuse3"
+msgstr ""
+
+#: plugbackup/ui/encryption.py:41
+msgid "Create encrypted folder"
+msgstr ""
+
+#: plugbackup/ui/encryption.py:44 plugbackup/ui/profile_dialog.py:28
+msgid "Create"
+msgstr ""
+
+#: plugbackup/ui/encryption.py:50
+#, python-format
+msgid "Password for the encrypted folder of profile “%s”"
+msgstr ""
+
+#: plugbackup/ui/encryption.py:52
+msgid "Password"
+msgstr ""
+
+#: plugbackup/ui/encryption.py:54
+msgid "Repeat the password"
+msgstr ""
+
+#: plugbackup/ui/encryption.py:59 plugbackup/ui/unlock.py:77
+msgid "Remember the password in the keyring"
+msgstr ""
+
+#: plugbackup/ui/encryption.py:71
+msgid ""
+"Without the password and the master key (shown on the next step) the copy "
+"cannot be recovered by anyone."
+msgstr ""
+
+#: plugbackup/ui/encryption.py:81
+msgid "The passwords do not match."
+msgstr ""
+
+#: plugbackup/ui/encryption.py:83
+msgid "A password of at least 8 characters is recommended."
+msgstr ""
+
+#: plugbackup/ui/encryption.py:100
+msgid "Master key"
+msgstr ""
+
+#: plugbackup/ui/encryption.py:102 plugbackup/ui/run_dialogs.py:67
+msgid "Continue"
+msgstr ""
+
+#: plugbackup/ui/encryption.py:108
+msgid "Save the master key of the encrypted folder"
+msgstr ""
+
+#: plugbackup/ui/encryption.py:112
+msgid ""
+"If the password is forgotten, the copy can be opened only with this key. "
+"Write it down or print it and keep it separate from the drive. Plug & Backup "
+"does not store it anywhere and will not show it again."
+msgstr ""
+
+#: plugbackup/ui/encryption.py:120
+msgid "Copy"
+msgstr ""
+
+#: plugbackup/ui/encryption.py:124
+msgid "I have saved the master key in a safe place"
+msgstr ""
+
+#: plugbackup/ui/encryption.py:129
+msgid ""
+"The master key could not be read. You can see it later with the command "
+"gocryptfs-xray -dumpmasterkey <folder>/gocryptfs.conf (it asks for the "
+"password)."
+msgstr ""
+
+#: plugbackup/ui/encryption.py:147
+msgid "Transfer"
+msgstr ""
+
+#: plugbackup/ui/encryption.py:153
+#, python-format
+msgid "Files in the existing copy: %d (%s). Needed on the drive: %s."
+msgstr ""
+
+#: plugbackup/ui/encryption.py:156
+#, python-format
+msgid "Free: %s."
+msgstr ""
+
+#: plugbackup/ui/encryption.py:160
+msgid "There is not enough free space on the drive to transfer the copy."
+msgstr ""
+
+#: plugbackup/ui/encryption.py:180
+msgid "Transferring the copy"
+msgstr ""
+
+#: plugbackup/ui/encryption.py:183 plugbackup/ui/profile_view.py:279
+#: plugbackup/ui/restore_dialog.py:134 plugbackup/ui/tray.py:103
+msgid "Stop"
+msgstr ""
+
+#: plugbackup/ui/encryption.py:190
+msgid "Copying, then comparing with the original…"
+msgstr ""
+
+#: plugbackup/ui/encryption.py:204
+#, python-format
+msgid "%s · %s left"
+msgstr ""
+
+#: plugbackup/ui/encryption.py:269
+msgid "The encrypted folder is unavailable"
+msgstr ""
+
+#: plugbackup/ui/encryption.py:278
+msgid "The encryption mode was not changed"
+msgstr ""
+
+#: plugbackup/ui/encryption.py:314
+#, python-format
+msgid ""
+"The drive already has the encrypted folder “%s”. Enter its password to use "
+"it."
+msgstr ""
+
+#: plugbackup/ui/encryption.py:318
+#, python-format
+msgid ""
+"The folder “%s” already exists on the drive and is not an encrypted folder."
+msgstr ""
+
+#: plugbackup/ui/encryption.py:329 plugbackup/ui/unlock.py:520
+#, python-format
+msgid "Plug & Backup: encrypted folder of profile “%s”"
+msgstr ""
+
+#: plugbackup/ui/encryption.py:344 plugbackup/ui/unlock.py:406
+msgid "The password could not be saved in the keyring."
+msgstr ""
+
+#: plugbackup/ui/encryption.py:363
+#, python-format
+msgid ""
+"The encrypted folder already contains data, so the existing unencrypted copy "
+"in “%s” cannot be transferred into it. The unencrypted copy stays on the "
+"drive."
+msgstr ""
+
+#: plugbackup/ui/encryption.py:385 plugbackup/ui/profile_actions.py:120
+#: plugbackup/ui/profile_actions.py:133 plugbackup/ui/profile_actions.py:139
+msgid "The marker was not written to the drive"
+msgstr ""
+
+#: plugbackup/ui/encryption.py:405
+msgid "Enter the password to move the copy out of the encrypted folder."
+msgstr ""
+
+#: plugbackup/ui/encryption.py:420
+#, python-format
+msgid ""
+"The folder “%s” on the drive already contains data, so the encrypted copy "
+"cannot be moved there. The encrypted folder stays on the drive."
+msgstr ""
+
+#: plugbackup/ui/encryption.py:442
+msgid "Transfer the copy into the encrypted folder?"
+msgstr ""
+
+#: plugbackup/ui/encryption.py:443
+#, python-format
+msgid ""
+"The drive already has an unencrypted copy of this profile in “%s”. It can be "
+"transferred into the encrypted folder, so the version history and the copy "
+"are kept."
+msgstr ""
+
+#: plugbackup/ui/encryption.py:445
+msgid "Delete the unencrypted copy after a successful transfer"
+msgstr ""
+
+#: plugbackup/ui/encryption.py:446
+msgid "Start a new copy"
+msgstr ""
+
+#: plugbackup/ui/encryption.py:449
+msgid "Move the copy out of the encrypted folder?"
+msgstr ""
+
+#: plugbackup/ui/encryption.py:450
+msgid ""
+"The copy will no longer be encrypted: anyone who reads the drive will see it."
+msgstr ""
+
+#: plugbackup/ui/encryption.py:451
+msgid "Delete the encrypted folder after a successful transfer"
+msgstr ""
+
+#: plugbackup/ui/encryption.py:452
+msgid "Leave it encrypted on the drive"
+msgstr ""
+
+#: plugbackup/ui/encryption.py:494
+msgid "The drive is no longer available; nothing was deleted from it."
+msgstr ""
+
+#: plugbackup/ui/encryption.py:503
+msgid "The copy was not transferred; nothing has changed."
+msgstr ""
+
+#: plugbackup/ui/encryption.py:524
+msgid "The encrypted folder was not deleted."
+msgstr ""
+
+#: plugbackup/ui/encryption.py:544
+msgid "Change the mode without transferring the copy?"
+msgstr ""
+
+#: plugbackup/ui/encryption.py:544
+msgid "Change the mode"
+msgstr ""
+
+#: plugbackup/ui/help_window.py:22
+#, python-format
+msgid "Help — %s"
+msgstr ""
+
+#: plugbackup/ui/import_dialog.py:14 plugbackup/ui/profile_actions.py:431
+msgid "Import profile"
+msgstr ""
+
+#: plugbackup/ui/import_dialog.py:18
+msgid "Import as a separate copy"
+msgstr ""
+
+#: plugbackup/ui/import_dialog.py:19
+msgid "Replace existing profile"
+msgstr ""
+
+#: plugbackup/ui/import_dialog.py:22
+msgid "Import"
+msgstr ""
+
+#: plugbackup/ui/import_dialog.py:32 plugbackup/ui/profile_dialog.py:47
+#: plugbackup/ui/sidebar.py:24
+msgid "not bound"
+msgstr ""
+
+#: plugbackup/ui/import_dialog.py:34
+#, python-format
+msgid "Drive: %s · backup folder “%s” · jobs: %d"
+msgstr ""
+
+#: plugbackup/ui/import_dialog.py:44
+msgid "The folder exists on this computer"
+msgstr ""
+
+#: plugbackup/ui/import_dialog.py:45
+msgid "There is no such folder on this computer"
+msgstr ""
+
+#: plugbackup/ui/import_dialog.py:56
+msgid ""
+"Automatic backup is turned off for the imported profile. Check the folders "
+"and turn it on in the profile settings."
+msgstr ""
+
+#: plugbackup/ui/import_dialog.py:59
+#, python-format
+msgid ""
+"Some job folders do not exist on this computer (%d). Edit those jobs before "
+"backing up."
+msgstr ""
+
+#: plugbackup/ui/import_dialog.py:62
+msgid ""
+"A profile with the same ID already exists. Replacing it keeps its binding to "
+"the marker on the drive; importing it as a separate copy assigns new IDs."
+msgstr ""
+
+#: plugbackup/ui/job_dialog.py:17
+msgid "New job"
+msgstr ""
+
+#: plugbackup/ui/job_dialog.py:17 plugbackup/ui/profile_view.py:120
+msgid "Edit job"
+msgstr ""
+
+#: plugbackup/ui/job_dialog.py:24 plugbackup/ui/main_window.py:211
+#: plugbackup/ui/profile_dialog.py:28
+msgid "Save"
+msgstr ""
+
+#: plugbackup/ui/job_dialog.py:38
+msgid "Folder to back up"
+msgstr ""
+
+#: plugbackup/ui/job_dialog.py:43
+msgid "Folder on this computer"
+msgstr ""
+
+#: plugbackup/ui/job_dialog.py:46
+msgid "Folder name inside the backup folder"
+msgstr ""
+
+#: plugbackup/ui/job_dialog.py:48
+msgid "Folder on the drive"
+msgstr ""
+
+#: plugbackup/ui/job_dialog.py:50
+#, python-format
+msgid "Inside “%s” on the drive."
+msgstr ""
+
+#: plugbackup/ui/job_dialog.py:57
+msgid "Mode"
+msgstr ""
+
+#: plugbackup/ui/job_dialog.py:64
+msgid "Detect changes"
+msgstr ""
+
+#: plugbackup/ui/job_dialog.py:66
+msgid "Symbolic links"
+msgstr ""
+
+#: plugbackup/ui/job_dialog.py:70
+msgid "0 — no limit"
+msgstr ""
+
+#: plugbackup/ui/job_dialog.py:71
+msgid "Skip files larger than (MB)"
+msgstr ""
+
+#: plugbackup/ui/job_dialog.py:74 plugbackup/ui/profile_view.py:94
+msgid "Job is enabled"
+msgstr ""
+
+#: plugbackup/ui/job_dialog.py:75
+msgid "Include in automatic backup"
+msgstr ""
+
+#: plugbackup/ui/job_dialog.py:76
+msgid "Skip hidden files and folders"
+msgstr ""
+
+#: plugbackup/ui/job_dialog.py:77
+msgid "Do not enter other disks mounted inside the folder"
+msgstr ""
+
+#: plugbackup/ui/job_dialog.py:82
+msgid "Also apply the common exclusion list"
+msgstr ""
+
+#: plugbackup/ui/job_dialog.py:90
+msgid "Add the Development set"
+msgstr ""
+
+#: plugbackup/ui/job_dialog.py:94
+msgid ""
+"One pattern per line, rsync syntax: *.tmp — by name at any depth; "
+"node_modules/ — a folder at any depth; /Archive/ — only at the top of the "
+"job."
+msgstr ""
+
+#: plugbackup/ui/job_dialog.py:105
+msgid "Exclusions"
+msgstr ""
+
+#: plugbackup/ui/main_window.py:28
+msgid "Import profile…"
+msgstr ""
+
+#: plugbackup/ui/main_window.py:31
+msgid "Common exclusions…"
+msgstr ""
+
+#: plugbackup/ui/main_window.py:32
+msgid "Ignored drives…"
+msgstr ""
+
+#: plugbackup/ui/main_window.py:33
+msgid "Start at login"
+msgstr ""
+
+#: plugbackup/ui/main_window.py:34
+msgid "Show all disks"
+msgstr ""
+
+#: plugbackup/ui/main_window.py:36
+msgid "As in the system"
+msgstr ""
+
+#: plugbackup/ui/main_window.py:37
+msgid "Light"
+msgstr ""
+
+#: plugbackup/ui/main_window.py:38
+msgid "Dark"
+msgstr ""
+
+#: plugbackup/ui/main_window.py:39
+msgid "Theme"
+msgstr ""
+
+#: plugbackup/ui/main_window.py:42
+msgid "Help"
+msgstr ""
+
+#: plugbackup/ui/main_window.py:44
+msgid "About"
+msgstr ""
+
+#: plugbackup/ui/main_window.py:45 plugbackup/ui/tray.py:124
+msgid "Quit"
+msgstr ""
+
+#: plugbackup/ui/main_window.py:49
+msgid "Menu"
+msgstr ""
+
+#: plugbackup/ui/main_window.py:123
+msgid "Restore from backup copy"
+msgstr ""
+
+#: plugbackup/ui/main_window.py:130
+msgid "No profiles yet"
+msgstr ""
+
+#: plugbackup/ui/main_window.py:134
+msgid ""
+"Insert a USB flash drive, SD card or external disk and create a backup "
+"profile for it."
+msgstr ""
+
+#: plugbackup/ui/main_window.py:189
+msgid "Stop the backup and quit?"
+msgstr ""
+
+#: plugbackup/ui/main_window.py:190
+msgid ""
+"A backup is in progress. Files copied so far stay on the drive; the copy "
+"will be incomplete until the next backup."
+msgstr ""
+
+#: plugbackup/ui/main_window.py:191
+msgid "Stop and quit"
+msgstr ""
+
+#: plugbackup/ui/main_window.py:207
+msgid "Common exclusions"
+msgstr ""
+
+#: plugbackup/ui/main_window.py:209
+msgid "Reset to defaults"
+msgstr ""
+
+#: plugbackup/ui/main_window.py:214
+msgid ""
+"Applied to every job that has “Also apply the common exclusion list” turned "
+"on. One pattern per line, rsync syntax. Excluded files are not deleted from "
+"existing copies."
+msgstr ""
+
+#: plugbackup/ui/main_window.py:237
+msgid "The settings file is damaged; the list was not saved."
+msgstr ""
+
+#: plugbackup/ui/main_window.py:251
+msgid "Ignored drives"
+msgstr ""
+
+#: plugbackup/ui/main_window.py:258
+msgid "Plug & Backup does not offer to create a profile for these drives."
+msgstr ""
+
+#: plugbackup/ui/main_window.py:260
+msgid "The list is empty."
+msgstr ""
+
+#: plugbackup/ui/main_window.py:271
+msgid "Remove from list"
+msgstr ""
+
+#: plugbackup/ui/main_window.py:307
+#, python-format
+msgid ""
+"The settings file is damaged and was not changed: %s. Default settings are "
+"used until it is fixed."
+msgstr ""
+
+#: plugbackup/ui/main_window.py:310
+#, python-format
+msgid ""
+"The profiles file is damaged and was not changed: %s. Profiles cannot be "
+"shown or edited until it is fixed."
+msgstr ""
+
+#: plugbackup/ui/main_window.py:335
+#, python-format
+msgid ""
+"Required components are missing: %s. The application cannot work until they "
+"are installed."
+msgstr ""
+
+#: plugbackup/ui/main_window.py:342
+#, python-format
+msgid "Some features are unavailable: %s."
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:37 plugbackup/ui/volumes_view.py:40
+#, python-format
+msgid "%s inside LUKS"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:66
+msgid "Profiles cannot be changed"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:67
+msgid "The profiles file is damaged; restore it first."
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:77
+msgid "Could not save profiles"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:90 plugbackup/ui/profile_actions.py:207
+#: plugbackup/ui/profile_actions.py:226 plugbackup/ui/profile_actions.py:238
+#: plugbackup/ui/profile_actions.py:342 plugbackup/ui/profile_actions.py:559
+msgid "The drive is not connected"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:90 plugbackup/ui/profile_actions.py:207
+#: plugbackup/ui/profile_actions.py:226 plugbackup/ui/profile_actions.py:238
+#: plugbackup/ui/profile_actions.py:342 plugbackup/ui/profile_actions.py:559
+msgid "Connect and mount the profile’s drive first."
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:121
+msgid "The profile is saved; write the marker later."
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:126
+#, python-format
+msgid "The drive already has data in “%s”"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:127
+#, python-format
+msgid ""
+"There is no Plug & Backup marker in this folder. Accept its contents as the "
+"copy for profile “%s”? Mirror jobs may later delete files there that do not "
+"exist on this computer."
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:129
+msgid "Accept as this profile’s copy"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:197
+msgid "The backup folder was not renamed"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:198
+msgid ""
+"The encryption mode and the backup folder name cannot be changed at once. "
+"Change the name separately after the mode is changed."
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:222 plugbackup/ui/profile_actions.py:555
+msgid "A backup is in progress"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:222 plugbackup/ui/profile_actions.py:555
+msgid "Wait until it finishes."
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:249 plugbackup/ui/profile_actions.py:564
+msgid "This job has no marked copy on the drive yet."
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:251 plugbackup/ui/profile_actions.py:566
+msgid "The action is not available"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:255 plugbackup/ui/profile_actions.py:708
+#: plugbackup/ui/profile_actions.py:712
+msgid "The copy is empty"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:255
+msgid "There is no copy of this job on the drive yet."
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:275
+msgid "The profile is in use"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:276
+msgid ""
+"Wait until the backup finishes and close the restore window, then try again."
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:278
+#, python-format
+msgid "Delete profile “%s”?"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:279
+msgid ""
+"This removes the profile from Plug & Backup only; the backup copy and the "
+"marker on the drive are left untouched."
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:280
+msgid "Delete profile"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:291
+#, python-format
+msgid "%s (copy)"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:297
+#, python-format
+msgid "Bind profile “%s” to this drive?"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:298
+#, python-format
+msgid "Drive: %s. A marker folder will be created on it inside “%s”."
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:300 plugbackup/ui/profile_view.py:613
+msgid "Bind"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:332 plugbackup/ui/unlock.py:488
+#: plugbackup/ui/volumes_view.py:212
+#, python-format
+msgid "Could not mount “%s”: %s"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:382
+#, python-format
+msgid "Remove job “%s”?"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:383
+msgid "Only the job is removed. Its copy on the drive is not touched."
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:384 plugbackup/ui/profile_view.py:121
+msgid "Remove job"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:414
+msgid "Export profile"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:415
+msgid "Export"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:426
+msgid "Could not export the profile"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:432 plugbackup/ui/run_dialogs.py:188
+#: plugbackup/ui/unlock.py:517
+msgid "Open"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:434
+msgid "Profile files (*.json)"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:443 plugbackup/ui/profile_actions.py:453
+#: plugbackup/ui/profile_actions.py:483
+msgid "Could not import the profile"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:476
+msgid "No profile copy in the encrypted folder"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:477
+msgid ""
+"The encrypted folder does not contain a copy of the profile (the profile "
+"option “Keep a copy of this profile on the drive” was off). Import an "
+"exported profile file instead."
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:574 plugbackup/ui/restore_dialog.py:25
+#: plugbackup/ui/run_dialogs.py:29
+#, python-format
+msgid "… and %d more"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:610
+msgid ""
+"They will be moved to the version history on the drive and kept for the "
+"profile’s set number of days."
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:611
+msgid "They will be deleted from the drive permanently."
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:623
+msgid "The version history is empty"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:623
+msgid "There is nothing to delete."
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:625
+msgid "Clear the version history"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:628
+msgid "Delete selected"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:634
+msgid ""
+"Old versions of deleted and replaced files. Deleted folders cannot be "
+"restored."
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:639
+#, python-format
+msgid "%s — files: %d, %s"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:658
+msgid "Could not delete"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:660 plugbackup/ui/profile_actions.py:696
+#: plugbackup/ui/profile_actions.py:727
+msgid "Done"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:660
+#, python-format
+msgid "Version history folders deleted: %d"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:676
+msgid "Could not check the copy"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:680
+msgid "Nothing to remove"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:680
+msgid "The copy has no files that match the exclusions."
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:682
+msgid "Remove excluded files from the copy?"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:683
+#, python-format
+msgid "Files in the copy that match the job’s exclusions: %d. "
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:684
+msgid "Remove"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:694
+msgid "Could not remove"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:696 plugbackup/ui/profile_actions.py:727
+#, python-format
+msgid "Files removed from the copy: %d"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:708 plugbackup/ui/profile_actions.py:712
+msgid "There is nothing to clear."
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:714
+#, python-format
+msgid ""
+"All files in the copy of “%s” on the drive (%d, %s) will be removed. Use "
+"this when the source folder is empty on purpose. "
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:716
+msgid "Clear this job’s copy?"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:717
+msgid "Clear the copy"
+msgstr ""
+
+#: plugbackup/ui/profile_actions.py:725
+msgid "Could not clear"
+msgstr ""
+
+#: plugbackup/ui/profile_dialog.py:25
+msgid "New profile"
+msgstr ""
+
+#: plugbackup/ui/profile_dialog.py:25
+msgid "Profile settings"
+msgstr ""
+
+#: plugbackup/ui/profile_dialog.py:48
+msgid "Drive"
+msgstr ""
+
+#: plugbackup/ui/profile_dialog.py:51
+msgid "Name"
+msgstr ""
+
+#: plugbackup/ui/profile_dialog.py:54
+msgid "Backup folder on the drive"
+msgstr ""
+
+#: plugbackup/ui/profile_dialog.py:55
+msgid ""
+"All jobs and the version history are stored inside this folder; the rest of "
+"the drive stays yours."
+msgstr ""
+
+#: plugbackup/ui/profile_dialog.py:57
+msgid "Keep a copy of this profile on the drive"
+msgstr ""
+
+#: plugbackup/ui/profile_dialog.py:60
+msgid ""
+"Lets you import the profile on a new computer straight from the drive. The "
+"copy includes the paths of your folders, so anyone who reads an unencrypted "
+"drive will see them."
+msgstr ""
+
+#: plugbackup/ui/profile_dialog.py:64
+msgid "Back up automatically when the drive is inserted"
+msgstr ""
+
+#: plugbackup/ui/profile_dialog.py:68
+msgid "Eject the drive after a successful automatic backup"
+msgstr ""
+
+#: plugbackup/ui/profile_dialog.py:71
+msgid "Countdown before start (s)"
+msgstr ""
+
+#: plugbackup/ui/profile_dialog.py:73
+msgid "Not more often than every N hours (0 — no limit)"
+msgstr ""
+
+#: plugbackup/ui/profile_dialog.py:85
+msgid "Keep version history (days)"
+msgstr ""
+
+#: plugbackup/ui/profile_dialog.py:87
+msgid "Ask before deleting more than this percentage of files"
+msgstr ""
+
+#: plugbackup/ui/profile_dialog.py:89
+msgid "…or more than this many files"
+msgstr ""
+
+#: plugbackup/ui/profile_dialog.py:91
+msgid "Never delete more than this many files per run"
+msgstr ""
+
+#: plugbackup/ui/profile_dialog.py:111
+msgid "Automatic backup"
+msgstr ""
+
+#: plugbackup/ui/profile_dialog.py:114
+msgid "Encryption"
+msgstr ""
+
+#: plugbackup/ui/profile_dialog.py:119
+msgid "Safety"
+msgstr ""
+
+#: plugbackup/ui/profile_dialog.py:126
+msgid "Remember the drive password in the keyring"
+msgstr ""
+
+#: plugbackup/ui/profile_dialog.py:129
+msgid ""
+"The drive is encrypted (LUKS). With a saved password it is unlocked without "
+"questions, including for automatic backup; otherwise you are asked for it in "
+"a window. The password is saved the next time you unlock the drive."
+msgstr ""
+
+#: plugbackup/ui/profile_dialog.py:133
+msgid "Forget password"
+msgstr ""
+
+#: plugbackup/ui/profile_dialog.py:152
+msgid "No encryption"
+msgstr ""
+
+#: plugbackup/ui/profile_dialog.py:154
+msgid "Encrypted folder on the drive (gocryptfs)"
+msgstr ""
+
+#: plugbackup/ui/profile_dialog.py:157
+#, python-format
+msgid ""
+"The copy is kept in the encrypted folder “%s.enc”; the rest of the drive "
+"stays as it is. "
+msgstr ""
+
+#: plugbackup/ui/profile_dialog.py:172
+msgid ""
+"The mode can be changed only while the profile’s drive is connected: the "
+"copy on it is transferred to the new place."
+msgstr ""
+
+#: plugbackup/ui/profile_dialog.py:177
+msgid ""
+"When you save, Plug & Backup asks for a new password, shows the master key "
+"and offers to transfer the existing copy."
+msgstr ""
+
+#: plugbackup/ui/profile_dialog.py:180
+msgid "Remember the folder password in the keyring"
+msgstr ""
+
+#: plugbackup/ui/profile_dialog.py:181
+msgid ""
+"With a saved password the folder is opened without questions, including for "
+"automatic backup; otherwise you are asked for it in a window."
+msgstr ""
+
+#: plugbackup/ui/profile_dialog.py:200
+msgid "The password is removed from the keyring."
+msgstr ""
+
+#: plugbackup/ui/profile_dialog.py:201
+msgid "No saved password."
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:51
+msgid "manual only"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:53
+msgid "disabled"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:60
+msgid "AUTO"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:66
+msgid "The job runs in automatic backup when the drive is inserted"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:69
+msgid ""
+"The job is marked for automatic backup, but automatic backup is turned off "
+"in the profile settings"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:77
+msgid "Automatic backup: off"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:78
+msgid "Automatic backup: on"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:79
+#, python-format
+msgid "countdown %d s"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:79
+msgid "starts immediately"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:81
+#, python-format
+msgid "not more often than every %d h"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:83
+msgid "ejects after success"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:114
+msgid "Back up only this job"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:116
+msgid "Move up"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:117
+msgid "Move down"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:138
+msgid "Turn off automatic"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:138
+msgid "Turn on automatic"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:141
+msgid "Restore this job…"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:142
+msgid "Open the job’s copy"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:145
+msgid "Remove excluded files from the copy…"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:146
+msgid "Clear this job’s copy…"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:150 plugbackup/ui/profile_view.py:212
+msgid "More actions"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:200
+msgid "Open the copy on the drive"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:201
+msgid "Bind to another drive…"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:202
+msgid "Write the marker to the drive"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:203
+msgid "Clear the version history…"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:206
+msgid "Create the same profile for another drive"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:207
+msgid "Export…"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:208
+msgid "Delete profile…"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:228
+msgid "Drive details"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:239
+msgid "Backup"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:244 plugbackup/ui/tray.py:101
+msgid "Back up"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:248 plugbackup/ui/profile_view.py:393
+msgid "Preview"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:250
+msgid "Log…"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:252
+msgid "Profile settings…"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:257
+msgid "Restore…"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:266
+msgid "Turn on automatic backup"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:296
+msgid "+ Add job"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:301
+msgid "No jobs yet — add the first folder to back up."
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:344
+msgid "Insert the profile’s drive first."
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:364
+msgid "No backups yet"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:367
+#, python-format
+msgid "Last backup: %s — %s"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:379
+#, python-format
+msgid "Job %d of %d: %s → %s"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:382
+msgid "Preparing…"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:387 plugbackup/ui/restore_dialog.py:219
+#, python-format
+msgid "%s · %s left · %s"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:391
+msgid "Reading the source folder…"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:391
+msgid "Comparing with the copy…"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:392
+msgid "Checking the drive…"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:431
+msgid "Not bound to a drive"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:433
+#, python-format
+msgid "Drive not connected · %s"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:438
+#, python-format
+msgid "%s free"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:445
+#, python-format
+msgid "Jobs (%d)"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:465
+msgid "This profile is not bound to a drive yet."
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:466
+msgid "Bind to a drive…"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:469
+msgid ""
+"Insert the profile’s drive to back up or restore. Settings and jobs can be "
+"edited now."
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:472
+msgid ""
+"The marker on the drive will need updating after the drive is connected."
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:476
+msgid ""
+"Another connected drive has the same identifier (UUID). Disconnect one of "
+"them."
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:481
+msgid ""
+"The keyring is locked: you will be asked for the password in a window, "
+"including for automatic backup."
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:483
+msgid ""
+"The keyring service is unavailable: the password cannot be saved, so you "
+"will be asked for it in a window."
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:488
+msgid ""
+"The drive is encrypted (LUKS) and locked. Unlock it to back up or restore."
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:489 plugbackup/ui/volumes_view.py:86
+msgid "Unlock…"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:493
+msgid "The drive is connected but not mounted."
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:495 plugbackup/ui/volumes_view.py:89
+msgid "Mount"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:518
+msgid "Accept as this profile’s copy…"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:522
+msgid ""
+"Change the backup folder name in the profile settings or import that profile."
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:525
+msgid "The profile marker has not been written to this drive yet."
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:526
+msgid "Write marker"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:528
+msgid "The marker on the drive is out of date after profile changes."
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:529
+msgid "Update marker"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:539
+msgid ""
+"The profile keeps its copy in an encrypted folder, but it cannot be opened: "
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:547
+msgid "The encrypted folder has not been created on this drive yet."
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:548
+msgid "Create…"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:552
+#, python-format
+msgid ""
+"The copy is in the encrypted folder “%s”. It is opened with the password "
+"when you back up, restore or open the copy, and closed afterwards."
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:557
+msgid "The encrypted folder is open."
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:580
+msgid "Create a profile for this drive…"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:587
+#, python-format
+msgid "This looks like the drive of profile “%s”, but it has been reformatted."
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:588
+msgid "Rebind…"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:592
+#, python-format
+msgid "The drive holds a copy of profile “%s”."
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:592 plugbackup/ui/profile_view.py:597
+msgid "Import…"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:596
+#, python-format
+msgid "The drive holds an encrypted Plug & Backup folder “%s.enc”."
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:608
+msgid "No available drive"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:609
+msgid "Insert a drive that is not bound to any profile yet."
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:611
+msgid "Bind to a drive"
+msgstr ""
+
+#: plugbackup/ui/profile_view.py:622
+#, python-format
+msgid "Drive for profile “%s”:"
+msgstr ""
+
+#: plugbackup/ui/restore_dialog.py:34
+#, python-format
+msgid "Restore — %s"
+msgstr ""
+
+#: plugbackup/ui/restore_dialog.py:40
+msgid "Back"
+msgstr ""
+
+#: plugbackup/ui/restore_dialog.py:42 plugbackup/ui/restore_dialog.py:133
+#: plugbackup/ui/volumes_view.py:136
+msgid "Check"
+msgstr ""
+
+#: plugbackup/ui/restore_dialog.py:66
+msgid "What to restore"
+msgstr ""
+
+#: plugbackup/ui/restore_dialog.py:73 plugbackup/ui/restore_dialog.py:75
+msgid "no copy on the drive yet"
+msgstr ""
+
+#: plugbackup/ui/restore_dialog.py:86
+msgid "Where to"
+msgstr ""
+
+#: plugbackup/ui/restore_dialog.py:87
+msgid "Back to the original folders on this computer"
+msgstr ""
+
+#: plugbackup/ui/restore_dialog.py:88
+msgid "Into another folder:"
+msgstr ""
+
+#: plugbackup/ui/restore_dialog.py:89
+msgid "Folder for restored files"
+msgstr ""
+
+#: plugbackup/ui/restore_dialog.py:99
+#, python-format
+msgid "Each job goes into its own subfolder, for example “%s”."
+msgstr ""
+
+#: plugbackup/ui/restore_dialog.py:107
+msgid "Do not replace files that are newer on this computer than in the copy"
+msgstr ""
+
+#: plugbackup/ui/restore_dialog.py:110
+#, python-format
+msgid ""
+"Nothing is deleted on this computer. Files that get replaced are first saved "
+"to %s."
+msgstr ""
+
+#: plugbackup/ui/restore_dialog.py:112
+msgid ""
+"The current state of the copy is restored, not a state at a given date. In "
+"“Accumulate” mode the copy also contains files deleted long ago; excluded "
+"files are not in the copy; after an interrupted backup the copy may be "
+"incomplete. Old versions are in the version history (open the copy on the "
+"drive)."
+msgstr ""
+
+#: plugbackup/ui/restore_dialog.py:133
+msgid "Restore"
+msgstr ""
+
+#: plugbackup/ui/restore_dialog.py:157
+msgid "Choose at least one job with a copy."
+msgstr ""
+
+#: plugbackup/ui/restore_dialog.py:173
+#, python-format
+msgid "Will appear: %d · will be replaced: %d · size: %s"
+msgstr ""
+
+#: plugbackup/ui/restore_dialog.py:176
+#, python-format
+msgid "Will be replaced (old versions are saved) — %d"
+msgstr ""
+
+#: plugbackup/ui/restore_dialog.py:180
+#, python-format
+msgid "Will appear — %d"
+msgstr ""
+
+#: plugbackup/ui/restore_dialog.py:184
+#, python-format
+msgid "Files to be replaced will first be saved to %s."
+msgstr ""
+
+#: plugbackup/ui/restore_dialog.py:193
+msgid "Restoring…"
+msgstr ""
+
+#: plugbackup/ui/restore_dialog.py:216
+#, python-format
+msgid "Job %d of %d: %s"
+msgstr ""
+
+#: plugbackup/ui/restore_dialog.py:232
+msgid "Open replaced files"
+msgstr ""
+
+#: plugbackup/ui/restore_dialog.py:238
+msgid "Open the restored folder"
+msgstr ""
+
+#: plugbackup/ui/run_controller.py:152
+#, python-format
+msgid "“%s”: the copy is up to date — nothing to change."
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:46
+msgid "Delete many files from the copy?"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:47
+#, python-format
+msgid ""
+"Job “%s → %s” would delete or move to the version history %d or more files — "
+"more than the safety threshold of the profile. Check that the source folder "
+"is the right one."
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:50
+msgid "Delete and continue"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:52
+msgid "Accept existing data as the copy?"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:53
+#, python-format
+msgid ""
+"The folder “%s” on the drive has data but no Plug & Backup marker. Mirror "
+"jobs may delete files there that do not exist on this computer."
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:55 plugbackup/ui/run_dialogs.py:60
+msgid "Accept and continue"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:57
+msgid "Accept the job folder’s existing data?"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:58
+#, python-format
+msgid ""
+"The folder “%s” on the drive already has data that is not marked as the copy "
+"of job “%s”. Mirror mode may delete files there."
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:62
+msgid "Not enough free space"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:63
+#, python-format
+msgid ""
+"The copy needs about %s, but only %s is free. Delete the oldest version "
+"history folders to make room?"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:65
+msgid "Delete old versions"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:71
+msgid "Skip this job"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:83
+#, python-format
+msgid "List (%d)"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:94
+#, python-format
+msgid "Preview — %s"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:101
+msgid ""
+"Nothing has been changed on the drive. This is what a backup would do now."
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:115
+#, python-format
+msgid ""
+"To copy: %d new, %d changed (%s) · to delete or move to version history: %d "
+"· skipped: %d"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:121
+#, python-format
+msgid "Free on the drive: %s"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:124
+#, python-format
+msgid "New files (%d)"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:127
+#, python-format
+msgid "Changed files (%d)"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:130
+#, python-format
+msgid "To delete or move to version history (%d)"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:133
+#, python-format
+msgid "Skipped by drive limitations (%d)"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:152
+#, python-format
+msgid "%s · %s · started %s"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:166
+#, python-format
+msgid "“%s”: from the copy → %s"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:170
+#, python-format
+msgid "Copy on the drive: %s"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:174
+#, python-format
+msgid "%s · appeared: %d · replaced: %d"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:177
+#, python-format
+msgid "%s · restored files: %d"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:179
+#, python-format
+msgid ""
+"%s · copied: %d (%s) · deleted or moved to version history: %d · skipped: %d"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:187
+#, python-format
+msgid "The replaced files were saved to %s"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:199
+#, python-format
+msgid "Skipped (%d)"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:203
+#, python-format
+msgid "Errors (%d)"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:208
+#, python-format
+msgid "Old version history folders removed: %d"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:211
+msgid "Open the full rsync log"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:220
+msgid "Backup result"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:233
+#, python-format
+msgid "Log — %s"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:245
+msgid "Started"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:245
+msgid "How"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:245
+msgid "Result"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:250
+msgid "No runs yet."
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:250
+msgid "Choose a run."
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:50
+msgid "completed"
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:51
+msgid "completed with notes"
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:52
+msgid "error"
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:53
+msgid "stopped"
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:54
+msgid "skipped"
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:68
+msgid "no changes"
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:72
+msgid "manual"
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:72
+msgid "command line"
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:72
+msgid "automatic"
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:73
+msgid "restore"
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:79
+msgid "This profile is already being backed up."
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:80
+msgid "There is no copy of this job on the drive."
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:81
+msgid ""
+"No changes — the copy is up to date (checked automatically, nothing was "
+"written)."
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:82
+msgid ""
+"The backup folder contains data without a profile marker, and it was not "
+"accepted."
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:83
+msgid "Could not write the profile marker to the drive."
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:84
+msgid ""
+"The source folder is empty while the copy has files — the copy was left "
+"untouched. If the folder is empty on purpose, clear the job’s copy manually."
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:86
+msgid ""
+"Some file names differ only in letter case; on this drive they would "
+"overwrite each other. Rename or exclude them."
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:88
+msgid ""
+"The job folder on the drive already has data that is not marked as this "
+"job’s copy, and it was not accepted."
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:90
+msgid "Too many files would be deleted from the copy; the job was skipped."
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:91
+msgid "Not enough free space on the drive."
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:92
+msgid "Could not read the source folder."
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:93
+msgid "Could not prepare the copy plan."
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:94
+msgid "The hard limit on deletions per run was reached; deletions stopped."
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:95
+msgid "Some files could not be copied (see the log)."
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:96
+msgid "Some files disappeared while copying."
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:97
+msgid "The drive was disconnected or changed during the backup."
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:98
+msgid "Stopped by the user."
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:99
+msgid "The copy process was interrupted."
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:100
+#, python-format
+msgid "System error: %s"
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:101
+msgid ""
+"A folder on the drive is a link to somewhere else; it will not be written to."
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:102
+msgid "Something that is not a folder blocks the job’s path on the drive."
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:104
+msgid "The encrypted folder is closed (no password)."
+msgstr ""
+
+#: plugbackup/ui/run_texts.py:109
+#, python-format
+msgid "rsync finished with error code %s."
+msgstr ""
+
+#: plugbackup/ui/sidebar.py:41
+msgid "Needs attention"
+msgstr ""
+
+#: plugbackup/ui/sidebar.py:69
+msgid "Profiles"
+msgstr ""
+
+#: plugbackup/ui/sidebar.py:77
+msgid "New drives"
+msgstr ""
+
+#: plugbackup/ui/tray.py:104 plugbackup/ui/volumes_view.py:93
+msgid "Eject"
+msgstr ""
+
+#: plugbackup/ui/tray.py:113
+msgid "Resume automatic backup"
+msgstr ""
+
+#: plugbackup/ui/tray.py:115
+msgid "Pause automatic backup"
+msgstr ""
+
+#: plugbackup/ui/tray.py:117
+msgid "For 1 hour"
+msgstr ""
+
+#: plugbackup/ui/tray.py:118
+msgid "For 4 hours"
+msgstr ""
+
+#: plugbackup/ui/tray.py:119
+msgid "Until quit"
+msgstr ""
+
+#: plugbackup/ui/tray.py:123
+msgid "Open Plug & Backup"
+msgstr ""
+
+#: plugbackup/ui/unlock.py:44
+msgid "The keyring is locked, so the saved password could not be read."
+msgstr ""
+
+#: plugbackup/ui/unlock.py:45
+msgid "The keyring service is unavailable, so the password cannot be saved."
+msgstr ""
+
+#: plugbackup/ui/unlock.py:215
+msgid "Unlock drive"
+msgstr ""
+
+#: plugbackup/ui/unlock.py:215
+#, python-format
+msgid "Enter the password for the encrypted drive “%s”"
+msgstr ""
+
+#: plugbackup/ui/unlock.py:216
+msgid "Unlock"
+msgstr ""
+
+#: plugbackup/ui/unlock.py:219
+#, python-format
+msgid "Plug & Backup: drive of profile “%s”"
+msgstr ""
+
+#: plugbackup/ui/unlock.py:229
+#, python-format
+msgid "The drive “%s” is waiting for its password"
+msgstr ""
+
+#: plugbackup/ui/unlock.py:324
+msgid ""
+"Unlock the screen to enter the password; automatic backup will start after "
+"that."
+msgstr ""
+
+#: plugbackup/ui/unlock.py:365
+msgid "The saved password is incorrect. Enter the password."
+msgstr ""
+
+#: plugbackup/ui/unlock.py:368 plugbackup/ui/unlock.py:371
+#: plugbackup/ui/unlock.py:562
+msgid "Wrong password."
+msgstr ""
+
+#: plugbackup/ui/unlock.py:457
+#, python-format
+msgid "Could not unlock “%s”: %s"
+msgstr ""
+
+#: plugbackup/ui/unlock.py:471 plugbackup/ui/unlock.py:547
+msgid "The drive was disconnected."
+msgstr ""
+
+#: plugbackup/ui/unlock.py:480
+msgid ""
+"The drive is unlocked, but no supported file system was found inside it."
+msgstr ""
+
+#: plugbackup/ui/unlock.py:516
+msgid "Open encrypted folder"
+msgstr ""
+
+#: plugbackup/ui/unlock.py:517
+#, python-format
+msgid "Enter the password for the encrypted folder of profile “%s”"
+msgstr ""
+
+#: plugbackup/ui/unlock.py:523
+#, python-format
+msgid "Profile “%s” is waiting for the password of its encrypted folder"
+msgstr ""
+
+#: plugbackup/ui/unlock.py:557
+msgid "The encrypted folder could not be opened."
+msgstr ""
+
+#: plugbackup/ui/unlock.py:563
+msgid "The folder is not empty."
+msgstr ""
+
+#: plugbackup/ui/unlock.py:564
+msgid "gocryptfs or FUSE is not installed."
+msgstr ""
+
+#: plugbackup/ui/unlock.py:566
+msgid "gocryptfs reported an error."
+msgstr ""
+
+#: plugbackup/ui/vaults.py:88
+msgid "The encrypted folder is in use."
+msgstr ""
+
+#: plugbackup/ui/vaults.py:98
+#, python-format
+msgid "Could not close the encrypted folder: %s"
+msgstr ""
+
+#: plugbackup/ui/vaults.py:105
+msgid "Close any files open in that folder and try again."
+msgstr ""
+
+#: plugbackup/ui/vaults.py:126
+#, python-format
+msgid "Profile “%s”: an action using the copy has not finished"
+msgstr ""
+
+#: plugbackup/ui/vaults.py:175
+#, python-format
+msgid "Encrypted folders left open after a failure could not be closed: %s"
+msgstr ""
+
+#: plugbackup/ui/volumes_view.py:14
+msgid "Ready to write"
+msgstr ""
+
+#: plugbackup/ui/volumes_view.py:15 plugbackup/ui/volumes_view.py:138
+msgid "Not mounted"
+msgstr ""
+
+#: plugbackup/ui/volumes_view.py:16 plugbackup/ui/volumes_view.py:17
+msgid "The mounted file system does not match this drive"
+msgstr ""
+
+#: plugbackup/ui/volumes_view.py:18
+msgid "The drive has no file system identifier"
+msgstr ""
+
+#: plugbackup/ui/volumes_view.py:19
+msgid "Only a subfolder of the drive is mounted"
+msgstr ""
+
+#: plugbackup/ui/volumes_view.py:20
+msgid "Mounted read-only"
+msgstr ""
+
+#: plugbackup/ui/volumes_view.py:21
+msgid "No write permission"
+msgstr ""
+
+#: plugbackup/ui/volumes_view.py:23
+msgid "Cannot check the mount point"
+msgstr ""
+
+#: plugbackup/ui/volumes_view.py:38
+msgid "Encrypted (LUKS), locked"
+msgstr ""
+
+#: plugbackup/ui/volumes_view.py:65
+msgid "Another connected drive has the same identifier"
+msgstr ""
+
+#: plugbackup/ui/volumes_view.py:91
+msgid "Open in file manager"
+msgstr ""
+
+#: plugbackup/ui/volumes_view.py:121 plugbackup/ui/volumes_view.py:124
+msgid "Device"
+msgstr ""
+
+#: plugbackup/ui/volumes_view.py:121
+#, python-format
+msgid "Disk image: %s"
+msgstr ""
+
+#: plugbackup/ui/volumes_view.py:125
+msgid "Volume label"
+msgstr ""
+
+#: plugbackup/ui/volumes_view.py:126
+msgid "File system"
+msgstr ""
+
+#: plugbackup/ui/volumes_view.py:127
+msgid "Size"
+msgstr ""
+
+#: plugbackup/ui/volumes_view.py:133
+msgid "Free"
+msgstr ""
+
+#: plugbackup/ui/volumes_view.py:134 plugbackup/ui/volumes_view.py:138
+msgid "Mount point"
+msgstr ""
+
+#: plugbackup/ui/volumes_view.py:141
+msgid "File system UUID"
+msgstr ""
+
+#: plugbackup/ui/volumes_view.py:143
+msgid "Serial number"
+msgstr ""
+
+#: plugbackup/ui/volumes_view.py:144
+msgid "Connection"
+msgstr ""
+
+#: plugbackup/ui/volumes_view.py:144
+msgid "disk image"
+msgstr ""
+
+#: plugbackup/ui/volumes_view.py:165
+msgid "A backup is in progress on this drive."
+msgstr ""
+
+#: plugbackup/ui/volumes_view.py:170
+msgid ""
+"Another connected drive has the same identifier (UUID). Automatic backup "
+"will not run for either of them until one is disconnected."
+msgstr ""
+
+#: plugbackup/ui/volumes_view.py:173
+msgid ""
+"The drive has no file system identifier (UUID); it cannot be bound to a "
+"profile."
+msgstr ""
+
+#: plugbackup/ui/volumes_view.py:175
+msgid ""
+"The drive is encrypted (LUKS) and locked. Unlock it with its password to "
+"back up or to create a profile."
+msgstr ""
+
+#: plugbackup/ui/volumes_view.py:178
+msgid ""
+"The root folder of the drive belongs to another user, so backups cannot be "
+"written. This is typical for a freshly formatted ext4 drive: change the "
+"owner of the root folder in the Disks application or with chown."
+msgstr ""
+
+#: plugbackup/ui/volumes_view.py:182
+msgid ""
+"The drive is mounted in a folder you can write to. If the drive disappears, "
+"files could be written there instead — mount it under /media for safety."
+msgstr ""
+
+#: plugbackup/ui/volumes_view.py:256
+#, python-format
+msgid "Could not eject “%s”: %s"
+msgstr ""
+
+#: plugbackup/ui/volumes_view.py:258
+#, python-format
+msgid ""
+"“%s” is unmounted, but the device was not powered off: another partition on "
+"it (or in the same card reader) is still in use, or the device does not "
+"support it."
+msgstr ""

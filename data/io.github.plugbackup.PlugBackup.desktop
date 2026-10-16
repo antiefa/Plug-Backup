@@ -1,0 +1,15 @@
+[Desktop Entry]
+Type=Application
+Name=Plug & Backup
+GenericName=Backup to Removable Drives
+GenericName[ru]=Резервное копирование на сменные носители
+Comment=Back up selected folders to removable drives
+Comment[ru]=Резервное копирование выбранных папок на сменные носители
+Exec=plugbackup
+Icon=io.github.plugbackup.PlugBackup
+Terminal=false
+Categories=Utility;Archiving;
+Keywords=backup;usb;flash;drive;rsync;
+Keywords[ru]=резервная;копия;бэкап;флешка;носитель;usb;
+StartupNotify=true
+StartupWMClass=io.github.plugbackup.PlugBackup

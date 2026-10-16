@@ -1,0 +1,9 @@
+# Рабочие документы, копии перед правками, сборки
+docs/
+.backup/
+build/
+dist/
+temp/
+# Python
+__pycache__/
+*.pyc

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3B82F6"/>
+      <stop offset="1" stop-color="#1D4ED8"/>
+    </linearGradient>
+    <linearGradient id="badge" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#34D399"/>
+      <stop offset="1" stop-color="#059669"/>
+    </linearGradient>
+  </defs>
+  <!-- Флешка -->
+  <rect x="98" y="26" width="60" height="62" rx="6" fill="#E2E8F0" stroke="#94A3B8" stroke-width="4"/>
+  <rect x="110" y="42" width="13" height="13" rx="2" fill="#475569"/>
+  <rect x="133" y="42" width="13" height="13" rx="2" fill="#475569"/>
+  <rect x="72" y="80" width="112" height="152" rx="24" fill="url(#body)"/>
+  <rect x="96" y="112" width="64" height="9" rx="4.5" fill="#FFFFFF" opacity=".45"/>
+  <circle cx="104" cy="206" r="7" fill="#A7F3D0"/>
+  <!-- Значок с круговой стрелкой: дуги на окружности (190,190) R 24, симметрия 180° -->
+  <circle cx="190" cy="190" r="50" fill="url(#badge)" stroke="#FFFFFF" stroke-width="8"/>
+  <g fill="none" stroke="#FFFFFF" stroke-width="9" stroke-linecap="round">
+    <path d="M166 190 A24 24 0 0 1 205.43 171.62"/>
+    <path d="M214 190 A24 24 0 0 1 174.57 208.38"/>
+  </g>
+  <g fill="#FFFFFF" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round">
+    <path d="M212.32 177.41 L208.80 161.39 L195.94 176.71 Z"/>
+    <path d="M167.68 202.59 L171.20 218.61 L184.06 203.29 Z"/>
+  </g>
+</svg>

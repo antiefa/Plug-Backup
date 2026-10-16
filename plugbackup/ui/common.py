@@ -1,0 +1,118 @@
+"""Общие элементы интерфейса: подтверждения, сообщения, список замечаний, тексты ошибок."""
+
+from gi.repository import GLib, Gtk, Pango
+
+from plugbackup.core import marker
+from plugbackup.core.profiles import Issue
+from plugbackup.i18n import _
+
+MODE_TITLES = {
+    "mirror_versions": lambda: _("Mirror with version history"),
+    "mirror": lambda: _("Mirror"),
+    "accumulate": lambda: _("Accumulate"),
+}
+MODE_HINTS = {
+    "mirror_versions": lambda: _("The copy matches the folder; deleted and replaced files are moved to the version "
+                                 "history on the drive and kept for the set number of days."),
+    "mirror": lambda: _("The copy matches the folder exactly: files deleted on this computer are permanently "
+                        "deleted from the copy."),
+    "accumulate": lambda: _("New and changed files are copied; nothing is ever deleted from the copy."),
+}
+COMPARE_TITLES = {
+    "size_mtime": lambda: _("By size and modification time (fast)"),
+    "checksum": lambda: _("By content (slow, reads every file)"),
+}
+SYMLINK_TITLES = {
+    "auto": lambda: _("Automatic: keep as links on ext4, skip on other file systems"),
+    "skip": lambda: _("Skip links"),
+    "copy_target": lambda: _("Copy what the link points to"),
+}
+
+
+def binding_error_text(code: str) -> str:
+    texts = {
+        "not-this-drive": _("This drive is not bound to the profile."),
+        "locked": _("The drive is encrypted and locked."),
+        "not-mounted": _("The drive is not mounted."),
+        "uuid-mismatch": _("The mounted file system does not match the profile’s drive."),
+        "uuid-not-found": _("The mounted file system does not match the profile’s drive."),
+        "not-filesystem-root": _("Only a subfolder of the drive is mounted."),
+        "read-only": _("The drive is mounted read-only."),
+        "not-writable": _("You do not have permission to write to the drive."),
+        "root-invalid": _("The backup folder name is invalid."),
+        "root-is-link": _("The backup folder on the drive is a link to somewhere else; it will not be used."),
+        "root-not-folder": _("Something that is not a folder has the backup folder’s name on the drive."),
+        "vault-missing": _("The profile’s encrypted folder has not been created on this drive yet."),
+        "vault-closed": _("The profile’s encrypted folder is closed."),
+        marker.ROOT_OTHER_PROFILE: _("The backup folder on the drive belongs to another profile."),
+        marker.ROOT_CORRUPT: _("The profile marker on the drive is damaged."),
+        marker.ROOT_FOREIGN_DATA: _("The backup folder on the drive already contains data without a profile marker."),
+    }
+    return texts.get(code, _("The drive cannot be used right now (%s).") % code)
+
+
+def confirm(parent: Gtk.Window, title: str, text: str, ok_label: str, destructive: bool = False) -> bool:
+    dialog = Gtk.MessageDialog(transient_for=parent, modal=True, message_type=Gtk.MessageType.QUESTION,
+                               buttons=Gtk.ButtonsType.NONE, text=title)
+    dialog.format_secondary_text(text)
+    dialog.add_button(_("Cancel"), Gtk.ResponseType.CANCEL)
+    ok = dialog.add_button(ok_label, Gtk.ResponseType.OK)
+    if destructive:
+        ok.get_style_context().add_class("destructive-action")
+    else:
+        ok.get_style_context().add_class("suggested-action")
+    dialog.set_default_response(Gtk.ResponseType.CANCEL)
+    response = dialog.run()
+    dialog.destroy()
+    return response == Gtk.ResponseType.OK
+
+
+def message(parent: Gtk.Window, title: str, text: str, error: bool = False) -> None:
+    dialog = Gtk.MessageDialog(transient_for=parent, modal=True,
+                               message_type=Gtk.MessageType.ERROR if error else Gtk.MessageType.INFO,
+                               buttons=Gtk.ButtonsType.CLOSE, text=title)
+    dialog.format_secondary_text(text)
+    dialog.run()
+    dialog.destroy()
+
+
+def note(text: str, kind: str = "info") -> Gtk.Widget:
+    """Строка с иконкой: info / warning / error."""
+    icon_name = {"error": "dialog-error-symbolic", "warning": "dialog-warning-symbolic"}.get(
+        kind, "plugbackup-info-symbolic")
+    icon = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.BUTTON)
+    icon.set_valign(Gtk.Align.START)
+    label = Gtk.Label(label=text, xalign=0, wrap=True, max_width_chars=70,
+                      wrap_mode=Pango.WrapMode.WORD_CHAR)
+    box = Gtk.Box(spacing=8)
+    box.pack_start(icon, False, False, 0)
+    box.pack_start(label, True, True, 0)
+    return box
+
+
+class IssuesBox(Gtk.Box):
+    """Список ошибок и предупреждений проверки."""
+
+    def __init__(self):
+        super().__init__(orientation=Gtk.Orientation.VERTICAL, spacing=6)
+
+    def set_issues(self, issues: list[Issue]) -> None:
+        for child in self.get_children():
+            self.remove(child)
+        for issue in sorted(issues, key=lambda i: i.level != "error"):
+            self.pack_start(note(issue.message, issue.level), False, False, 0)
+        self.show_all()
+
+
+def combo(choices: dict, active: str) -> Gtk.ComboBoxText:
+    widget = Gtk.ComboBoxText()
+    for key, title in choices.items():
+        widget.append(key, title())
+    widget.set_active_id(active)
+    return widget
+
+
+def section_label(text: str) -> Gtk.Label:
+    label = Gtk.Label(xalign=0, margin_top=6)
+    label.set_markup(f"<b>{GLib.markup_escape_text(text)}</b>")
+    return label
