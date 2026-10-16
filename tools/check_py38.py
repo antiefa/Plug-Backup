@@ -10,6 +10,7 @@ FILES = sorted((ROOT / "plugbackup" / "core").rglob("*.py"))
 FILES += sorted((ROOT / "plugbackup" / "plat").rglob("*.py"))
 FILES += sorted((ROOT / "plugbackup" / "engine").rglob("*.py"))
 FILES += sorted((ROOT / "plugbackup" / "qt").rglob("*.py"))
+FILES += sorted((ROOT / "plugbackup" / "appcore").rglob("*.py"))
 FILES += sorted((ROOT / "plugbackup" / "plat" / "windows").rglob("*.py"))
 FILES += [ROOT / path for path in (
         "plugbackup/plat/__init__.py", "plugbackup/plat/base.py", "plugbackup/cli.py",

@@ -9,6 +9,7 @@ from __future__ import annotations
 import calendar
 import os
 import shutil
+import stat
 import subprocess
 import threading
 import time
@@ -17,11 +18,13 @@ from dataclasses import dataclass, field
 from plugbackup import plat
 from plugbackup.core import binding, journal, marker
 from plugbackup.core import rsync as R
+from plugbackup.core import timeshift
 from plugbackup.core.copier import default_copier, EngineCopier
 from plugbackup.core.binding import BindingError
 from plugbackup.core.fsinfo import SKIP_NON_REGULAR, SKIP_SYMLINK, SKIP_TOO_BIG, check_names
 from plugbackup.core.journal import CANCELLED, ERROR, OK, SKIPPED, WARNINGS, JobResult, RunRecord
 from plugbackup.core.profiles import Job, Profile, normalize_dest, validate_job
+from plugbackup.i18n import _
 
 VERSIONS_TS_FORMAT = "%Y-%m-%dT%H-%M-%SZ"
 SAMPLE = 50                      # сколько путей хранить в журнале для образца
@@ -52,6 +55,7 @@ class JobPlan:
     transfer_bytes: int = 0
     free_bytes: int | None = None
     dest_files_before: int = 0
+    timeshift: int | None = None
 
 
 @dataclass
@@ -288,6 +292,23 @@ class Runner:
             result.status, result.reason, result.rsync_code = ERROR, "source-list-failed", rc
             result.errors = _errors(text)
             return
+        detected_shift = None
+        if volume.fs_type == "vfat" and job.compare == "size_mtime":
+            detected_shift = timeshift.detect(entries, job.source, dest_dir)
+        if detected_shift is not None:
+            plan.timeshift = detected_shift.hours
+            if not req.preview:
+                title = _("FAT32 time shift detected")
+                question = _("The file times on the drive appear to be shifted by %d hours (usually after changing the operating system or time zone). Update only the file times on the drive without copying them?") % detected_shift.hours
+                if not self._ask("timeshift", title, question, []):
+                    result.status, result.reason = SKIPPED, "timeshift"
+                    result.message = question
+                    return
+                updated = self._update_shifted_times(root, dest, job, entries, detected_shift)
+                result.message = _("Updated the times of %d files on the drive.") % updated
+                if log is not None:
+                    log.write(f"Time shift: {detected_shift.hours} hours; updated {updated} of "
+                              f"{detected_shift.matched} matching files.\n")
         dest_has_files = os.path.isdir(dest_dir) and has_any_file(dest_dir)
         if job.mode in ("mirror", "mirror_versions") and dest_has_files \
                 and not any(e.kind != "d" for e in entries):
@@ -436,6 +457,38 @@ class Runner:
                 raise BindingError("dest-is-link")
             if os.path.lexists(path) and not os.path.isdir(path):
                 raise BindingError("dest-not-folder")
+
+    def _update_shifted_times(self, root: str, dest: str, job: Job, entries,
+                              shift: timeshift.Shift) -> int:
+        """Обновить только время файлов на носителе после повторной проверки путей."""
+        binding.root_dir_for(self.request.profile, self.request.volume)
+        self._check_dest_path(root, dest)
+        dest_dir = os.path.join(root, dest)
+        updated = 0
+        for relative, source_mtime, _dest_mtime in timeshift.matching_paths(
+                entries, job.source, dest_dir, shift):
+            relative_parts = relative.replace("\\", "/").split("/")
+            if any(part in ("", ".", "..") for part in relative_parts):
+                continue
+            relative_dest = "/".join([dest] + relative_parts)
+            parent = "/".join(relative_dest.split("/")[:-1])
+            self._check_dest_path(root, parent)
+            path = os.path.join(root, *relative_dest.split("/"))
+            try:
+                source_stat = os.lstat(os.path.join(job.source, *relative_parts))
+                dest_stat = os.lstat(path)
+            except OSError:
+                continue
+            if not stat.S_ISREG(source_stat.st_mode) or not stat.S_ISREG(dest_stat.st_mode):
+                continue
+            if source_stat.st_size != dest_stat.st_size:
+                continue
+            difference = source_stat.st_mtime - dest_stat.st_mtime
+            if abs(difference - shift.hours * timeshift.HOUR_SECONDS) > timeshift.TIME_TOLERANCE:
+                continue
+            os.utime(path, (dest_stat.st_atime, source_stat.st_mtime), follow_symlinks=False)
+            updated += 1
+        return updated
 
     def _capture(self, command: list[str]) -> tuple[int, str] | None:
         """Запустить команду и собрать вывод; None — если отменено."""

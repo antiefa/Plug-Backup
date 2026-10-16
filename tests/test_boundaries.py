@@ -37,3 +37,23 @@ class BoundaryTests(unittest.TestCase):
                 if "/proc/" in source:
                     violations.append("{}: строка /proc/".format(path.relative_to(ROOT)))
         self.assertEqual(violations, [], "\n".join(violations))
+
+    def test_appcore_does_not_import_ui_or_os_specific_apis(self):
+        folder = ROOT / "plugbackup" / "appcore"
+        forbidden = FORBIDDEN_IMPORTS | {"ctypes"}
+        violations = []
+        for path in folder.rglob("*.py"):
+            source = path.read_text(encoding="utf-8")
+            tree = ast.parse(source, filename=str(path))
+            for node in ast.walk(tree):
+                names = []
+                if isinstance(node, ast.Import):
+                    names = [alias.name for alias in node.names]
+                elif isinstance(node, ast.ImportFrom):
+                    names = [node.module or ""]
+                for name in names:
+                    if imported_root(name) in forbidden:
+                        violations.append("{}:{}: import {}".format(path.relative_to(ROOT), node.lineno, name))
+                if isinstance(node, ast.Attribute) and node.attr == "windll":
+                    violations.append("{}:{}: windll".format(path.relative_to(ROOT), node.lineno))
+        self.assertEqual(violations, [], "\n".join(violations))

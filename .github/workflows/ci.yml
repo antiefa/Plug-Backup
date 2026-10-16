@@ -21,12 +21,12 @@ jobs:
       - name: Проверить совместимость с Python 3.8
         run: python3 tools/check_py38.py
       - name: Модульные тесты
-        run: python3 -m unittest discover -v
+        run: python3 tools/ci_tests.py
       - name: Модульные тесты на собственном движке копирования
         env:
           PLUGBACKUP_COPIER: engine
           PLUGBACKUP_SKIP_SLOW: '1'
-        run: python3 -m unittest discover
+        run: python3 tools/ci_tests.py
 
   linux-py38:
     runs-on: ubuntu-24.04
@@ -36,7 +36,7 @@ jobs:
         with:
           python-version: '3.8'
       - name: Тесты без GTK
-        run: python -m unittest discover -v
+        run: python tools/ci_tests.py
 
   windows:
     runs-on: windows-2022
@@ -53,4 +53,4 @@ jobs:
       - name: Показать версию Python
         run: python --version
       - name: Модульные тесты
-        run: python -m unittest discover -v
+        run: python tools/ci_tests.py

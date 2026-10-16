@@ -2,8 +2,8 @@
 
 from gi.repository import GLib, Gtk, Pango
 
-from plugbackup.core import marker
 from plugbackup.core.profiles import Issue
+from plugbackup.appcore.presentation import binding_error_text
 from plugbackup.i18n import _
 
 MODE_TITLES = {
@@ -27,28 +27,6 @@ SYMLINK_TITLES = {
     "skip": lambda: _("Skip links"),
     "copy_target": lambda: _("Copy what the link points to"),
 }
-
-
-def binding_error_text(code: str) -> str:
-    texts = {
-        "not-this-drive": _("This drive is not bound to the profile."),
-        "locked": _("The drive is encrypted and locked."),
-        "not-mounted": _("The drive is not mounted."),
-        "uuid-mismatch": _("The mounted file system does not match the profile’s drive."),
-        "uuid-not-found": _("The mounted file system does not match the profile’s drive."),
-        "not-filesystem-root": _("Only a subfolder of the drive is mounted."),
-        "read-only": _("The drive is mounted read-only."),
-        "not-writable": _("You do not have permission to write to the drive."),
-        "root-invalid": _("The backup folder name is invalid."),
-        "root-is-link": _("The backup folder on the drive is a link to somewhere else; it will not be used."),
-        "root-not-folder": _("Something that is not a folder has the backup folder’s name on the drive."),
-        "vault-missing": _("The profile’s encrypted folder has not been created on this drive yet."),
-        "vault-closed": _("The profile’s encrypted folder is closed."),
-        marker.ROOT_OTHER_PROFILE: _("The backup folder on the drive belongs to another profile."),
-        marker.ROOT_CORRUPT: _("The profile marker on the drive is damaged."),
-        marker.ROOT_FOREIGN_DATA: _("The backup folder on the drive already contains data without a profile marker."),
-    }
-    return texts.get(code, _("The drive cannot be used right now (%s).") % code)
 
 
 def confirm(parent: Gtk.Window, title: str, text: str, ok_label: str, destructive: bool = False) -> bool:

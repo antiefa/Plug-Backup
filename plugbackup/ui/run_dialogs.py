@@ -148,6 +148,9 @@ def ask(parent: Gtk.Window, profile: Profile, kind: str, title: str, text: str, 
         body = _("The folder “%s” on the drive already has data that is not marked as the copy of job “%s”. "
                  "Mirror mode may delete files there.") % (text, title)
         ok_label, destructive = _("Accept and continue"), True
+    elif kind == "timeshift":
+        heading, body = title, text
+        ok_label, destructive = _("Update file times"), False
     elif kind == "free-space":
         heading = _("Not enough free space")
         body = _("The copy needs about %s, but only %s is free. Delete the oldest version history folders "

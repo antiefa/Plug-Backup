@@ -22,26 +22,13 @@ from plugbackup.ui.common import binding_error_text, confirm, message
 from plugbackup.ui.import_dialog import ImportDialog
 from plugbackup.ui.job_dialog import JobDialog
 from plugbackup.ui.profile_dialog import ProfileDialog
+from plugbackup.appcore.presentation import drive_text
 
 devices = plat.devices
 secrets = plat.secrets
 
 # Поля, от которых зависит содержимое метки и копии профиля на носителе.
 _DEVICE_FIELDS = ("root", "store_profile_on_device")
-
-
-def drive_text(volume) -> str:
-    if volume is None:
-        return ""
-    model = " ".join(p for p in (volume.drive_vendor, volume.drive_model) if p)
-    parts = [volume.display_name]
-    if model and model != volume.display_name:
-        parts.append(model)
-    if volume.encrypted:
-        parts.append(_("%s inside LUKS") % volume.fs_type if volume.fs_type else "LUKS")
-    else:
-        parts.append(volume.fs_type)
-    return " · ".join(p for p in parts if p)
 
 
 def forget_password(profile_id: str) -> None:
