@@ -60,24 +60,40 @@ FAT_RESERVED = frozenset({"CON", "PRN", "AUX", "NUL"} | {f"COM{i}" for i in rang
                          | {f"LPT{i}" for i in range(1, 10)})
 
 
+# Причины пропуска файла (код или «код:подробность») — для показа пользователю
+SKIP_INVALID_CHARS = "invalid-chars"    # подробность — сами символы
+SKIP_TRAILING = "trailing"              # имя оканчивается пробелом или точкой
+SKIP_RESERVED = "reserved"              # зарезервированное имя FAT (CON, NUL, COM1…)
+SKIP_TOO_BIG = "too-big"                # подробность — размер в байтах
+SKIP_SYMLINK = "symlink"
+SKIP_NON_REGULAR = "non-regular"        # сокет, канал, устройство
+
+
 @dataclass
 class NameReport:
     invalid: list[str] = field(default_factory=list)            # пропускаются с отчётом
     collisions: list[tuple[str, str]] = field(default_factory=list)  # блокируют задание
     too_big: list[tuple[str, int]] = field(default_factory=list)     # больше предела FAT32
     symlinks: list[str] = field(default_factory=list)            # ссылки, которые не будут скопированы
+    reasons: dict[str, str] = field(default_factory=dict)        # путь → причина (SKIP_*) для invalid
+
+
+def invalid_reason(name: str, fs_type: str) -> str:
+    """Почему имя нельзя записать на эту ФС ("" — можно)."""
+    if fs_type not in WINDOWS_FS:
+        return ""
+    bad = "".join(sorted({c for c in name if c in INVALID_CHARS or ord(c) < 32}))
+    if bad:
+        return f"{SKIP_INVALID_CHARS}:{bad}"
+    if name.endswith((" ", ".")):
+        return SKIP_TRAILING
+    if fs_type == "vfat" and name.split(".", 1)[0].upper() in FAT_RESERVED:
+        return SKIP_RESERVED
+    return ""
 
 
 def invalid_name(name: str, fs_type: str) -> bool:
-    if fs_type not in WINDOWS_FS:
-        return False
-    if any(c in INVALID_CHARS or ord(c) < 32 for c in name):
-        return True
-    if name.endswith((" ", ".")):
-        return True
-    if fs_type == "vfat" and name.split(".", 1)[0].upper() in FAT_RESERVED:
-        return True
-    return False
+    return bool(invalid_reason(name, fs_type))
 
 
 def check_names(entries, fs_type: str, copy_symlinks: bool, encrypted: bool = False) -> NameReport:
@@ -95,8 +111,10 @@ def check_names(entries, fs_type: str, copy_symlinks: bool, encrypted: bool = Fa
         if any(path == d or path.startswith(d + "/") for d in invalid_dirs):
             continue  # вся папка уже пропускается
         name = path.rsplit("/", 1)[-1]
-        if not encrypted and invalid_name(name, fs_type):
+        reason = "" if encrypted else invalid_reason(name, fs_type)
+        if reason:
             report.invalid.append(path)
+            report.reasons[path] = reason
             if entry.kind == "d":
                 invalid_dirs.append(path)
             continue

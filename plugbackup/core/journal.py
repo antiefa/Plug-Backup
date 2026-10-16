@@ -38,6 +38,7 @@ class JobResult:
     deleted_files: int = 0           # удалено (зеркало) или перенесено в корзину
     skipped_files: list[str] = field(default_factory=list)   # образец пропущенных (до 50)
     skipped_count: int = 0
+    skipped_reasons: list[str] = field(default_factory=list)   # причины для skipped_files (fsinfo.SKIP_*), та же длина
     errors: list[str] = field(default_factory=list)          # образец ошибок rsync (до 50)
     rsync_code: int | None = None
     new_files: int = 0               # восстановление: появилось на ПК

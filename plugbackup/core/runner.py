@@ -20,7 +20,7 @@ from plugbackup.core import binding, journal, marker
 from plugbackup.core import rsync as R
 from plugbackup.core.binding import BindingError
 from plugbackup.core.config import runtime_dir  # noqa: F401  (здесь же блокировки запусков)
-from plugbackup.core.fsinfo import check_names
+from plugbackup.core.fsinfo import SKIP_NON_REGULAR, SKIP_SYMLINK, SKIP_TOO_BIG, check_names
 from plugbackup.core.journal import CANCELLED, ERROR, OK, SKIPPED, WARNINGS, JobResult, RunRecord
 from plugbackup.core.mounts import verify_mount
 from plugbackup.core.profiles import Job, Profile, normalize_dest, validate_job
@@ -50,6 +50,7 @@ class JobPlan:
     changed_files: list[str] = field(default_factory=list)
     deleted_files: list[str] = field(default_factory=list)
     skipped: list[str] = field(default_factory=list)      # пропуски по ограничениям ФС и ссылкам
+    skip_reasons: dict[str, str] = field(default_factory=dict)   # путь → причина (fsinfo.SKIP_*)
     transfer_bytes: int = 0
     free_bytes: int | None = None
     dest_files_before: int = 0
@@ -351,7 +352,9 @@ class Runner:
             result.status, result.reason = SKIPPED, "empty-source"
             return
         encrypted = profile.encryption.mode == "gocryptfs"
-        names = check_names(entries, volume.fs_type, job.symlinks == "copy_target", encrypted)
+        # Ссылки не пропускаются, если копируется то, на что они указывают, или на POSIX-ФС они сохраняются как ссылки.
+        links_copied = job.symlinks == "copy_target" or (job.symlinks == "auto" and volume.fs_type in R.POSIX_FS)
+        names = check_names(entries, volume.fs_type, links_copied, encrypted)
         if names.collisions:
             result.status, result.reason = SKIPPED, "name-collision"
             result.skipped_files = [f"{a} ⇄ {b}" for a, b in names.collisions[:SAMPLE]]
@@ -359,6 +362,9 @@ class Runner:
             return
         options.extra_excludes = names.invalid
         plan.skipped = ([f"{p}" for p in names.invalid] + [p for p, _s in names.too_big] + names.symlinks)
+        plan.skip_reasons.update(names.reasons)
+        plan.skip_reasons.update({p: f"{SKIP_TOO_BIG}:{size}" for p, size in names.too_big})
+        plan.skip_reasons.update({p: SKIP_SYMLINK for p in names.symlinks})
 
         # Задание без своей записи в метке, а в его папке уже есть данные.
         if existing_marker is not None and job.id not in existing_marker.jobs and dest_has_files \
@@ -385,7 +391,12 @@ class Runner:
         stats = R.parse_stats(text)
         plan.new_files, plan.changed_files = summary.new_files, summary.changed_files
         plan.deleted_files = summary.deleted_files
-        plan.skipped += [p for p in summary.skipped_nonregular if p not in plan.skipped]
+        for path in summary.skipped_nonregular:
+            if path not in plan.skipped:
+                plan.skipped.append(path)
+                # rsync не различает ссылку и сокет/канал — смотрим на сам источник.
+                is_link = os.path.islink(os.path.join(job.source, path.rstrip("/")))
+                plan.skip_reasons[path] = SKIP_SYMLINK if is_link else SKIP_NON_REGULAR
         plan.transfer_bytes = stats.transferred_size
         plan.free_bytes = free_bytes(dest_dir)
 
@@ -417,6 +428,7 @@ class Runner:
         result.copied_bytes = plan.transfer_bytes
         result.deleted_files = deletions
         result.skipped_files = plan.skipped[:SAMPLE]
+        result.skipped_reasons = [plan.skip_reasons.get(p, "") for p in result.skipped_files]
         result.skipped_count = len(plan.skipped)
         if req.preview:
             result.status = WARNINGS if plan.skipped else OK

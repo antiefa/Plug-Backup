@@ -3,9 +3,9 @@
 import os
 import time
 
-from gi.repository import Gio, GLib, Gtk, Pango
+from gi.repository import Gdk, Gio, GLib, Gtk, Pango
 
-from plugbackup.core import journal
+from plugbackup.core import fsinfo, journal
 from plugbackup.core.journal import RunRecord
 from plugbackup.core.profiles import Profile
 from plugbackup.i18n import _
@@ -28,7 +28,9 @@ def _path_list(paths: list[str], total: int | None = None) -> Gtk.Widget:
     if rest > 0:
         text += "\n" + _("… and %d more") % rest
     view.get_buffer().set_text(text)
-    scrolled = Gtk.ScrolledWindow(min_content_height=60, max_content_height=220, propagate_natural_height=True)
+    # По горизонтали прокручивается сам список (длинные пути), а не всё окно.
+    scrolled = Gtk.ScrolledWindow(min_content_height=60, max_content_height=220, propagate_natural_height=True,
+                                  hscrollbar_policy=Gtk.PolicyType.AUTOMATIC, overlay_scrolling=False)
     scrolled.add(view)
     return scrolled
 
@@ -36,6 +38,94 @@ def _path_list(paths: list[str], total: int | None = None) -> Gtk.Widget:
 def _expander(title: str, paths: list[str], total: int | None = None) -> Gtk.Widget:
     expander = Gtk.Expander(label=title)
     expander.add(_path_list(paths, total))
+    return expander
+
+
+# ---------- пропущенные файлы: по причинам ----------
+
+def _skip_group(reason: str) -> str:
+    code = reason.split(":", 1)[0]
+    if code in (fsinfo.SKIP_INVALID_CHARS, fsinfo.SKIP_TRAILING, fsinfo.SKIP_RESERVED):
+        return "names"
+    return {fsinfo.SKIP_SYMLINK: "links", fsinfo.SKIP_TOO_BIG: "big", fsinfo.SKIP_NON_REGULAR: "special"}.get(
+        code, "other")
+
+
+def _skip_detail(reason: str) -> str:
+    code, _sep, detail = reason.partition(":")
+    if code == fsinfo.SKIP_INVALID_CHARS:
+        return " ".join(f"«{c}»" if c.isprintable() else f"\\x{ord(c):02x}" for c in detail)
+    if code == fsinfo.SKIP_TRAILING:
+        return _("space or dot at the end")
+    if code == fsinfo.SKIP_RESERVED:
+        return _("reserved name")
+    if code == fsinfo.SKIP_TOO_BIG and detail.isdigit():
+        return GLib.format_size(int(detail))
+    return ""
+
+
+def _skip_groups():
+    return (
+        ("names", lambda n: _("Names not allowed on this drive (%d)") % n,
+         _("Rename them, or keep the copy in an encrypted folder (Profile settings → Encryption): names are "
+           "encrypted there, so any characters are allowed.")),
+        ("links", lambda n: _("Symbolic links (%d)") % n,
+         _("This file system cannot store links. In the job settings you can copy what the links point to, "
+           "or exclude these folders.")),
+        ("big", lambda n: _("Files of 4 GiB and larger (%d)") % n,
+         _("FAT32 cannot store files of 4 GiB and larger.")),
+        ("special", lambda n: _("Special files (%d)") % n,
+         _("Sockets, pipes and devices are never copied.")),
+        ("other", lambda n: _("Other (%d)") % n, ""),
+    )
+
+
+def skipped_widget(paths: list[str], reasons, total: int | None = None) -> Gtk.Widget:
+    """Пропущенные файлы, сгруппированные по причинам. reasons — словарь путь → причина или список той же длины."""
+    if isinstance(reasons, dict):
+        pairs = [(p, reasons.get(p, "")) for p in paths]
+    else:
+        pairs = list(zip(paths, list(reasons) + [""] * (len(paths) - len(reasons))))
+    # Причина — в начале строки (колонкой), чтобы её было видно и у длинных путей.
+    by_group: dict[str, list[tuple[str, str]]] = {}
+    for path, reason in pairs:
+        by_group.setdefault(_skip_group(reason), []).append((_skip_detail(reason), path))
+    grouped: dict[str, list[str]] = {}
+    for key, items in by_group.items():
+        width = max(len(detail) for detail, _path in items)
+        grouped[key] = [f"{detail.ljust(width)}   {path}" if width else path for detail, path in items]
+
+    box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6, margin_start=18)
+    for key, title, hint in _skip_groups():
+        lines = grouped.get(key)
+        if not lines:
+            continue
+        expander = Gtk.Expander(label=title(len(lines)), expanded=len(grouped) == 1)
+        inner = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=4, margin_start=18)
+        if hint:
+            # Отступ справа: внутри вложенных раскрывающихся блоков GTK 3 переносит строку чуть шире своей области.
+            label = Gtk.Label(label=hint, xalign=0, wrap=True, margin_end=24)
+            label.get_style_context().add_class("dim-label")
+            inner.pack_start(label, False, False, 0)
+        inner.pack_start(_path_list(lines), False, False, 0)
+        expander.add(inner)
+        box.pack_start(expander, False, False, 0)
+    rest = (total if total is not None else len(paths)) - len(paths)
+    if rest > 0:
+        more = Gtk.Label(label=_("… and %d more (the log keeps only the first ones)") % rest, xalign=0)
+        more.get_style_context().add_class("dim-label")
+        box.pack_start(more, False, False, 0)
+
+    copy_text = "\n".join(f"{p}\t{_skip_detail(r)}".rstrip() for p, r in pairs)
+    copy_button = Gtk.Button(label=_("Copy the list"), halign=Gtk.Align.START)
+    copy_button.connect("clicked", lambda _b: Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD).set_text(copy_text, -1))
+    box.pack_start(copy_button, False, False, 0)
+    return box
+
+
+def _skipped_expander(title: str, paths: list[str], reasons, total: int | None = None) -> Gtk.Widget:
+    expander = Gtk.Expander(label=title)
+    expander.add(skipped_widget(paths, reasons, total))
     return expander
 
 
@@ -130,11 +220,11 @@ class PreviewDialog(Gtk.Dialog):
                     frame.pack_start(_expander(_("To delete or move to version history (%d)") % len(plan.deleted_files),
                                                plan.deleted_files), False, False, 0)
                 if plan.skipped:
-                    frame.pack_start(_expander(_("Skipped by drive limitations (%d)") % len(plan.skipped),
-                                               plan.skipped), False, False, 0)
+                    frame.pack_start(_skipped_expander(_("Skipped by drive limitations (%d)") % len(plan.skipped),
+                                                       plan.skipped, plan.skip_reasons), False, False, 0)
             box.pack_start(frame, False, False, 0)
             box.pack_start(Gtk.Separator(), False, False, 0)
-        scrolled = Gtk.ScrolledWindow(vexpand=True)
+        scrolled = Gtk.ScrolledWindow(vexpand=True, hscrollbar_policy=Gtk.PolicyType.NEVER)
         scrolled.add(box)
         self.get_content_area().pack_start(scrolled, True, True, 0)
         self.show_all()
@@ -196,7 +286,8 @@ def record_widget(record: RunRecord) -> Gtk.Widget:
             reason.set_margin_start(28)
             frame.pack_start(reason, False, False, 0)
         if result.skipped_files:
-            exp = _expander(_("Skipped (%d)") % result.skipped_count, result.skipped_files, result.skipped_count)
+            exp = _skipped_expander(_("Skipped (%d)") % result.skipped_count, result.skipped_files,
+                                    result.skipped_reasons, result.skipped_count)
             exp.set_margin_start(28)
             frame.pack_start(exp, False, False, 0)
         if result.errors:
@@ -220,7 +311,8 @@ class SummaryDialog(Gtk.Dialog):
         super().__init__(title=_("Backup result"), transient_for=parent, modal=True)
         self.set_default_size(680, -1)
         self.add_button(_("Close"), Gtk.ResponseType.CLOSE)
-        scrolled = Gtk.ScrolledWindow(propagate_natural_height=True, max_content_height=560)
+        scrolled = Gtk.ScrolledWindow(propagate_natural_height=True, max_content_height=560,
+                                      hscrollbar_policy=Gtk.PolicyType.NEVER)
         content = record_widget(record)
         content.set_border_width(14)
         scrolled.add(content)
@@ -246,7 +338,7 @@ class JournalDialog(Gtk.Dialog):
             view.append_column(Gtk.TreeViewColumn(title, Gtk.CellRendererText(), text=col))
         left = Gtk.ScrolledWindow(min_content_width=300)
         left.add(view)
-        self.details = Gtk.ScrolledWindow(hexpand=True)
+        self.details = Gtk.ScrolledWindow(hexpand=True, hscrollbar_policy=Gtk.PolicyType.NEVER)
         placeholder = Gtk.Label(label=_("No runs yet.") if not runs else _("Choose a run."))
         placeholder.get_style_context().add_class("dim-label")
         self.details.add(placeholder)

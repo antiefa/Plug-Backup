@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plugbackup 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-16 13:01+0300\n"
+"POT-Creation-Date: 2026-10-16 13:52+0300\n"
 "PO-Revision-Date: 2026-10-15 18:49+0300\n"
 "Last-Translator: Plug & Backup\n"
 "Language-Team: Russian\n"
@@ -172,80 +172,80 @@ msgstr "Права доступа Linux не сохраняются."
 msgid "This file system has not been tested with Plug & Backup."
 msgstr "Эта файловая система не проверялась с Plug & Backup."
 
-#: plugbackup/core/profiles.py:326
+#: plugbackup/core/profiles.py:325
 msgid "The backup folder name on the drive is empty."
 msgstr "Не указано имя папки копии на носителе."
 
-#: plugbackup/core/profiles.py:328
+#: plugbackup/core/profiles.py:327
 msgid "The backup folder on the drive must be a single folder name."
 msgstr "Папка копии на носителе должна быть одним именем папки."
 
-#: plugbackup/core/profiles.py:330 plugbackup/core/profiles.py:345
+#: plugbackup/core/profiles.py:329 plugbackup/core/profiles.py:344
 #, python-format
 msgid "“%s” is a reserved service name."
 msgstr "«%s» — зарезервированное служебное имя."
 
-#: plugbackup/core/profiles.py:337
+#: plugbackup/core/profiles.py:336
 msgid "The destination folder on the drive is empty."
 msgstr "Не указана папка на носителе."
 
-#: plugbackup/core/profiles.py:339
+#: plugbackup/core/profiles.py:338
 msgid ""
 "The destination must be a folder inside the backup folder, not an absolute "
 "path."
 msgstr ""
 "Папка на носителе должна быть внутри папки копии, а не абсолютным путём."
 
-#: plugbackup/core/profiles.py:342
+#: plugbackup/core/profiles.py:341
 msgid "The destination must not contain “..”."
 msgstr "Путь на носителе не должен содержать «..»."
 
-#: plugbackup/core/profiles.py:354
+#: plugbackup/core/profiles.py:353
 msgid "Choose a folder on this computer to back up."
 msgstr "Выберите папку на этом компьютере."
 
-#: plugbackup/core/profiles.py:356
+#: plugbackup/core/profiles.py:355
 msgid "The source folder must be an absolute path."
 msgstr "Папка-источник должна быть абсолютным путём."
 
-#: plugbackup/core/profiles.py:360
+#: plugbackup/core/profiles.py:359
 msgid "A system folder cannot be backed up as a whole."
 msgstr "Системную папку целиком резервировать нельзя."
 
-#: plugbackup/core/profiles.py:362
+#: plugbackup/core/profiles.py:361
 msgid "The source folder does not exist."
 msgstr "Папки-источника не существует."
 
-#: plugbackup/core/profiles.py:364
+#: plugbackup/core/profiles.py:363
 msgid "The source is not a folder."
 msgstr "Источник — не папка."
 
-#: plugbackup/core/profiles.py:366
+#: plugbackup/core/profiles.py:365
 msgid "The source folder cannot be read."
 msgstr "Папку-источник нельзя прочитать."
 
-#: plugbackup/core/profiles.py:369
+#: plugbackup/core/profiles.py:368
 msgid "The source folder is on the backup drive itself."
 msgstr "Папка-источник находится на самом носителе копии."
 
-#: plugbackup/core/profiles.py:372
+#: plugbackup/core/profiles.py:371
 msgid ""
 "The source folder contains the backup drive; the copy would include itself."
 msgstr ""
 "Внутри папки-источника находится носитель копии — копия включала бы саму "
 "себя."
 
-#: plugbackup/core/profiles.py:381
+#: plugbackup/core/profiles.py:380
 #, python-format
 msgid "The destination overlaps with another job (“%s”)."
 msgstr "Папка на носителе пересекается с другим заданием («%s»)."
 
-#: plugbackup/core/profiles.py:385
+#: plugbackup/core/profiles.py:384
 msgid "The source overlaps with another job; some files will be copied twice."
 msgstr ""
 "Источник пересекается с другим заданием — часть файлов скопируется дважды."
 
-#: plugbackup/core/profiles.py:389
+#: plugbackup/core/profiles.py:388
 msgid ""
 "Mirror mode: files deleted on this computer are deleted from the copy too, "
 "and changed files replace their previous versions — they cannot be got back."
@@ -253,23 +253,23 @@ msgstr ""
 "Режим «Зеркало»: файлы, удалённые на этом компьютере, удаляются и из копии, "
 "а изменённые заменяют прежние версии — вернуть их будет нельзя."
 
-#: plugbackup/core/profiles.py:392
+#: plugbackup/core/profiles.py:391
 msgid "The file size limit must be a positive number."
 msgstr "Предел размера файла должен быть положительным числом."
 
-#: plugbackup/core/profiles.py:395
+#: plugbackup/core/profiles.py:394
 msgid "An exclusion pattern must be a single line."
 msgstr "Шаблон исключения должен быть одной строкой."
 
-#: plugbackup/core/profiles.py:403
+#: plugbackup/core/profiles.py:402
 msgid "Enter a profile name."
 msgstr "Введите имя профиля."
 
-#: plugbackup/core/profiles.py:406
+#: plugbackup/core/profiles.py:405
 msgid "The countdown must be between 0 and 600 seconds."
 msgstr "Отсчёт — от 0 до 600 секунд."
 
-#: plugbackup/core/profiles.py:408
+#: plugbackup/core/profiles.py:407
 msgid "Versions must be kept for at least one day."
 msgstr "Версии нужно хранить хотя бы один день."
 
@@ -376,7 +376,7 @@ msgstr "Файлов к изменению: %d (%s)."
 #: plugbackup/ui/encryption.py:43 plugbackup/ui/encryption.py:145
 #: plugbackup/ui/import_dialog.py:16 plugbackup/ui/job_dialog.py:23
 #: plugbackup/ui/main_window.py:210 plugbackup/ui/profile_actions.py:586
-#: plugbackup/ui/profile_actions.py:627 plugbackup/ui/profile_dialog.py:27
+#: plugbackup/ui/profile_actions.py:627 plugbackup/ui/profile_dialog.py:26
 #: plugbackup/ui/profile_view.py:612 plugbackup/ui/restore_dialog.py:41
 #: plugbackup/ui/restore_dialog.py:135 plugbackup/ui/unlock.py:57
 msgid "Cancel"
@@ -397,7 +397,7 @@ msgid "Copied files: %d"
 msgstr "Скопировано файлов: %d"
 
 #: plugbackup/ui/auto_controller.py:334 plugbackup/ui/main_window.py:69
-#: plugbackup/ui/run_dialogs.py:112
+#: plugbackup/ui/run_dialogs.py:202
 msgid "Details"
 msgstr "Подробнее"
 
@@ -566,8 +566,8 @@ msgstr "Проверка системы"
 
 #: plugbackup/ui/deps_dialog.py:42 plugbackup/ui/main_window.py:253
 #: plugbackup/ui/profile_view.py:557 plugbackup/ui/restore_dialog.py:135
-#: plugbackup/ui/run_dialogs.py:96 plugbackup/ui/run_dialogs.py:222
-#: plugbackup/ui/run_dialogs.py:235
+#: plugbackup/ui/run_dialogs.py:186 plugbackup/ui/run_dialogs.py:313
+#: plugbackup/ui/run_dialogs.py:327
 msgid "Close"
 msgstr "Закрыть"
 
@@ -601,7 +601,7 @@ msgstr "FUSE не установлен. Установите его команд
 msgid "Create encrypted folder"
 msgstr "Создание зашифрованной папки"
 
-#: plugbackup/ui/encryption.py:44 plugbackup/ui/profile_dialog.py:28
+#: plugbackup/ui/encryption.py:44 plugbackup/ui/profile_dialog.py:27
 msgid "Create"
 msgstr "Создать"
 
@@ -642,7 +642,7 @@ msgstr "Рекомендуется пароль не короче 8 символ
 msgid "Master key"
 msgstr "Мастер-ключ"
 
-#: plugbackup/ui/encryption.py:102 plugbackup/ui/run_dialogs.py:67
+#: plugbackup/ui/encryption.py:102 plugbackup/ui/run_dialogs.py:157
 msgid "Continue"
 msgstr "Продолжить"
 
@@ -855,7 +855,7 @@ msgstr "Заменить существующий профиль"
 msgid "Import"
 msgstr "Импортировать"
 
-#: plugbackup/ui/import_dialog.py:32 plugbackup/ui/profile_dialog.py:47
+#: plugbackup/ui/import_dialog.py:32 plugbackup/ui/profile_dialog.py:46
 #: plugbackup/ui/sidebar.py:24
 msgid "not bound"
 msgstr "не привязан"
@@ -907,7 +907,7 @@ msgid "Edit job"
 msgstr "Изменить задание"
 
 #: plugbackup/ui/job_dialog.py:24 plugbackup/ui/main_window.py:211
-#: plugbackup/ui/profile_dialog.py:28
+#: plugbackup/ui/profile_dialog.py:27
 msgid "Save"
 msgstr "Сохранить"
 
@@ -1313,7 +1313,7 @@ msgstr "Экспортировать"
 msgid "Could not export the profile"
 msgstr "Не удалось экспортировать профиль"
 
-#: plugbackup/ui/profile_actions.py:432 plugbackup/ui/run_dialogs.py:188
+#: plugbackup/ui/profile_actions.py:432 plugbackup/ui/run_dialogs.py:278
 #: plugbackup/ui/unlock.py:517
 msgid "Open"
 msgstr "Открыть"
@@ -1461,27 +1461,27 @@ msgstr "Очистить копию"
 msgid "Could not clear"
 msgstr "Не удалось очистить"
 
-#: plugbackup/ui/profile_dialog.py:25
+#: plugbackup/ui/profile_dialog.py:24
 msgid "New profile"
 msgstr "Новый профиль"
 
-#: plugbackup/ui/profile_dialog.py:25
+#: plugbackup/ui/profile_dialog.py:24
 msgid "Profile settings"
 msgstr "Настройки профиля"
 
-#: plugbackup/ui/profile_dialog.py:48
+#: plugbackup/ui/profile_dialog.py:47
 msgid "Drive"
 msgstr "Носитель"
 
-#: plugbackup/ui/profile_dialog.py:51
+#: plugbackup/ui/profile_dialog.py:50
 msgid "Name"
 msgstr "Имя"
 
-#: plugbackup/ui/profile_dialog.py:54
+#: plugbackup/ui/profile_dialog.py:53
 msgid "Backup folder on the drive"
 msgstr "Папка копии на носителе"
 
-#: plugbackup/ui/profile_dialog.py:55
+#: plugbackup/ui/profile_dialog.py:54
 msgid ""
 "All jobs and the version history are stored inside this folder; the rest of "
 "the drive stays yours."
@@ -1489,11 +1489,11 @@ msgstr ""
 "Все задания и корзина версий хранятся внутри этой папки; остальное место на "
 "носителе остаётся вашим."
 
-#: plugbackup/ui/profile_dialog.py:57
+#: plugbackup/ui/profile_dialog.py:56
 msgid "Keep a copy of this profile on the drive"
 msgstr "Хранить копию профиля на носителе"
 
-#: plugbackup/ui/profile_dialog.py:60
+#: plugbackup/ui/profile_dialog.py:59
 msgid ""
 "Lets you import the profile on a new computer straight from the drive. The "
 "copy includes the paths of your folders, so anyone who reads an unencrypted "
@@ -1503,55 +1503,55 @@ msgstr ""
 "содержит пути ваших папок — их увидит любой, кто прочитает незашифрованный "
 "носитель."
 
-#: plugbackup/ui/profile_dialog.py:64
+#: plugbackup/ui/profile_dialog.py:63
 msgid "Back up automatically when the drive is inserted"
 msgstr "Резервировать автоматически при вставке носителя"
 
-#: plugbackup/ui/profile_dialog.py:68
+#: plugbackup/ui/profile_dialog.py:67
 msgid "Eject the drive after a successful automatic backup"
 msgstr "Извлекать носитель после успешного автоматического резервирования"
 
-#: plugbackup/ui/profile_dialog.py:71
+#: plugbackup/ui/profile_dialog.py:70
 msgid "Countdown before start (s)"
 msgstr "Отсчёт перед запуском, с"
 
-#: plugbackup/ui/profile_dialog.py:73
+#: plugbackup/ui/profile_dialog.py:72
 msgid "Not more often than every N hours (0 — no limit)"
 msgstr "Не чаще раза в N часов (0 — без ограничения)"
 
-#: plugbackup/ui/profile_dialog.py:85
+#: plugbackup/ui/profile_dialog.py:84
 msgid "Keep version history (days)"
 msgstr "Хранить корзину версий, дней"
 
-#: plugbackup/ui/profile_dialog.py:87
+#: plugbackup/ui/profile_dialog.py:86
 msgid "Ask before deleting more than this percentage of files"
 msgstr "Спрашивать, если удаляется больше этой доли файлов, %"
 
-#: plugbackup/ui/profile_dialog.py:89
+#: plugbackup/ui/profile_dialog.py:88
 msgid "…or more than this many files"
 msgstr "…или больше, файлов"
 
-#: plugbackup/ui/profile_dialog.py:91
+#: plugbackup/ui/profile_dialog.py:90
 msgid "Never delete more than this many files per run"
 msgstr "Никогда не удалять за запуск больше, файлов"
 
-#: plugbackup/ui/profile_dialog.py:111
+#: plugbackup/ui/profile_dialog.py:110
 msgid "Automatic backup"
 msgstr "Автоматическое резервирование"
 
-#: plugbackup/ui/profile_dialog.py:114
+#: plugbackup/ui/profile_dialog.py:113
 msgid "Encryption"
 msgstr "Шифрование"
 
-#: plugbackup/ui/profile_dialog.py:119
+#: plugbackup/ui/profile_dialog.py:118
 msgid "Safety"
 msgstr "Защита"
 
-#: plugbackup/ui/profile_dialog.py:126
+#: plugbackup/ui/profile_dialog.py:125
 msgid "Remember the drive password in the keyring"
 msgstr "Запомнить пароль носителя в связке ключей"
 
-#: plugbackup/ui/profile_dialog.py:129
+#: plugbackup/ui/profile_dialog.py:128
 msgid ""
 "The drive is encrypted (LUKS). With a saved password it is unlocked without "
 "questions, including for automatic backup; otherwise you are asked for it in "
@@ -1561,19 +1561,19 @@ msgstr ""
 "вопросов, в том числе для автоматического резервирования; иначе пароль "
 "спрашивается в окне. Пароль сохранится при следующей разблокировке носителя."
 
-#: plugbackup/ui/profile_dialog.py:133
+#: plugbackup/ui/profile_dialog.py:132
 msgid "Forget password"
 msgstr "Забыть пароль"
 
-#: plugbackup/ui/profile_dialog.py:152
+#: plugbackup/ui/profile_dialog.py:151
 msgid "No encryption"
 msgstr "Без шифрования"
 
-#: plugbackup/ui/profile_dialog.py:154
+#: plugbackup/ui/profile_dialog.py:153
 msgid "Encrypted folder on the drive (gocryptfs)"
 msgstr "Зашифрованная папка на носителе (gocryptfs)"
 
-#: plugbackup/ui/profile_dialog.py:157
+#: plugbackup/ui/profile_dialog.py:156
 #, python-format
 msgid ""
 "The copy is kept in the encrypted folder “%s.enc”; the rest of the drive "
@@ -1582,7 +1582,7 @@ msgstr ""
 "Копия хранится в зашифрованной папке «%s.enc»; остальное место на носителе "
 "остаётся как есть. "
 
-#: plugbackup/ui/profile_dialog.py:172
+#: plugbackup/ui/profile_dialog.py:171
 msgid ""
 "The mode can be changed only while the profile’s drive is connected: the "
 "copy on it is transferred to the new place."
@@ -1590,7 +1590,7 @@ msgstr ""
 "Режим можно сменить только при подключённом носителе профиля: копия на нём "
 "переносится на новое место."
 
-#: plugbackup/ui/profile_dialog.py:177
+#: plugbackup/ui/profile_dialog.py:176
 msgid ""
 "When you save, Plug & Backup asks for a new password, shows the master key "
 "and offers to transfer the existing copy."
@@ -1598,11 +1598,11 @@ msgstr ""
 "При сохранении Plug & Backup спросит новый пароль, покажет мастер-ключ и "
 "предложит перенести существующую копию."
 
-#: plugbackup/ui/profile_dialog.py:180
+#: plugbackup/ui/profile_dialog.py:179
 msgid "Remember the folder password in the keyring"
 msgstr "Запомнить пароль папки в связке ключей"
 
-#: plugbackup/ui/profile_dialog.py:181
+#: plugbackup/ui/profile_dialog.py:180
 msgid ""
 "With a saved password the folder is opened without questions, including for "
 "automatic backup; otherwise you are asked for it in a window."
@@ -1610,11 +1610,11 @@ msgstr ""
 "С сохранённым паролем папка открывается без вопросов, в том числе для "
 "автоматического резервирования; иначе пароль спрашивается в окне."
 
-#: plugbackup/ui/profile_dialog.py:200
+#: plugbackup/ui/profile_dialog.py:199
 msgid "The password is removed from the keyring."
 msgstr "Пароль удалён из связки ключей."
 
-#: plugbackup/ui/profile_dialog.py:201
+#: plugbackup/ui/profile_dialog.py:200
 msgid "No saved password."
 msgstr "Сохранённого пароля нет."
 
@@ -2114,11 +2114,77 @@ msgstr "Открыть восстановленную папку"
 msgid "“%s”: the copy is up to date — nothing to change."
 msgstr "«%s»: копия актуальна — изменений нет."
 
-#: plugbackup/ui/run_dialogs.py:46
+#: plugbackup/ui/run_dialogs.py:59
+msgid "space or dot at the end"
+msgstr "пробел или точка в конце"
+
+#: plugbackup/ui/run_dialogs.py:61
+msgid "reserved name"
+msgstr "зарезервированное имя"
+
+#: plugbackup/ui/run_dialogs.py:69
+#, python-format
+msgid "Names not allowed on this drive (%d)"
+msgstr "Имена, недопустимые на этом носителе (%d)"
+
+#: plugbackup/ui/run_dialogs.py:70
+msgid ""
+"Rename them, or keep the copy in an encrypted folder (Profile settings → "
+"Encryption): names are encrypted there, so any characters are allowed."
+msgstr ""
+"Переименуйте их или храните копию в зашифрованной папке (Настройки профиля → "
+"Шифрование): там имена шифруются, и допустимы любые символы."
+
+#: plugbackup/ui/run_dialogs.py:72
+#, python-format
+msgid "Symbolic links (%d)"
+msgstr "Символьные ссылки (%d)"
+
+#: plugbackup/ui/run_dialogs.py:73
+msgid ""
+"This file system cannot store links. In the job settings you can copy what "
+"the links point to, or exclude these folders."
+msgstr ""
+"Эта файловая система не хранит ссылки. В настройках задания можно копировать "
+"то, на что указывают ссылки, или исключить эти папки."
+
+#: plugbackup/ui/run_dialogs.py:75
+#, python-format
+msgid "Files of 4 GiB and larger (%d)"
+msgstr "Файлы от 4 ГиБ (%d)"
+
+#: plugbackup/ui/run_dialogs.py:76
+msgid "FAT32 cannot store files of 4 GiB and larger."
+msgstr "FAT32 не вмещает файлы размером 4 ГиБ и больше."
+
+#: plugbackup/ui/run_dialogs.py:77
+#, python-format
+msgid "Special files (%d)"
+msgstr "Специальные файлы (%d)"
+
+#: plugbackup/ui/run_dialogs.py:78
+msgid "Sockets, pipes and devices are never copied."
+msgstr "Сокеты, каналы и устройства не копируются."
+
+#: plugbackup/ui/run_dialogs.py:79
+#, python-format
+msgid "Other (%d)"
+msgstr "Прочее (%d)"
+
+#: plugbackup/ui/run_dialogs.py:115
+#, python-format
+msgid "… and %d more (the log keeps only the first ones)"
+msgstr "… и ещё %d (в журнале хранятся только первые)"
+
+#: plugbackup/ui/run_dialogs.py:120
+msgid "Copy the list"
+msgstr "Скопировать список"
+
+#: plugbackup/ui/run_dialogs.py:136
 msgid "Delete many files from the copy?"
 msgstr "Удалить из копии много файлов?"
 
-#: plugbackup/ui/run_dialogs.py:47
+#: plugbackup/ui/run_dialogs.py:137
 #, python-format
 msgid ""
 "Job “%s → %s” would delete or move to the version history %d or more files — "
@@ -2128,15 +2194,15 @@ msgstr ""
 "Задание «%s → %s» удалит или перенесёт в корзину версий не менее %d файлов — "
 "больше порога защиты профиля. Убедитесь, что папка-источник правильная."
 
-#: plugbackup/ui/run_dialogs.py:50
+#: plugbackup/ui/run_dialogs.py:140
 msgid "Delete and continue"
 msgstr "Удалить и продолжить"
 
-#: plugbackup/ui/run_dialogs.py:52
+#: plugbackup/ui/run_dialogs.py:142
 msgid "Accept existing data as the copy?"
 msgstr "Принять существующие данные как копию?"
 
-#: plugbackup/ui/run_dialogs.py:53
+#: plugbackup/ui/run_dialogs.py:143
 #, python-format
 msgid ""
 "The folder “%s” on the drive has data but no Plug & Backup marker. Mirror "
@@ -2145,15 +2211,15 @@ msgstr ""
 "В папке «%s» на носителе есть данные, но нет метки Plug & Backup. Задания в "
 "режиме зеркала могут удалить там файлы, которых нет на этом компьютере."
 
-#: plugbackup/ui/run_dialogs.py:55 plugbackup/ui/run_dialogs.py:60
+#: plugbackup/ui/run_dialogs.py:145 plugbackup/ui/run_dialogs.py:150
 msgid "Accept and continue"
 msgstr "Принять и продолжить"
 
-#: plugbackup/ui/run_dialogs.py:57
+#: plugbackup/ui/run_dialogs.py:147
 msgid "Accept the job folder’s existing data?"
 msgstr "Принять существующие данные в папке задания?"
 
-#: plugbackup/ui/run_dialogs.py:58
+#: plugbackup/ui/run_dialogs.py:148
 #, python-format
 msgid ""
 "The folder “%s” on the drive already has data that is not marked as the copy "
@@ -2162,11 +2228,11 @@ msgstr ""
 "В папке «%s» на носителе уже есть данные, не отмеченные как копия задания "
 "«%s». Режим зеркала может удалить там файлы."
 
-#: plugbackup/ui/run_dialogs.py:62
+#: plugbackup/ui/run_dialogs.py:152
 msgid "Not enough free space"
 msgstr "Недостаточно места"
 
-#: plugbackup/ui/run_dialogs.py:63
+#: plugbackup/ui/run_dialogs.py:153
 #, python-format
 msgid ""
 "The copy needs about %s, but only %s is free. Delete the oldest version "
@@ -2175,31 +2241,31 @@ msgstr ""
 "Для копии нужно около %s, а свободно только %s. Удалить самые старые папки "
 "корзины версий, чтобы освободить место?"
 
-#: plugbackup/ui/run_dialogs.py:65
+#: plugbackup/ui/run_dialogs.py:155
 msgid "Delete old versions"
 msgstr "Удалить старые версии"
 
-#: plugbackup/ui/run_dialogs.py:71
+#: plugbackup/ui/run_dialogs.py:161
 msgid "Skip this job"
 msgstr "Пропустить задание"
 
-#: plugbackup/ui/run_dialogs.py:83
+#: plugbackup/ui/run_dialogs.py:173
 #, python-format
 msgid "List (%d)"
 msgstr "Список (%d)"
 
-#: plugbackup/ui/run_dialogs.py:94
+#: plugbackup/ui/run_dialogs.py:184
 #, python-format
 msgid "Preview — %s"
 msgstr "Предпросмотр — %s"
 
-#: plugbackup/ui/run_dialogs.py:101
+#: plugbackup/ui/run_dialogs.py:191
 msgid ""
 "Nothing has been changed on the drive. This is what a backup would do now."
 msgstr ""
 "На носителе ничего не изменено. Вот что сделало бы резервирование сейчас."
 
-#: plugbackup/ui/run_dialogs.py:115
+#: plugbackup/ui/run_dialogs.py:205
 #, python-format
 msgid ""
 "To copy: %d new, %d changed (%s) · to delete or move to version history: %d "
@@ -2208,112 +2274,112 @@ msgstr ""
 "Скопировать: новых %d, изменённых %d (%s) · удалить или в корзину: %d · "
 "пропустить: %d"
 
-#: plugbackup/ui/run_dialogs.py:121
+#: plugbackup/ui/run_dialogs.py:211
 #, python-format
 msgid "Free on the drive: %s"
 msgstr "Свободно на носителе: %s"
 
-#: plugbackup/ui/run_dialogs.py:124
+#: plugbackup/ui/run_dialogs.py:214
 #, python-format
 msgid "New files (%d)"
 msgstr "Новые файлы (%d)"
 
-#: plugbackup/ui/run_dialogs.py:127
+#: plugbackup/ui/run_dialogs.py:217
 #, python-format
 msgid "Changed files (%d)"
 msgstr "Изменённые файлы (%d)"
 
-#: plugbackup/ui/run_dialogs.py:130
+#: plugbackup/ui/run_dialogs.py:220
 #, python-format
 msgid "To delete or move to version history (%d)"
 msgstr "Удаление или перенос в корзину (%d)"
 
-#: plugbackup/ui/run_dialogs.py:133
+#: plugbackup/ui/run_dialogs.py:223
 #, python-format
 msgid "Skipped by drive limitations (%d)"
 msgstr "Пропущено из-за ограничений носителя (%d)"
 
-#: plugbackup/ui/run_dialogs.py:152
+#: plugbackup/ui/run_dialogs.py:242
 #, python-format
 msgid "%s · %s · started %s"
 msgstr "%s · %s · начало %s"
 
-#: plugbackup/ui/run_dialogs.py:166
+#: plugbackup/ui/run_dialogs.py:256
 #, python-format
 msgid "“%s”: from the copy → %s"
 msgstr "«%s»: из копии → %s"
 
-#: plugbackup/ui/run_dialogs.py:170
+#: plugbackup/ui/run_dialogs.py:260
 #, python-format
 msgid "Copy on the drive: %s"
 msgstr "Копия на носителе: %s"
 
-#: plugbackup/ui/run_dialogs.py:174
+#: plugbackup/ui/run_dialogs.py:264
 #, python-format
 msgid "%s · appeared: %d · replaced: %d"
 msgstr "%s · появилось: %d · заменено: %d"
 
-#: plugbackup/ui/run_dialogs.py:177
+#: plugbackup/ui/run_dialogs.py:267
 #, python-format
 msgid "%s · restored files: %d"
 msgstr "%s · восстановлено файлов: %d"
 
-#: plugbackup/ui/run_dialogs.py:179
+#: plugbackup/ui/run_dialogs.py:269
 #, python-format
 msgid ""
 "%s · copied: %d (%s) · deleted or moved to version history: %d · skipped: %d"
 msgstr "%s · скопировано: %d (%s) · удалено или в корзину: %d · пропущено: %d"
 
-#: plugbackup/ui/run_dialogs.py:187
+#: plugbackup/ui/run_dialogs.py:277
 #, python-format
 msgid "The replaced files were saved to %s"
 msgstr "Прежние версии заменённых файлов сохранены в %s"
 
-#: plugbackup/ui/run_dialogs.py:199
+#: plugbackup/ui/run_dialogs.py:289
 #, python-format
 msgid "Skipped (%d)"
 msgstr "Пропущено (%d)"
 
-#: plugbackup/ui/run_dialogs.py:203
+#: plugbackup/ui/run_dialogs.py:294
 #, python-format
 msgid "Errors (%d)"
 msgstr "Ошибки (%d)"
 
-#: plugbackup/ui/run_dialogs.py:208
+#: plugbackup/ui/run_dialogs.py:299
 #, python-format
 msgid "Old version history folders removed: %d"
 msgstr "Удалено старых папок корзины: %d"
 
-#: plugbackup/ui/run_dialogs.py:211
+#: plugbackup/ui/run_dialogs.py:302
 msgid "Open the full rsync log"
 msgstr "Открыть полный журнал rsync"
 
-#: plugbackup/ui/run_dialogs.py:220
+#: plugbackup/ui/run_dialogs.py:311
 msgid "Backup result"
 msgstr "Итог резервирования"
 
-#: plugbackup/ui/run_dialogs.py:233
+#: plugbackup/ui/run_dialogs.py:325
 #, python-format
 msgid "Log — %s"
 msgstr "Журнал — %s"
 
-#: plugbackup/ui/run_dialogs.py:245
+#: plugbackup/ui/run_dialogs.py:337
 msgid "Started"
 msgstr "Начало"
 
-#: plugbackup/ui/run_dialogs.py:245
+#: plugbackup/ui/run_dialogs.py:337
 msgid "How"
 msgstr "Запуск"
 
-#: plugbackup/ui/run_dialogs.py:245
+#: plugbackup/ui/run_dialogs.py:337
 msgid "Result"
 msgstr "Итог"
 
-#: plugbackup/ui/run_dialogs.py:250
+#: plugbackup/ui/run_dialogs.py:342
 msgid "No runs yet."
 msgstr "Запусков ещё не было."
 
-#: plugbackup/ui/run_dialogs.py:250
+#: plugbackup/ui/run_dialogs.py:342
 msgid "Choose a run."
 msgstr "Выберите запуск."
 
@@ -2778,17 +2844,3 @@ msgid ""
 msgstr ""
 "«%s» отключён, но питание устройства не выключено: другой раздел на нём (или "
 "в том же кардридере) ещё используется, либо устройство это не поддерживает."
-
-#~ msgid ""
-#~ "Automatic backup starts working in version 0.5; the settings are saved "
-#~ "now."
-#~ msgstr ""
-#~ "Автоматическое резервирование заработает в версии 0.5; настройки "
-#~ "сохраняются уже сейчас."
-
-#~ msgid ""
-#~ "The drive is encrypted (LUKS). Unlocking from Plug & Backup will arrive "
-#~ "in version 0.7; for now unlock it in the file manager."
-#~ msgstr ""
-#~ "Носитель зашифрован (LUKS). Разблокировка из Plug & Backup появится в "
-#~ "версии 0.7, а пока разблокируйте его в файловом менеджере."

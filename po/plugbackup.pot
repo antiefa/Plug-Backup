@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plugbackup 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-16 13:02+0300\n"
+"POT-Creation-Date: 2026-10-16 13:52+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -168,98 +168,98 @@ msgstr ""
 msgid "This file system has not been tested with Plug & Backup."
 msgstr ""
 
-#: plugbackup/core/profiles.py:326
+#: plugbackup/core/profiles.py:325
 msgid "The backup folder name on the drive is empty."
 msgstr ""
 
-#: plugbackup/core/profiles.py:328
+#: plugbackup/core/profiles.py:327
 msgid "The backup folder on the drive must be a single folder name."
 msgstr ""
 
-#: plugbackup/core/profiles.py:330 plugbackup/core/profiles.py:345
+#: plugbackup/core/profiles.py:329 plugbackup/core/profiles.py:344
 #, python-format
 msgid "“%s” is a reserved service name."
 msgstr ""
 
-#: plugbackup/core/profiles.py:337
+#: plugbackup/core/profiles.py:336
 msgid "The destination folder on the drive is empty."
 msgstr ""
 
-#: plugbackup/core/profiles.py:339
+#: plugbackup/core/profiles.py:338
 msgid ""
 "The destination must be a folder inside the backup folder, not an absolute "
 "path."
 msgstr ""
 
-#: plugbackup/core/profiles.py:342
+#: plugbackup/core/profiles.py:341
 msgid "The destination must not contain “..”."
 msgstr ""
 
-#: plugbackup/core/profiles.py:354
+#: plugbackup/core/profiles.py:353
 msgid "Choose a folder on this computer to back up."
 msgstr ""
 
-#: plugbackup/core/profiles.py:356
+#: plugbackup/core/profiles.py:355
 msgid "The source folder must be an absolute path."
 msgstr ""
 
-#: plugbackup/core/profiles.py:360
+#: plugbackup/core/profiles.py:359
 msgid "A system folder cannot be backed up as a whole."
 msgstr ""
 
-#: plugbackup/core/profiles.py:362
+#: plugbackup/core/profiles.py:361
 msgid "The source folder does not exist."
 msgstr ""
 
-#: plugbackup/core/profiles.py:364
+#: plugbackup/core/profiles.py:363
 msgid "The source is not a folder."
 msgstr ""
 
-#: plugbackup/core/profiles.py:366
+#: plugbackup/core/profiles.py:365
 msgid "The source folder cannot be read."
 msgstr ""
 
-#: plugbackup/core/profiles.py:369
+#: plugbackup/core/profiles.py:368
 msgid "The source folder is on the backup drive itself."
 msgstr ""
 
-#: plugbackup/core/profiles.py:372
+#: plugbackup/core/profiles.py:371
 msgid ""
 "The source folder contains the backup drive; the copy would include itself."
 msgstr ""
 
-#: plugbackup/core/profiles.py:381
+#: plugbackup/core/profiles.py:380
 #, python-format
 msgid "The destination overlaps with another job (“%s”)."
 msgstr ""
 
-#: plugbackup/core/profiles.py:385
+#: plugbackup/core/profiles.py:384
 msgid "The source overlaps with another job; some files will be copied twice."
 msgstr ""
 
-#: plugbackup/core/profiles.py:389
+#: plugbackup/core/profiles.py:388
 msgid ""
 "Mirror mode: files deleted on this computer are deleted from the copy too, "
 "and changed files replace their previous versions — they cannot be got back."
 msgstr ""
 
-#: plugbackup/core/profiles.py:392
+#: plugbackup/core/profiles.py:391
 msgid "The file size limit must be a positive number."
 msgstr ""
 
-#: plugbackup/core/profiles.py:395
+#: plugbackup/core/profiles.py:394
 msgid "An exclusion pattern must be a single line."
 msgstr ""
 
-#: plugbackup/core/profiles.py:403
+#: plugbackup/core/profiles.py:402
 msgid "Enter a profile name."
 msgstr ""
 
-#: plugbackup/core/profiles.py:406
+#: plugbackup/core/profiles.py:405
 msgid "The countdown must be between 0 and 600 seconds."
 msgstr ""
 
-#: plugbackup/core/profiles.py:408
+#: plugbackup/core/profiles.py:407
 msgid "Versions must be kept for at least one day."
 msgstr ""
 
@@ -356,7 +356,7 @@ msgstr ""
 #: plugbackup/ui/encryption.py:43 plugbackup/ui/encryption.py:145
 #: plugbackup/ui/import_dialog.py:16 plugbackup/ui/job_dialog.py:23
 #: plugbackup/ui/main_window.py:210 plugbackup/ui/profile_actions.py:586
-#: plugbackup/ui/profile_actions.py:627 plugbackup/ui/profile_dialog.py:27
+#: plugbackup/ui/profile_actions.py:627 plugbackup/ui/profile_dialog.py:26
 #: plugbackup/ui/profile_view.py:612 plugbackup/ui/restore_dialog.py:41
 #: plugbackup/ui/restore_dialog.py:135 plugbackup/ui/unlock.py:57
 msgid "Cancel"
@@ -377,7 +377,7 @@ msgid "Copied files: %d"
 msgstr ""
 
 #: plugbackup/ui/auto_controller.py:334 plugbackup/ui/main_window.py:69
-#: plugbackup/ui/run_dialogs.py:112
+#: plugbackup/ui/run_dialogs.py:202
 msgid "Details"
 msgstr ""
 
@@ -540,8 +540,8 @@ msgstr ""
 
 #: plugbackup/ui/deps_dialog.py:42 plugbackup/ui/main_window.py:253
 #: plugbackup/ui/profile_view.py:557 plugbackup/ui/restore_dialog.py:135
-#: plugbackup/ui/run_dialogs.py:96 plugbackup/ui/run_dialogs.py:222
-#: plugbackup/ui/run_dialogs.py:235
+#: plugbackup/ui/run_dialogs.py:186 plugbackup/ui/run_dialogs.py:313
+#: plugbackup/ui/run_dialogs.py:327
 msgid "Close"
 msgstr ""
 
@@ -571,7 +571,7 @@ msgstr ""
 msgid "Create encrypted folder"
 msgstr ""
 
-#: plugbackup/ui/encryption.py:44 plugbackup/ui/profile_dialog.py:28
+#: plugbackup/ui/encryption.py:44 plugbackup/ui/profile_dialog.py:27
 msgid "Create"
 msgstr ""
 
@@ -610,7 +610,7 @@ msgstr ""
 msgid "Master key"
 msgstr ""
 
-#: plugbackup/ui/encryption.py:102 plugbackup/ui/run_dialogs.py:67
+#: plugbackup/ui/encryption.py:102 plugbackup/ui/run_dialogs.py:157
 msgid "Continue"
 msgstr ""
 
@@ -808,7 +808,7 @@ msgstr ""
 msgid "Import"
 msgstr ""
 
-#: plugbackup/ui/import_dialog.py:32 plugbackup/ui/profile_dialog.py:47
+#: plugbackup/ui/import_dialog.py:32 plugbackup/ui/profile_dialog.py:46
 #: plugbackup/ui/sidebar.py:24
 msgid "not bound"
 msgstr ""
@@ -854,7 +854,7 @@ msgid "Edit job"
 msgstr ""
 
 #: plugbackup/ui/job_dialog.py:24 plugbackup/ui/main_window.py:211
-#: plugbackup/ui/profile_dialog.py:28
+#: plugbackup/ui/profile_dialog.py:27
 msgid "Save"
 msgstr ""
 
@@ -1234,7 +1234,7 @@ msgstr ""
 msgid "Could not export the profile"
 msgstr ""
 
-#: plugbackup/ui/profile_actions.py:432 plugbackup/ui/run_dialogs.py:188
+#: plugbackup/ui/profile_actions.py:432 plugbackup/ui/run_dialogs.py:278
 #: plugbackup/ui/unlock.py:517
 msgid "Open"
 msgstr ""
@@ -1373,144 +1373,144 @@ msgstr ""
 msgid "Could not clear"
 msgstr ""
 
-#: plugbackup/ui/profile_dialog.py:25
+#: plugbackup/ui/profile_dialog.py:24
 msgid "New profile"
 msgstr ""
 
-#: plugbackup/ui/profile_dialog.py:25
+#: plugbackup/ui/profile_dialog.py:24
 msgid "Profile settings"
 msgstr ""
 
-#: plugbackup/ui/profile_dialog.py:48
+#: plugbackup/ui/profile_dialog.py:47
 msgid "Drive"
 msgstr ""
 
-#: plugbackup/ui/profile_dialog.py:51
+#: plugbackup/ui/profile_dialog.py:50
 msgid "Name"
 msgstr ""
 
-#: plugbackup/ui/profile_dialog.py:54
+#: plugbackup/ui/profile_dialog.py:53
 msgid "Backup folder on the drive"
 msgstr ""
 
-#: plugbackup/ui/profile_dialog.py:55
+#: plugbackup/ui/profile_dialog.py:54
 msgid ""
 "All jobs and the version history are stored inside this folder; the rest of "
 "the drive stays yours."
 msgstr ""
 
-#: plugbackup/ui/profile_dialog.py:57
+#: plugbackup/ui/profile_dialog.py:56
 msgid "Keep a copy of this profile on the drive"
 msgstr ""
 
-#: plugbackup/ui/profile_dialog.py:60
+#: plugbackup/ui/profile_dialog.py:59
 msgid ""
 "Lets you import the profile on a new computer straight from the drive. The "
 "copy includes the paths of your folders, so anyone who reads an unencrypted "
 "drive will see them."
 msgstr ""
 
-#: plugbackup/ui/profile_dialog.py:64
+#: plugbackup/ui/profile_dialog.py:63
 msgid "Back up automatically when the drive is inserted"
 msgstr ""
 
-#: plugbackup/ui/profile_dialog.py:68
+#: plugbackup/ui/profile_dialog.py:67
 msgid "Eject the drive after a successful automatic backup"
 msgstr ""
 
-#: plugbackup/ui/profile_dialog.py:71
+#: plugbackup/ui/profile_dialog.py:70
 msgid "Countdown before start (s)"
 msgstr ""
 
-#: plugbackup/ui/profile_dialog.py:73
+#: plugbackup/ui/profile_dialog.py:72
 msgid "Not more often than every N hours (0 — no limit)"
 msgstr ""
 
-#: plugbackup/ui/profile_dialog.py:85
+#: plugbackup/ui/profile_dialog.py:84
 msgid "Keep version history (days)"
 msgstr ""
 
-#: plugbackup/ui/profile_dialog.py:87
+#: plugbackup/ui/profile_dialog.py:86
 msgid "Ask before deleting more than this percentage of files"
 msgstr ""
 
-#: plugbackup/ui/profile_dialog.py:89
+#: plugbackup/ui/profile_dialog.py:88
 msgid "…or more than this many files"
 msgstr ""
 
-#: plugbackup/ui/profile_dialog.py:91
+#: plugbackup/ui/profile_dialog.py:90
 msgid "Never delete more than this many files per run"
 msgstr ""
 
-#: plugbackup/ui/profile_dialog.py:111
+#: plugbackup/ui/profile_dialog.py:110
 msgid "Automatic backup"
 msgstr ""
 
-#: plugbackup/ui/profile_dialog.py:114
+#: plugbackup/ui/profile_dialog.py:113
 msgid "Encryption"
 msgstr ""
 
-#: plugbackup/ui/profile_dialog.py:119
+#: plugbackup/ui/profile_dialog.py:118
 msgid "Safety"
 msgstr ""
 
-#: plugbackup/ui/profile_dialog.py:126
+#: plugbackup/ui/profile_dialog.py:125
 msgid "Remember the drive password in the keyring"
 msgstr ""
 
-#: plugbackup/ui/profile_dialog.py:129
+#: plugbackup/ui/profile_dialog.py:128
 msgid ""
 "The drive is encrypted (LUKS). With a saved password it is unlocked without "
 "questions, including for automatic backup; otherwise you are asked for it in "
 "a window. The password is saved the next time you unlock the drive."
 msgstr ""
 
-#: plugbackup/ui/profile_dialog.py:133
+#: plugbackup/ui/profile_dialog.py:132
 msgid "Forget password"
 msgstr ""
 
-#: plugbackup/ui/profile_dialog.py:152
+#: plugbackup/ui/profile_dialog.py:151
 msgid "No encryption"
 msgstr ""
 
-#: plugbackup/ui/profile_dialog.py:154
+#: plugbackup/ui/profile_dialog.py:153
 msgid "Encrypted folder on the drive (gocryptfs)"
 msgstr ""
 
-#: plugbackup/ui/profile_dialog.py:157
+#: plugbackup/ui/profile_dialog.py:156
 #, python-format
 msgid ""
 "The copy is kept in the encrypted folder “%s.enc”; the rest of the drive "
 "stays as it is. "
 msgstr ""
 
-#: plugbackup/ui/profile_dialog.py:172
+#: plugbackup/ui/profile_dialog.py:171
 msgid ""
 "The mode can be changed only while the profile’s drive is connected: the "
 "copy on it is transferred to the new place."
 msgstr ""
 
-#: plugbackup/ui/profile_dialog.py:177
+#: plugbackup/ui/profile_dialog.py:176
 msgid ""
 "When you save, Plug & Backup asks for a new password, shows the master key "
 "and offers to transfer the existing copy."
 msgstr ""
 
-#: plugbackup/ui/profile_dialog.py:180
+#: plugbackup/ui/profile_dialog.py:179
 msgid "Remember the folder password in the keyring"
 msgstr ""
 
-#: plugbackup/ui/profile_dialog.py:181
+#: plugbackup/ui/profile_dialog.py:180
 msgid ""
 "With a saved password the folder is opened without questions, including for "
 "automatic backup; otherwise you are asked for it in a window."
 msgstr ""
 
-#: plugbackup/ui/profile_dialog.py:200
+#: plugbackup/ui/profile_dialog.py:199
 msgid "The password is removed from the keyring."
 msgstr ""
 
-#: plugbackup/ui/profile_dialog.py:201
+#: plugbackup/ui/profile_dialog.py:200
 msgid "No saved password."
 msgstr ""
 
@@ -1988,11 +1988,73 @@ msgstr ""
 msgid "“%s”: the copy is up to date — nothing to change."
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:46
+#: plugbackup/ui/run_dialogs.py:59
+msgid "space or dot at the end"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:61
+msgid "reserved name"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:69
+#, python-format
+msgid "Names not allowed on this drive (%d)"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:70
+msgid ""
+"Rename them, or keep the copy in an encrypted folder (Profile settings → "
+"Encryption): names are encrypted there, so any characters are allowed."
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:72
+#, python-format
+msgid "Symbolic links (%d)"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:73
+msgid ""
+"This file system cannot store links. In the job settings you can copy what "
+"the links point to, or exclude these folders."
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:75
+#, python-format
+msgid "Files of 4 GiB and larger (%d)"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:76
+msgid "FAT32 cannot store files of 4 GiB and larger."
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:77
+#, python-format
+msgid "Special files (%d)"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:78
+msgid "Sockets, pipes and devices are never copied."
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:79
+#, python-format
+msgid "Other (%d)"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:115
+#, python-format
+msgid "… and %d more (the log keeps only the first ones)"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:120
+msgid "Copy the list"
+msgstr ""
+
+#: plugbackup/ui/run_dialogs.py:136
 msgid "Delete many files from the copy?"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:47
+#: plugbackup/ui/run_dialogs.py:137
 #, python-format
 msgid ""
 "Job “%s → %s” would delete or move to the version history %d or more files — "
@@ -2000,183 +2062,183 @@ msgid ""
 "is the right one."
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:50
+#: plugbackup/ui/run_dialogs.py:140
 msgid "Delete and continue"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:52
+#: plugbackup/ui/run_dialogs.py:142
 msgid "Accept existing data as the copy?"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:53
+#: plugbackup/ui/run_dialogs.py:143
 #, python-format
 msgid ""
 "The folder “%s” on the drive has data but no Plug & Backup marker. Mirror "
 "jobs may delete files there that do not exist on this computer."
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:55 plugbackup/ui/run_dialogs.py:60
+#: plugbackup/ui/run_dialogs.py:145 plugbackup/ui/run_dialogs.py:150
 msgid "Accept and continue"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:57
+#: plugbackup/ui/run_dialogs.py:147
 msgid "Accept the job folder’s existing data?"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:58
+#: plugbackup/ui/run_dialogs.py:148
 #, python-format
 msgid ""
 "The folder “%s” on the drive already has data that is not marked as the copy "
 "of job “%s”. Mirror mode may delete files there."
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:62
+#: plugbackup/ui/run_dialogs.py:152
 msgid "Not enough free space"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:63
+#: plugbackup/ui/run_dialogs.py:153
 #, python-format
 msgid ""
 "The copy needs about %s, but only %s is free. Delete the oldest version "
 "history folders to make room?"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:65
+#: plugbackup/ui/run_dialogs.py:155
 msgid "Delete old versions"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:71
+#: plugbackup/ui/run_dialogs.py:161
 msgid "Skip this job"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:83
+#: plugbackup/ui/run_dialogs.py:173
 #, python-format
 msgid "List (%d)"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:94
+#: plugbackup/ui/run_dialogs.py:184
 #, python-format
 msgid "Preview — %s"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:101
+#: plugbackup/ui/run_dialogs.py:191
 msgid ""
 "Nothing has been changed on the drive. This is what a backup would do now."
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:115
+#: plugbackup/ui/run_dialogs.py:205
 #, python-format
 msgid ""
 "To copy: %d new, %d changed (%s) · to delete or move to version history: %d "
 "· skipped: %d"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:121
+#: plugbackup/ui/run_dialogs.py:211
 #, python-format
 msgid "Free on the drive: %s"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:124
+#: plugbackup/ui/run_dialogs.py:214
 #, python-format
 msgid "New files (%d)"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:127
+#: plugbackup/ui/run_dialogs.py:217
 #, python-format
 msgid "Changed files (%d)"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:130
+#: plugbackup/ui/run_dialogs.py:220
 #, python-format
 msgid "To delete or move to version history (%d)"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:133
+#: plugbackup/ui/run_dialogs.py:223
 #, python-format
 msgid "Skipped by drive limitations (%d)"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:152
+#: plugbackup/ui/run_dialogs.py:242
 #, python-format
 msgid "%s · %s · started %s"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:166
+#: plugbackup/ui/run_dialogs.py:256
 #, python-format
 msgid "“%s”: from the copy → %s"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:170
+#: plugbackup/ui/run_dialogs.py:260
 #, python-format
 msgid "Copy on the drive: %s"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:174
+#: plugbackup/ui/run_dialogs.py:264
 #, python-format
 msgid "%s · appeared: %d · replaced: %d"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:177
+#: plugbackup/ui/run_dialogs.py:267
 #, python-format
 msgid "%s · restored files: %d"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:179
+#: plugbackup/ui/run_dialogs.py:269
 #, python-format
 msgid ""
 "%s · copied: %d (%s) · deleted or moved to version history: %d · skipped: %d"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:187
+#: plugbackup/ui/run_dialogs.py:277
 #, python-format
 msgid "The replaced files were saved to %s"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:199
+#: plugbackup/ui/run_dialogs.py:289
 #, python-format
 msgid "Skipped (%d)"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:203
+#: plugbackup/ui/run_dialogs.py:294
 #, python-format
 msgid "Errors (%d)"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:208
+#: plugbackup/ui/run_dialogs.py:299
 #, python-format
 msgid "Old version history folders removed: %d"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:211
+#: plugbackup/ui/run_dialogs.py:302
 msgid "Open the full rsync log"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:220
+#: plugbackup/ui/run_dialogs.py:311
 msgid "Backup result"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:233
+#: plugbackup/ui/run_dialogs.py:325
 #, python-format
 msgid "Log — %s"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:245
+#: plugbackup/ui/run_dialogs.py:337
 msgid "Started"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:245
+#: plugbackup/ui/run_dialogs.py:337
 msgid "How"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:245
+#: plugbackup/ui/run_dialogs.py:337
 msgid "Result"
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:250
+#: plugbackup/ui/run_dialogs.py:342
 msgid "No runs yet."
 msgstr ""
 
-#: plugbackup/ui/run_dialogs.py:250
+#: plugbackup/ui/run_dialogs.py:342
 msgid "Choose a run."
 msgstr ""
 
