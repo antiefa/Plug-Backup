@@ -1,7 +1,8 @@
-"""Профили и задания: модель, хранение (~/.config/plugbackup/profiles.json), проверки, экспорт/импорт.
+"""Профили и задания: модель, хранение, проверки, экспорт/импорт.
 
 Модуль не обращается к носителям — только к файлам настроек и (при проверке) к папкам-источникам.
 """
+from __future__ import annotations
 
 import copy
 import os
@@ -268,6 +269,22 @@ class ProfilesStore:
     def find_by_uuid(self, device_uuid: str) -> list[Profile]:
         return [p for p in self.profiles if device_uuid and p.device.uuid == device_uuid]
 
+    def find_by_volume(self, volume) -> list[Profile]:
+        """Найти профили по полному UUID; частичный NTFS UUID требует своей метки."""
+        from plugbackup.core import marker
+        from plugbackup.core.volume import uuid_matches
+
+        matches = []
+        for profile in self.profiles:
+            if not uuid_matches(volume, profile.device.uuid):
+                continue
+            if volume.uuid_partial:
+                root = os.path.join(volume.mount_point, profile.root)
+                if marker.root_state(root, profile.id) != marker.ROOT_MATCH:
+                    continue
+            matches.append(profile)
+        return matches
+
     def upsert(self, profile: Profile) -> None:
         for i, existing in enumerate(self.profiles):
             if existing.id == profile.id:
@@ -415,8 +432,19 @@ def has_errors(issues: list[Issue]) -> bool:
 # ---------- подбор профиля к носителю ----------
 
 def profile_for_volume(profiles: list[Profile], volume) -> Profile | None:
-    """Профиль, привязанный к UUID этого носителя (для LUKS — UUID контейнера)."""
-    return next((p for p in profiles if volume.uuid and p.device.uuid == volume.uuid), None)
+    """Профиль этого носителя; частичный NTFS UUID требует совпадающей метки."""
+    from plugbackup.core import marker
+    from plugbackup.core.volume import uuid_matches
+
+    for profile in profiles:
+        if not uuid_matches(volume, profile.device.uuid):
+            continue
+        if getattr(volume, "uuid_partial", False):
+            root = os.path.join(volume.mount_point, profile.root)
+            if marker.root_state(root, profile.id) != marker.ROOT_MATCH:
+                continue
+        return profile
+    return None
 
 
 def rebind_candidates(profiles: list[Profile], volume, connected_uuids: set[str]) -> list[Profile]:

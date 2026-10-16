@@ -1,10 +1,12 @@
-"""Журнал запусков: ~/.local/state/plugbackup/log/runs.jsonl и полный вывод rsync по каждому запуску."""
+"""Журнал запусков и полный вывод rsync по каждому запуску."""
+from __future__ import annotations
 
 import json
 import os
 import time
 from dataclasses import asdict, dataclass, field
 
+from plugbackup import plat
 KEEP_RUNS = 100
 KEEP_DAYS = 90
 
@@ -17,8 +19,7 @@ SKIPPED = "skipped"          # не запускалось (защита, нуж
 
 
 def state_dir() -> str:
-    base = os.environ.get("XDG_STATE_HOME") or os.path.expanduser("~/.local/state")
-    return os.path.join(base, "plugbackup")
+    return plat.paths.state_dir()
 
 
 def log_dir() -> str:

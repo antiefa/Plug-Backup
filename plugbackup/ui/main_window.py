@@ -3,7 +3,7 @@
 from gi.repository import Gio, GLib, Gtk
 
 from plugbackup import APP_ID, APP_NAME
-from plugbackup.core import devices
+from plugbackup import plat
 from plugbackup.core.deps import Check, missing_required, run_checks
 from plugbackup.i18n import _
 from plugbackup.ui.deps_dialog import show_deps_dialog
@@ -11,6 +11,8 @@ from plugbackup.ui.profile_actions import ProfileActions
 from plugbackup.ui.profile_view import ProfilePage, VolumePage
 from plugbackup.ui.run_controller import RunController
 from plugbackup.ui.sidebar import Sidebar
+
+devices = plat.devices
 
 
 class MainWindow(Gtk.ApplicationWindow):

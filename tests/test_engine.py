@@ -13,6 +13,7 @@ from pathlib import Path
 from types import SimpleNamespace
 from unittest import mock
 
+from plugbackup import plat
 from plugbackup.core import binding, fsinfo, journal, rsync, runner
 from plugbackup.core.profiles import Job, Profile, Thresholds
 
@@ -28,6 +29,7 @@ class RsyncHelpersTests(unittest.TestCase):
         self.assertEqual(rsync.escape_pattern(r"a*[b]?\c"), r"a\*\[b\]\?\\c")
 
     def test_commands_cover_modes_filesystems_and_filtering(self):
+        """Контракт сборки команд относится только к rsync-копировщику."""
         base = Job(source="/tmp/source", dest="Photos")
         opts = rsync.CommandOptions(fs_type="ext4", global_excludes=[" *.tmp "])
         self.assertEqual(rsync.file_options(base, "ext4"),
@@ -169,9 +171,9 @@ class RunnerIntegrationTests(unittest.TestCase):
                                                                "XDG_RUNTIME_DIR": str(self.runtime)}))
         self.stack.enter_context(mock.patch.object(binding, "_verified_mount_point",
                                                     lambda profile, volume: str(self.drive)))
-        self.stack.enter_context(mock.patch.object(runner, "verify_mount",
+        self.stack.enter_context(mock.patch.object(plat.mounts, "verify_mount",
                                                     lambda *a, **kw: SimpleNamespace(ok=True)))
-        self.stack.enter_context(mock.patch.object(runner, "inhibit_sleep", lambda reason: None))
+        self.stack.enter_context(mock.patch.object(plat.system, "inhibit_sleep", lambda reason: None))
 
     @property
     def dest(self):
@@ -321,11 +323,11 @@ class RunnerIntegrationTests(unittest.TestCase):
         (old / "Data" / "old").write_text("old", encoding="utf-8")
         (newer / "Data" / "new").write_text("new", encoding="utf-8")
         run = runner.Runner(runner.RunRequest(self.profile, self.volume), RecordingCallbacks(False))
-        with mock.patch.object(runner, "free_bytes", side_effect=[0, 10, 10, 10]):
+        with mock.patch.object(plat.system, "free_bytes", side_effect=[0, 10, 10, 10]):
             self.assertFalse(run._make_space(str(root), 10, "current", str(self.dest)))
         self.assertTrue(old.exists())
         run.cb = RecordingCallbacks(True)
-        with mock.patch.object(runner, "free_bytes", side_effect=[0, 0, 10, 10]):
+        with mock.patch.object(plat.system, "free_bytes", side_effect=[0, 0, 10, 10]):
             self.assertTrue(run._make_space(str(root), 10, "current", str(self.dest)))
         self.assertFalse(old.exists())
         self.assertTrue(newer.exists())

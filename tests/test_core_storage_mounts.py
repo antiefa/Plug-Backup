@@ -4,8 +4,10 @@ import tempfile
 import unittest
 from dataclasses import replace
 
-from plugbackup.core import config, fsinfo, mounts, storage
-from plugbackup.core.devices import Volume, uuid_conflicts
+from plugbackup import plat
+mounts = plat.mounts
+from plugbackup.core import config, fsinfo, storage
+from plugbackup.core.volume import Volume, uuid_conflicts
 
 MOUNTINFO_SAMPLE = """\
 26 1 259:5 / / rw,relatime shared:1 - ext4 /dev/nvme0n1p5 rw,errors=remount-ro

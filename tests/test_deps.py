@@ -2,8 +2,15 @@ import os
 import unittest
 from unittest import mock
 
+try:
+    import gi  # noqa: F401
+    GI_AVAILABLE = True
+except ImportError:
+    GI_AVAILABLE = False
+
 from plugbackup.core import deps
 from plugbackup.core.deps import Check
+from plugbackup import plat
 
 
 def make(key, ok, required):
@@ -23,23 +30,26 @@ class FormatAndFilterTest(unittest.TestCase):
         self.assertTrue(report[2].startswith("[-- ]"))
 
 
+@unittest.skipUnless(GI_AVAILABLE, "нужен GI")
 class WhichTest(unittest.TestCase):
     def test_finds_tools_in_sbin_without_it_in_path(self):
         with mock.patch.dict(os.environ, {"PATH": "/nonexistent"}):
-            found = deps.which("sh")
+            found = plat.deps.which("sh")
         self.assertIsNotNone(found)
 
     def test_unknown_tool(self):
-        self.assertIsNone(deps.which("plugbackup-no-such-tool"))
+        self.assertIsNone(plat.deps.which("plugbackup-no-such-tool"))
 
 
+@unittest.skipUnless(GI_AVAILABLE, "нужен GI")
 class GirTest(unittest.TestCase):
     def test_missing_namespace_reports_reason(self):
-        ok, detail = deps.gir_available("PlugbackupNoSuchNamespace", "1.0")
+        ok, detail = plat.deps.gir_available("PlugbackupNoSuchNamespace", "1.0")
         self.assertFalse(ok)
         self.assertTrue(detail)
 
 
+@unittest.skipUnless(GI_AVAILABLE, "нужен GI")
 class RunChecksTest(unittest.TestCase):
     """Проверка на реальной системе: структура результата и обязательные ключи."""
 

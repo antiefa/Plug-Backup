@@ -3,6 +3,7 @@
 Команда собирается из задания, типа файловой системы носителя и общего списка исключений.
 Модуль не запускает процессы сам — это делает core.runner.
 """
+from __future__ import annotations
 
 import os
 import re
@@ -23,6 +24,7 @@ RC_PARTIAL = 23          # часть файлов не передана (оши
 RC_VANISHED = 24         # файлы исчезли во время копирования — обычно не страшно
 RC_MAX_DELETE = 25       # сработал --max-delete
 RC_SIGNAL = 20
+RC_NO_SPACE = 11
 
 
 def relative_backup_dir(dest: str, timestamp: str) -> str:

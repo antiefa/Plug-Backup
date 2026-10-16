@@ -4,11 +4,9 @@ Runner.run() — блокирующий; окно вызывает его в о�
 Вопросы пользователю задаются через Callbacks.confirm; без интерактивности (автозапуск, CLI)
 ответ всегда «нет», и задание пропускается — ничего опасного не делается молча.
 """
+from __future__ import annotations
 
 import calendar
-import ctypes
-import dataclasses
-import fcntl
 import os
 import shutil
 import subprocess
@@ -16,13 +14,13 @@ import threading
 import time
 from dataclasses import dataclass, field
 
+from plugbackup import plat
 from plugbackup.core import binding, journal, marker
 from plugbackup.core import rsync as R
+from plugbackup.core.copier import default_copier, EngineCopier
 from plugbackup.core.binding import BindingError
-from plugbackup.core.config import runtime_dir  # noqa: F401  (здесь же блокировки запусков)
 from plugbackup.core.fsinfo import SKIP_NON_REGULAR, SKIP_SYMLINK, SKIP_TOO_BIG, check_names
 from plugbackup.core.journal import CANCELLED, ERROR, OK, SKIPPED, WARNINGS, JobResult, RunRecord
-from plugbackup.core.mounts import verify_mount
 from plugbackup.core.profiles import Job, Profile, normalize_dest, validate_job
 
 VERSIONS_TS_FORMAT = "%Y-%m-%dT%H-%M-%SZ"
@@ -75,55 +73,6 @@ class RunOutcome:
 
 # ---------- системные мелочи ----------
 
-class ProfileLock:
-    def __init__(self, profile_id: str):
-        self.path = os.path.join(runtime_dir(), f"{profile_id}.lock")
-        self.fd: int | None = None
-
-    def acquire(self) -> bool:
-        self.fd = os.open(self.path, os.O_RDWR | os.O_CREAT, 0o600)
-        try:
-            fcntl.flock(self.fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        except BlockingIOError:
-            os.close(self.fd)
-            self.fd = None
-            return False
-        return True
-
-    def release(self) -> None:
-        if self.fd is not None:
-            fcntl.flock(self.fd, fcntl.LOCK_UN)
-            os.close(self.fd)
-            self.fd = None
-
-
-def inhibit_sleep(reason: str) -> int | None:
-    """Запрет сна через logind; возвращает дескриптор (закрыть — снять запрет) или None."""
-    try:
-        from gi.repository import Gio, GLib
-
-        bus = Gio.bus_get_sync(Gio.BusType.SYSTEM, None)
-        result, fd_list = bus.call_with_unix_fd_list_sync(
-            "org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "Inhibit",
-            GLib.Variant("(ssss)", ("sleep", "Plug & Backup", reason, "block")),
-            GLib.VariantType.new("(h)"), Gio.DBusCallFlags.NONE, 5000, None, None)
-        return fd_list.get(result.unpack()[0])
-    except Exception:
-        return None
-
-
-def syncfs(path: str) -> None:
-    fd = os.open(path, os.O_RDONLY)
-    try:
-        libc = ctypes.CDLL("libc.so.6", use_errno=True)
-        if libc.syncfs(fd) != 0:
-            os.sync()
-    except OSError:
-        os.sync()
-    finally:
-        os.close(fd)
-
-
 def count_files(path: str) -> int:
     total = 0
     for _root, dirs, files in os.walk(path):
@@ -168,14 +117,6 @@ def versions_dirs(root: str) -> list[tuple[float, str]]:
     return sorted(found)
 
 
-def free_bytes(path: str) -> int:
-    """Свободно для пользователя на ФС пути (если пути ещё нет — по ближайшей существующей папке)."""
-    while not os.path.exists(path) and os.path.dirname(path) != path:
-        path = os.path.dirname(path)
-    st = os.statvfs(path)
-    return st.f_bavail * st.f_frsize
-
-
 # ---------- выполнение ----------
 
 class Runner:
@@ -186,6 +127,7 @@ class Runner:
         self._cancel_reason = ""
         self._proc: subprocess.Popen | None = None
         self._proc_lock = threading.Lock()
+        self.copier = default_copier()
 
     # Остановка из другого потока (кнопка «Остановить», отключение носителя)
     def cancel(self, reason: str = "user") -> None:
@@ -212,10 +154,10 @@ class Runner:
         record = RunRecord(run_id=journal.new_run_id(), profile_id=profile.id, profile_name=profile.name,
                            trigger=req.trigger, started=time.time())
         outcome = RunOutcome(record)
-        lock = ProfileLock(profile.id)
+        lock = plat.system.ProfileLock(profile.id)
         if not lock.acquire():
             return self._finish(outcome, SKIPPED, "already-running")
-        inhibit_fd = None if req.preview else inhibit_sleep("Backup in progress")
+        inhibit_fd = None if req.preview else plat.system.inhibit_sleep("Backup in progress")
         log = None
         try:
             if not req.preview:
@@ -226,7 +168,7 @@ class Runner:
             if log is not None:
                 log.close()
             if inhibit_fd is not None:
-                os.close(inhibit_fd)
+                plat.system.release_inhibit(inhibit_fd)
             lock.release()
         return outcome
 
@@ -300,7 +242,7 @@ class Runner:
 
         try:
             binding.root_dir_for(profile, volume)  # носитель всё ещё тот же
-            syncfs(root)
+            plat.system.syncfs(root)
         except BindingError as exc:
             self._finish(outcome, CANCELLED, exc.code)
             return
@@ -310,7 +252,7 @@ class Runner:
                 outcome.marker_written = True
                 record.versions_removed = self._cleanup_versions(root, profile.versions_keep_days, timestamp)
                 self._remove_if_empty(os.path.join(root, R.VERSIONS_DIR, timestamp))
-                syncfs(root)
+                plat.system.syncfs(root)
             except (BindingError, OSError) as exc:
                 record.message = str(exc)
         self._finish(outcome, status, self._cancel_reason if status == CANCELLED else "")
@@ -336,16 +278,16 @@ class Runner:
 
         # Полный список источника: защита от пустого источника и предпроверка имён.
         self.cb.progress({"phase": "scan", "job_index": index, "job_count": count, "job": job})
-        listing = self._capture(R.build_list_command(job, job.source, options))
+        listing = self.copier.list_source(job, job.source, options,
+                                          capture=self._capture if not isinstance(self.copier, EngineCopier) else None)
         if listing is None:
             result.status, result.reason = CANCELLED, self._cancel_reason
             return
-        rc, text = listing
+        rc, entries, text = listing
         if rc not in (R.RC_OK, R.RC_VANISHED):
             result.status, result.reason, result.rsync_code = ERROR, "source-list-failed", rc
             result.errors = _errors(text)
             return
-        entries = R.parse_list(text)
         dest_has_files = os.path.isdir(dest_dir) and has_any_file(dest_dir)
         if job.mode in ("mirror", "mirror_versions") and dest_has_files \
                 and not any(e.kind != "d" for e in entries):
@@ -375,20 +317,21 @@ class Runner:
 
         # План — пробный запуск
         self.cb.progress({"phase": "plan", "job_index": index, "job_count": count, "job": job})
-        dry = R.build_command(job, job.source, dest_dir, dataclasses.replace(options, dry_run=True))
-        captured = self._capture(dry)
-        if captured is None:
-            result.status, result.reason = CANCELLED, self._cancel_reason
-            return
-        rc, text = captured
+        if isinstance(self.copier, EngineCopier):
+            rc, summary, stats, text = self.copier.plan_job(job, job.source, dest_dir, options, cancel=self._cancel)
+            if self.cancelled:
+                result.status, result.reason = CANCELLED, self._cancel_reason
+                return
+        else:
+            captured = self.copier.plan_job(job, job.source, dest_dir, options, capture=self._capture)
+            if captured is None:
+                result.status, result.reason = CANCELLED, self._cancel_reason
+                return
+            rc, summary, stats, text = captured
         if rc not in (R.RC_OK, R.RC_VANISHED, R.RC_PARTIAL):
             result.status, result.reason, result.rsync_code = ERROR, "plan-failed", rc
             result.errors = _errors(text)
             return
-        summary = R.ItemizeSummary()
-        for line in text.splitlines():
-            R.parse_itemize_line(line, summary)
-        stats = R.parse_stats(text)
         plan.new_files, plan.changed_files = summary.new_files, summary.changed_files
         plan.deleted_files = summary.deleted_files
         for path in summary.skipped_nonregular:
@@ -398,7 +341,7 @@ class Runner:
                 is_link = os.path.islink(os.path.join(job.source, path.rstrip("/")))
                 plan.skip_reasons[path] = SKIP_SYMLINK if is_link else SKIP_NON_REGULAR
         plan.transfer_bytes = stats.transferred_size
-        plan.free_bytes = free_bytes(dest_dir)
+        plan.free_bytes = plat.system.free_bytes(dest_dir)
 
         # Массовое удаление
         deletions = len(plan.deleted_files)
@@ -439,8 +382,29 @@ class Runner:
         self._check_dest_path(root, dest)
         command = R.build_command(job, job.source, dest_dir, options)
         if log is not None:
-            log.write(f"\n=== {job.source} → {dest}\n$ {' '.join(command)}\n")
-        rc, summary = self._execute(command, log, job, index, count)
+            log.write(f"\n=== {job.source} → {dest}\n")
+            if not isinstance(self.copier, EngineCopier):
+                log.write(f"$ {' '.join(command)}\n")
+        if isinstance(self.copier, EngineCopier):
+            watchdog_stop = threading.Event()
+            def watchdog():
+                while not watchdog_stop.wait(2.0):
+                    if not plat.mounts.verify_mount(volume.mount_point, volume.fs_uuid).ok:
+                        self.cancel("drive-lost")
+                        return
+            watcher = threading.Thread(target=watchdog, daemon=True)
+            watcher.start()
+            try:
+                rc, summary = self.copier.execute_job(job, job.source, dest_dir, options, self._cancel,
+                    lambda info: self.cb.progress(dict(info, phase="copy", job_index=index, job_count=count,
+                                                        job=job)), log)
+            finally:
+                watchdog_stop.set()
+                watcher.join()
+        else:
+            rc, summary = self.copier.execute_job(job, job.source, dest_dir, options, self._cancel,
+                None, log, command_runner=lambda _command, current_log, current_job, _progress:
+                self._execute(_command, current_log, current_job, index, count))
         result.rsync_code = rc
         result.errors = _errors_from_summary(summary)
         if self.cancelled or rc == R.RC_SIGNAL or rc < 0:
@@ -453,6 +417,8 @@ class Runner:
             result.status, result.reason = ERROR, "max-delete"
         elif rc == R.RC_PARTIAL:
             result.status, result.reason = ERROR, "partial-transfer"
+        elif rc == R.RC_NO_SPACE:
+            result.status, result.reason = ERROR, "no-space" if "no space" in " ".join(summary.other_messages).lower() else "rsync-11"
         else:
             result.status, result.reason = ERROR, f"rsync-{rc}"
         result.copied_files = len(summary.new_files) + len(summary.changed_files)
@@ -492,7 +458,7 @@ class Runner:
 
         def watchdog():
             while not watchdog_stop.wait(2.0):
-                if not verify_mount(volume.mount_point, volume.fs_uuid).ok:
+                if not plat.mounts.verify_mount(volume.mount_point, volume.fs_uuid).ok:
                     self.cancel("drive-lost")
                     return
 
@@ -558,14 +524,14 @@ class Runner:
         if not candidates:
             return False
         names = [os.path.basename(p) for _s, p in candidates]
-        if not self._ask("free-space", str(need), str(free_bytes(root)), names):
+        if not self._ask("free-space", str(need), str(plat.system.free_bytes(root)), names):
             return False
         target = dest_dir if os.path.isdir(dest_dir) else root
         for _stamp, path in candidates:
-            if free_bytes(target) >= need:
+            if plat.system.free_bytes(target) >= need:
                 break
             shutil.rmtree(path)
-        return free_bytes(target) >= need
+        return plat.system.free_bytes(target) >= need
 
     @staticmethod
     def _remove_if_empty(path: str) -> None:

@@ -1,0 +1,89 @@
+QMainWindow, QWidget#appRoot, QWidget#profilePage { background: #f1f1f1; color: #202124; font-size: 13px; }
+QMenuBar { background: #f1f1f1; color: #202124; }
+QMenuBar::item { padding: 5px 9px; background: transparent; }
+QMenuBar::item:selected { background: rgba(60, 90, 120, 0.12); }
+QMenu { background: #ffffff; color: #202124; border: 1px solid #bdbdbd; }
+QMenu::item { padding: 5px 24px 5px 22px; }
+QMenu::item:selected { background: rgba(59, 130, 246, 0.12); }
+QWidget#sidebar { background: #ffffff; border-right: 1px solid #c8c8c8; }
+QLabel#sidebarSection { padding: 14px 14px 8px 14px; font-weight: 700; }
+QWidget#profileRow { background: transparent; }
+QWidget#profileRow[selected="true"][state="connected"], QWidget#profileRow[selected="true"][state="running"] { background: #91b277; color: #ffffff; }
+QWidget#profileRow[selected="true"][state="locked"], QWidget#profileRow[selected="true"][state="conflict"] { background: #d97706; color: #ffffff; }
+QWidget#profileRow[selected="true"][state="error"] { background: #c2413b; color: #ffffff; }
+QWidget#profileRow[selected="true"][state="disconnected"] { background: #89939b; color: #ffffff; }
+QWidget#profileRow[selected="true"] QLabel { color: #ffffff; }
+QWidget#profileRow[selected="false"] QLabel#profileRowStatus, QLabel#muted { color: #7c8790; }
+QLabel#profileRowTitle { font-weight: 500; }
+QLabel#driveSummary { color: #7c8790; }
+QLabel#pageTitle { font-size: 21px; font-weight: 700; }
+QLabel#cardTitle { font-weight: 700; }
+QFrame#card { border: 1px solid rgba(30, 35, 40, 0.18); border-radius: 8px; background: rgba(0, 0, 0, 0.025); }
+QScrollArea#jobScroll { background: #ffffff; border: 1px solid #bdbdbd; }
+QWidget#jobRowsContainer { background: #ffffff; }
+QWidget#jobRow { background: transparent; border-bottom: 1px solid #e4e6e8; }
+QFrame#jobDropLine { background: #3b82f6; border: none; }
+QLabel#jobTitle { color: #25313c; }
+QWidget#autoBadge { background: #059669; color: #ffffff; border-radius: 9px; }
+QLabel#autoBadgeText { color: #ffffff; font-size: 11px; font-weight: 700; }
+QPushButton { background: #f7f7f7; border: 1px solid #b8b8b8; border-radius: 4px; padding: 6px 10px; }
+QPushButton:hover { background: #ffffff; border-color: #969696; }
+QPushButton:disabled { color: #a5a5a5; }
+QPushButton#primaryButton { background: #16a34a; border-color: #14863f; color: #ffffff; font-weight: 600; padding-left: 12px; padding-right: 12px; }
+QPushButton#primaryButton:hover { background: #138a40; }
+QPushButton#primaryButton:disabled { background: #b2c9a4; border-color: #b2c9a4; color: #f5f5f5; }
+QPushButton#dangerButton { color: #b42318; }
+QPushButton#createProfile { margin: 4px 8px 0 8px; }
+QToolButton#runJob, QToolButton#editButton, QToolButton#deleteButton, QToolButton#moreButton,
+QToolButton#infoButton { background: transparent; border: 1px solid transparent; padding: 3px; }
+QToolButton#runJob, QToolButton#editButton, QToolButton#deleteButton, QToolButton#moreButton { min-width: 32px; min-height: 32px; max-width: 32px; max-height: 32px; }
+QToolButton#infoButton { min-width: 28px; min-height: 28px; max-width: 28px; max-height: 28px; }
+QToolButton#profileMoreButton { background: #f7f7f7; border: 1px solid #b8b8b8; border-radius: 4px; padding: 4px; }
+QToolButton#profileMoreButton:hover { background: #ffffff; border-color: #8c959c; }
+QToolButton#runJob:hover, QToolButton#editButton:hover, QToolButton#deleteButton:hover, QToolButton#moreButton:hover,
+QToolButton#infoButton:hover { background: rgba(90, 100, 110, 0.12); border-radius: 4px; }
+QToolButton::menu-indicator { image: none; }
+QFrame#infoBanner, QFrame#warningBanner, QFrame#errorBanner { border-radius: 5px; }
+QFrame#infoBanner { background: rgba(59, 130, 246, 0.09); border: 1px solid rgba(59, 130, 246, 0.28); }
+QFrame#warningBanner { background: rgba(217, 119, 6, 0.10); border: 1px solid rgba(217, 119, 6, 0.35); }
+QFrame#errorBanner { background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.32); }
+QProgressBar { border: 1px solid #c8c8c8; border-radius: 3px; background: #ffffff; text-align: center; min-height: 18px; }
+QProgressBar::chunk { background: #16a34a; }
+QLabel#sectionTitle { font-weight: 700; }
+QLabel#warningHint { color: #d97706; font-weight: 600; }
+QCheckBox::indicator { width: 14px; height: 14px; }
+QComboBox, QLineEdit, QSpinBox, QPlainTextEdit { padding: 4px; }
+QSpinBox { min-width: 180px; }
+QScrollBar:vertical { width: 10px; background: transparent; margin: 2px; }
+QScrollBar::handle:vertical { background: #b8bdc1; min-height: 24px; border-radius: 4px; }
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical { height: 0; }
+
+QWidget[theme="dark"], QWidget[theme="dark"] QWidget#appRoot, QWidget[theme="dark"] QWidget#profilePage { background: #2d2d30; color: #eeeeef; }
+QWidget[theme="dark"] QMenuBar { background: #2d2d30; color: #eeeeef; }
+QWidget[theme="dark"] QMenu { background: #303034; color: #eeeeef; border-color: #606064; }
+QWidget[theme="dark"] QWidget#sidebar { background: #242426; border-right-color: #4b4b4e; }
+QWidget[theme="dark"] QWidget#profileRow[selected="true"][state="connected"], QWidget[theme="dark"] QWidget#profileRow[selected="true"][state="running"] { background: #237d5b; }
+QWidget[theme="dark"] QWidget#profileRow[selected="true"][state="locked"], QWidget[theme="dark"] QWidget#profileRow[selected="true"][state="conflict"] { background: #9c5709; }
+QWidget[theme="dark"] QWidget#profileRow[selected="true"][state="error"] { background: #8e302c; }
+QWidget[theme="dark"] QWidget#profileRow[selected="true"][state="disconnected"] { background: #59636b; }
+QWidget[theme="dark"] QWidget#profileRow[selected="false"] QLabel#profileRowStatus,
+QWidget[theme="dark"] QLabel#muted { color: #a9afb6; }
+QWidget[theme="dark"] QLabel#driveSummary { color: #a9afb6; }
+QWidget#jobRow[theme="dark"] QLabel#jobTitle { color: #e2e4e7; }
+QWidget#jobRow[theme="dark"] QLabel#muted { color: #a9afb6; }
+QWidget[theme="dark"] QFrame#card { background: rgba(255, 255, 255, 0.035); border-color: rgba(255, 255, 255, 0.18); }
+QWidget[theme="dark"] QScrollArea#jobScroll { background: #202022; border-color: #58585b; }
+QWidget[theme="dark"] QWidget#jobRowsContainer { background: #202022; }
+QWidget[theme="dark"] QWidget#jobRow { border-bottom-color: #37373a; }
+QWidget[theme="dark"] QPushButton { background: #3b3b3e; border-color: #606064; color: #eeeeef; }
+QWidget[theme="dark"] QPushButton:hover { background: #47474b; }
+QWidget[theme="dark"] QPushButton:disabled { color: #858589; }
+QWidget[theme="dark"] QPushButton#primaryButton { background: #177b4a; border-color: #238d58; color: #ffffff; }
+QWidget[theme="dark"] QPushButton#primaryButton:disabled { background: #344a3d; border-color: #465a4c; color: #8f9991; }
+QWidget[theme="dark"] QToolButton#profileMoreButton { background: #3b3b3e; border-color: #606064; }
+QWidget[theme="dark"] QToolButton#profileMoreButton:hover { background: #47474b; }
+QWidget[theme="dark"] QFrame#infoBanner { background: rgba(59, 130, 246, 0.13); border-color: rgba(100, 160, 255, 0.34); }
+QWidget[theme="dark"] QFrame#warningBanner { background: rgba(217, 119, 6, 0.14); border-color: rgba(217, 119, 6, 0.43); }
+QWidget[theme="dark"] QFrame#errorBanner { background: rgba(239, 68, 68, 0.14); border-color: rgba(239, 68, 68, 0.38); }
+QWidget[theme="dark"] QComboBox, QWidget[theme="dark"] QLineEdit, QWidget[theme="dark"] QSpinBox,
+QWidget[theme="dark"] QPlainTextEdit, QWidget[theme="dark"] QProgressBar { background: #202022; color: #eeeeef; border-color: #5d5d60; }

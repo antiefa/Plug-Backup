@@ -5,10 +5,12 @@
 Mint-L-Darker-Aqua → светлая Mint-L-Aqua, тёмная Mint-L-Dark-Aqua. Для прочих тем — пары вида
 «Тема» / «Тема-dark», а если их нет — просьба к GTK использовать тёмный вариант темы.
 """
+from __future__ import annotations
 
 import os
 import re
 
+from plugbackup import plat
 SYSTEM = "system"
 LIGHT = "light"
 DARK = "dark"
@@ -18,13 +20,7 @@ _MINT = re.compile(r"^(Mint-[LXY])(?:-(Darker|Dark))?(?:-(.+))?$")
 
 
 def theme_dirs() -> list[str]:
-    home = os.path.expanduser("~")
-    data_home = os.environ.get("XDG_DATA_HOME") or os.path.join(home, ".local", "share")
-    dirs = [os.path.join(home, ".themes"), os.path.join(data_home, "themes")]
-    for base in (os.environ.get("XDG_DATA_DIRS") or "/usr/local/share:/usr/share").split(":"):
-        if base:
-            dirs.append(os.path.join(base, "themes"))
-    return dirs
+    return plat.paths.theme_dirs()
 
 
 def installed_gtk3_themes(dirs: list[str] | None = None) -> set[str]:

@@ -12,8 +12,10 @@ import unittest
 from types import SimpleNamespace
 from unittest.mock import patch
 
-from plugbackup.core import binding, fsinfo, gocrypt
-from plugbackup.core.mounts import MountCheck, MountEntry
+from plugbackup import plat
+gocrypt = plat.vault
+from plugbackup.core import binding, fsinfo
+from plugbackup.plat.linux.mounts import MountCheck, MountEntry
 from plugbackup.core.profiles import DeviceBinding, Encryption, Profile
 from plugbackup.core.rsync import ListEntry
 
@@ -177,7 +179,7 @@ class GocryptUnitTests(unittest.TestCase):
                            os.path.join(root, "remote"), "rw"),
             ]
             with patch.object(gocrypt, "runtime_dir", return_value=base), \
-                    patch.object(gocrypt, "read_mountinfo", return_value=entries):
+                    patch.object(plat.mounts, "read_mountinfo", return_value=entries):
                 self.assertEqual(gocrypt.stale_mounts(), [base + "/profile"])
 
     def test_exception_details_redact_password_and_master_key(self):
@@ -208,7 +210,7 @@ class BindingGocryptTests(unittest.TestCase):
                                       mounted=True, mount_point=self.tmp.name)
         self.profile = Profile(id="profile-id", name="Test", device=DeviceBinding(uuid="volume-uuid"),
                               root="Archive", encryption=Encryption(mode="gocryptfs"))
-        self.verify = patch.object(binding, "verify_mount", return_value=MountCheck(True))
+        self.verify = patch.object(plat.mounts, "verify_mount", return_value=MountCheck(True))
         self.verify.start()
         self.addCleanup(self.verify.stop)
 

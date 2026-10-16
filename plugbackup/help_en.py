@@ -1,4 +1,6 @@
 """Plug &amp; Backup help in English. Pango markup uses <b>, <i> and <tt>; write «&» as &amp;amp;."""
+from __future__ import annotations
+from typing import Optional
 
 SECTIONS = [
     ("start", "Getting started", """\
@@ -224,3 +226,135 @@ If the settings or profiles file is damaged, the app tells you and offers to res
 
 <b>The tray icon is missing.</b> Make sure the “XApp Status” applet is on the Cinnamon panel (it is usually there by default)."""),
 ]
+
+# Shared by GTK and Qt: this section explains how to continue a copy on either OS.
+SECTIONS.append(("cross-os", "Shared drive: Linux ↔ Windows", """\
+A copy on FAT32, exFAT or NTFS can be continued and restored on Linux or Windows. On a new computer, import the profile from the drive or a file, then choose folders for its jobs; source paths depend on the OS. Do not back up the same profile from two PCs at once: in Mirror mode, they can delete each other’s files.
+
+Windows cannot read ext4. Linux permissions, owners and ACLs, and Windows ACLs and file attributes are not preserved when moving between OSes.
+
+FAT32 stores local time without a time zone. After switching OS, file times may appear different and files may look changed. Check the preview before the first run. If most files are marked changed and the difference looks like a time-zone shift, check the time and time zone before starting the backup."""))
+
+
+_WINDOWS_TEXT = {
+    "start": ("Getting started", """\
+<b>Plug &amp; Backup</b> copies selected folders from your computer to removable drives — USB flash drives, SD cards and external drives — manually or automatically when you connect a drive.
+
+<b>Three terms</b>
+• <b>Drive</b> — a Windows volume on a flash drive or disk. The app identifies it by its file-system serial number, not by its drive letter.
+• <b>Profile</b> — settings for one drive: what to copy, where to put it and how to copy it.
+• <b>Job</b> — a folder on your computer and a folder on the drive, with its own mode and exclusions.
+
+<b>First steps</b>
+1. Connect a drive; it appears on the left under “New drives”.
+2. Create a profile for it and give the profile a name.
+3. Add a job and choose a folder on your computer.
+4. Open “Preview”, then click “Back up”.
+
+The main window has the “File · View · Help” menus. While the profile’s drive is disconnected, you can edit jobs, but backup and restore are unavailable."""),
+    "profiles": ("Profiles and drives", """\
+A profile is linked to the file-system serial number. FAT32 and exFAT use a 32-bit number. For NTFS, the app reads the full 64-bit number when possible; if only 32 bits are available, it also checks the profile marker on the drive. An ambiguous match requires you to choose a drive manually.
+
+Changing the drive letter does not affect backups: writes use the Windows volume path, not the drive letter. Formatting changes the file-system serial number. If the device serial still matches, the app may offer to rebind the profile.
+
+A profile copy on the drive helps you import it on another computer. Check the job folders after importing. Do not run one profile for the same drive from two PCs at once."""),
+    "jobs": ("Jobs", """\
+Each job has a source folder on your computer, a destination folder on the drive, a copy mode and a list of exclusions.
+
+Choose mirror with version history, mirror or accumulate. You can also choose how to detect changes, skip hidden files, avoid nested junctions and set a maximum file size. Enter exclusions one pattern per line.
+
+In a job row, use the buttons to run that job, edit it or remove it. To change the order, drag the row by ⠿ on the left or use “Move up/down” in the row’s ⋮ menu; jobs run in this order. Removing a job does not delete its copy from the drive."""),
+    "auto": ("Automatic backups and the tray", """\
+In profile settings, enable “Back up automatically when the drive is inserted”. Only jobs marked ⟳ AUTO are included.
+
+If the profile drive is encrypted with BitLocker and locked, unlock it in File Explorer. When the volume becomes available, the app detects it and automatic backup can start according to the profile settings.
+
+When changes are found, the app shows a countdown before the run. If confirmation is needed, automatic backup skips the job and tells you. If Windows refuses a safe eject, the app shows a message; close files and programs that are using the drive.
+
+The tray icon is in the notification area. Closing the window hides it; use the icon menu to quit. Start at login is turned on in “File → Settings…”."""),
+    "backup": ("Backups and safeguards", """\
+Start a backup manually or set it to run automatically when you connect the drive. Open Preview first to see new, changed, deleted and skipped files.
+
+• If the source is empty but the copy contains files, the job is skipped.
+• The app asks before a large deletion; automatic backups skip a job that needs confirmation.
+• Files held open by another program are skipped with a reason.
+• OneDrive files marked “online-only” are skipped; the app does not request that they be downloaded.
+• Junctions and other reparse points in a source are not followed. Reparse points inside the copy are not followed either.
+• The engine supports long Windows paths using the <tt>\\\\?\\</tt> prefix; folder-picker dialogs may have their own limits.
+• Writes use the volume path. If the drive disconnects or a volume check fails, the run stops.
+
+Each file is replaced as a whole. After an interruption, the job copy may be incomplete; run the backup again."""),
+    "restore": ("Restore", """\
+Choose “Restore…” in the backup section or from a job’s menu. Select jobs and destination folders, review the file list, then start the restore.
+
+Restore does not delete files from your computer. Files that will be replaced are first saved in the app’s data folder. The copy contains regular files and folders; Windows cannot open a drive formatted as ext4."""),
+    "journal": ("Log", """\
+The log shows when each run happened, how it was started and its result: completed, completed with notes, error, skipped or stopped. For each run it lists the jobs, copied and deleted files, skipped files and errors. On Windows, the log contains the app’s action list."""),
+    "filesystems": ("Drive file systems", """\
+The Windows version works with NTFS, exFAT and FAT32 drives. Windows cannot read ext4.
+
+FAT32 cannot store files that are 4 GiB or larger. Copies contain regular files and folders, but do not preserve permissions, owners, ACLs, NTFS alternate data streams or file attributes.
+
+FAT32 stores local time without a time zone. File times may shift when you switch between Linux and Windows; check the preview before backing up. See “Shared drive: Linux ↔ Windows”."""),
+    "bitlocker": ("Drives with BitLocker", """\
+The app does not encrypt drives. Unlock a locked BitLocker drive in File Explorer. Once it is available, backup starts according to the profile settings.
+
+Keep the BitLocker recovery key and password safe: without them, you cannot open the copy. If automatic unlock is enabled, the drive may open without a password on this computer.
+
+You can create BitLocker To Go on Windows Pro or Enterprise; on Windows 7, Ultimate or Enterprise. You can open a BitLocker drive on any Windows edition."""),
+    "cli": ("Command line", """\
+Use <tt>plugbackup-cli.exe</tt> for command-line operations:
+<tt>plugbackup-cli.exe --list</tt> — profiles and drive status
+<tt>plugbackup-cli.exe --backup "Work"</tt> — back up a profile without a window (by name or ID)
+<tt>plugbackup-cli.exe --check</tt> — check system components
+<tt>plugbackup-cli.exe --version</tt> — show the version
+
+The same options and exit codes are available as in the other builds. The command line never asks questions; a job that needs confirmation is skipped."""),
+    "files": ("Where data is stored", """\
+<b>On your computer</b>
+<tt>%APPDATA%\\PlugBackup\\</tt> — settings and profiles
+<tt>%LOCALAPPDATA%\\PlugBackup\\state\\</tt> — state and logs
+<tt>%LOCALAPPDATA%\\PlugBackup\\restore-backup\\</tt> — files set aside during restore
+Start at login uses <tt>HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run</tt>.
+
+<b>On the drive</b>
+<tt>PlugBackup\\&lt;job folders&gt;\\</tt> — copies
+<tt>PlugBackup\\.versions\\</tt> — version history
+<tt>PlugBackup\\.plugbackup\\id</tt> — profile marker
+<tt>PlugBackup\\.plugbackup\\profile.json</tt> — profile copy, if enabled."""),
+    "faq": ("Frequently asked questions", """\
+<b>Why is there no encrypted gocryptfs folder?</b> This feature is not available in the Windows version yet. You can open an existing gocryptfs copy on Windows with cppcryptfs.
+
+<b>Why does Windows say “Unknown publisher”?</b> The installer is unsigned. Compare its SHA256 hash with the accompanying <tt>SHA256SUMS</tt> file.
+
+<b>Why did safe eject fail?</b> Windows reports which program is holding the drive. Close that file or program and try ejecting again.
+
+<b>Why was a file skipped?</b> The log gives the reason. Close the program using the file, or download the OneDrive file to this computer, then try again."""),
+    "install": ("Installing and updating", """\
+The installer is for the current user and does not require administrator rights. SmartScreen may show “Unknown publisher” because the app is unsigned. Before running the installer, check its SHA256 hash against the accompanying <tt>SHA256SUMS</tt> file.
+
+Uninstall the app from “Programs and Features” or “Apps”. Settings are kept unless you separately choose to remove them.
+
+Windows 7 SP1 requires update KB2533623 or a replacement update."""),
+}
+
+
+def sections(platform: Optional[str] = None):
+    """Return help sections for an OS; default to the current platform."""
+    import sys
+    platform = platform or sys.platform
+    if not platform.startswith("win"):
+        return list(SECTIONS)
+    result = []
+    for key, title, markup in SECTIONS:
+        if key == "gocryptfs":
+            continue
+        if key == "luks":
+            key = "bitlocker"
+        replacement = _WINDOWS_TEXT.get(key)
+        if replacement:
+            title, markup = replacement
+        result.append((key, title, markup))
+    install = _WINDOWS_TEXT["install"]
+    result.append(("install", install[0], install[1]))
+    return result

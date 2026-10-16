@@ -11,7 +11,16 @@ from contextlib import ExitStack
 from types import SimpleNamespace
 from unittest import mock
 
-from plugbackup.core import binding, gocrypt, marker, runner, transfer
+try:
+    import gi  # noqa: F401
+except ImportError as exc:
+    _GI_ERROR = str(exc)
+else:
+    _GI_ERROR = ""
+
+from plugbackup import plat
+gocrypt = None if _GI_ERROR else plat.vault
+from plugbackup.core import binding, marker, runner, transfer
 from plugbackup.core.profiles import Encryption, Job, Profile
 from plugbackup.core.runner import Runner, RunRequest
 
@@ -20,6 +29,7 @@ PASSWORD = "integration-only-password"
 
 @unittest.skipUnless(os.environ.get("PLUGBACKUP_GOCRYPTFS_TESTS") == "1",
                      "set PLUGBACKUP_GOCRYPTFS_TESTS=1 to run real gocryptfs/FUSE tests")
+@unittest.skipUnless(not _GI_ERROR, "GI недоступен: {}".format(_GI_ERROR))
 class GocryptfsRunTest(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory(prefix="plugbackup-vault-run-")
@@ -45,8 +55,8 @@ class GocryptfsRunTest(unittest.TestCase):
         stack.enter_context(mock.patch.dict(os.environ, {"XDG_STATE_HOME": os.path.join(base, "state"),
                                                          "XDG_RUNTIME_DIR": os.path.join(base, "runtime")}))
         stack.enter_context(mock.patch.object(binding, "_verified_mount_point", lambda p, v: self.drive))
-        stack.enter_context(mock.patch.object(runner, "verify_mount", lambda *a, **k: SimpleNamespace(ok=True)))
-        stack.enter_context(mock.patch.object(runner, "inhibit_sleep", lambda reason: None))
+        stack.enter_context(mock.patch.object(plat.mounts, "verify_mount", lambda *a, **k: SimpleNamespace(ok=True)))
+        stack.enter_context(mock.patch.object(plat.system, "inhibit_sleep", lambda reason: None))
         self.plain = gocrypt.plain_dir(self.profile.id)
         self.cipher = binding.cipher_dir_for(self.profile, self.volume)
         self.addCleanup(self._unmount)

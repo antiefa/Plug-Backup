@@ -4,9 +4,15 @@ import threading
 
 from gi.repository import Gio, GLib, Gtk, Pango
 
-from plugbackup.core import devices, fsinfo, gocrypt, mounts
-from plugbackup.core.devices import DeviceMonitor, Volume
+from plugbackup import plat
+from plugbackup.core import fsinfo
+from plugbackup.plat.linux.devices import DeviceMonitor, Volume
 from plugbackup.i18n import _
+from plugbackup.ui.common import NOTE_CSS
+
+devices = plat.devices
+gocrypt = plat.vault
+mounts = plat.mounts
 
 
 def _mount_reason_text(reason: str) -> str:
@@ -147,7 +153,7 @@ class VolumeDetails(Gtk.Box):
             key = Gtk.Label(label=name, xalign=0, valign=Gtk.Align.START)
             key.get_style_context().add_class("dim-label")
             val = Gtk.Label(label=value, xalign=0, selectable=True, wrap=True,
-                            wrap_mode=Pango.WrapMode.WORD_CHAR, max_width_chars=60)
+                            wrap_mode=Pango.WrapMode.WORD_CHAR, width_chars=24, max_width_chars=60)
             self.grid.attach(key, 0, i, 1, 1)
             self.grid.attach(val, 1, i, 1, 1)
 
@@ -193,6 +199,7 @@ class VolumeDetails(Gtk.Box):
         icon_name = {"error": "dialog-error-symbolic", "warning": "dialog-warning-symbolic"}.get(
             kind, "plugbackup-info-symbolic")
         icon = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.BUTTON)
+        icon.get_style_context().add_class(NOTE_CSS.get(kind, "pb-st-cancelled"))
         icon.set_valign(Gtk.Align.START)
         label = Gtk.Label(label=text, xalign=0, wrap=True, max_width_chars=70)
         box = Gtk.Box(spacing=8)

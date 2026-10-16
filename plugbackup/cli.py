@@ -1,4 +1,5 @@
 """Командная строка без окна: --list и --backup. Ничего не спрашивает у пользователя."""
+from __future__ import annotations
 
 import sys
 
@@ -16,10 +17,25 @@ EXIT_CANCELLED = 5
 EXIT_ALREADY_RUNNING = 6
 
 
-def _volumes():
-    from plugbackup.core.devices import UDisks, collect_volumes  # devices выбирает версию UDisks 2.0
+def cmd_version() -> int:
+    from plugbackup import APP_NAME, __version__
 
-    return collect_volumes(UDisks.Client.new_sync(None), show_all=True)
+    print(f"{APP_NAME} {__version__}")
+    return EXIT_OK
+
+
+def cmd_check() -> int:
+    from plugbackup.core import deps
+
+    checks = deps.run_checks()
+    print(deps.format_report(checks))
+    return EXIT_ERROR if deps.missing_required(checks) else EXIT_OK
+
+
+def _volumes():
+    from plugbackup import plat
+
+    return plat.devices.list_volumes(show_all=True)
 
 
 def _store_or_fail() -> ProfilesStore | None:
@@ -83,7 +99,13 @@ def _open_vault(profile, volume) -> tuple[bool, str]:
     (открыли ли мы её сами, текст ошибки)."""
     if profile.encryption.mode != "gocryptfs":
         return False, ""
-    from plugbackup.core import binding, gocrypt, secrets
+    from plugbackup import plat
+    try:
+        gocrypt = plat.vault
+    except NotImplementedError:
+        return False, "encrypted folder unavailable on this system"
+    secrets = plat.secrets
+    from plugbackup.core import binding
     ok, reason = gocrypt.availability()
     if not ok:
         return False, f"encrypted folder unavailable ({reason})"
@@ -109,7 +131,11 @@ def _open_vault(profile, volume) -> tuple[bool, str]:
 
 
 def _close_vault(profile) -> None:
-    from plugbackup.core import gocrypt
+    from plugbackup import plat
+    try:
+        gocrypt = plat.vault
+    except NotImplementedError:
+        return
     try:
         gocrypt.unmount(gocrypt.plain_dir(profile.id))
     except gocrypt.GocryptError as exc:

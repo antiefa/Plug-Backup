@@ -75,3 +75,7 @@ build-deb.sh       .deb package build
 On the computer: `~/.config/plugbackup/` (settings and profiles), `~/.local/state/plugbackup/log/` (log), `~/.local/share/plugbackup/restore-backup/` (files set aside during a restore).
 
 On the drive: `PlugBackup/` — job copies, `.versions/` (version history) and `.plugbackup/` (profile marker); with an encrypted folder, the same inside `PlugBackup.enc/`.
+
+## License
+
+GPL-3.0-or-later. See [LICENSE](LICENSE).

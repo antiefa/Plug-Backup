@@ -2,11 +2,13 @@
 
 Модуль без GTK: окно передаёт сюда текущий список носителей и время, а получает, что делать.
 """
+from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from plugbackup.core import journal
+from plugbackup.core import journal, marker
 from plugbackup.core.profiles import Profile
+import os
 
 MOUNT_WAIT_SECONDS = 5.0    # сколько ждать автомонтирования Cinnamon, прежде чем монтировать самим
 
@@ -43,6 +45,10 @@ def decide(profile: Profile, volume, conflicts: set[str], now: float,
         return Decision(False, AUTO_OFF)
     if volume.uuid in conflicts:
         return Decision(False, CONFLICT)
+    if getattr(volume, "uuid_partial", False):
+        root = os.path.join(volume.mount_point, profile.root)
+        if marker.root_state(root, profile.id) != marker.ROOT_MATCH:
+            return Decision(False, CONFLICT)
     jobs = tuple(j.id for j in profile.jobs if j.enabled and j.in_auto)
     if not jobs:
         return Decision(False, NO_AUTO_JOBS)

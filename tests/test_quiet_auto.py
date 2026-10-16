@@ -1,13 +1,17 @@
 import unittest
 from types import SimpleNamespace
 
-import gi
+try:
+    import gi
+    gi.require_version("Gtk", "3.0")
+    from plugbackup.ui.auto_controller import outcome_is_clean, planned_changes
+    GI_AVAILABLE = True
+except (ImportError, ValueError):
+    outcome_is_clean = planned_changes = None
+    GI_AVAILABLE = False
 
-gi.require_version("Gtk", "3.0")
-
-from plugbackup.core import journal  # noqa: E402
-from plugbackup.core.runner import JobPlan  # noqa: E402
-from plugbackup.ui.auto_controller import outcome_is_clean, planned_changes  # noqa: E402
+from plugbackup.core import journal
+from plugbackup.core.runner import JobPlan
 
 
 def record(status=journal.OK, reason="", jobs=(journal.OK,)):
@@ -15,6 +19,7 @@ def record(status=journal.OK, reason="", jobs=(journal.OK,)):
                              jobs=[journal.JobResult(str(i), "s", "d", status=s) for i, s in enumerate(jobs)])
 
 
+@unittest.skipUnless(GI_AVAILABLE, "нужен GTK 3")
 class QuietAutoTest(unittest.TestCase):
     def test_counts_new_changed_and_deleted(self):
         plans = {"a": JobPlan(new_files=["1", "2"], changed_files=["3"], transfer_bytes=10),

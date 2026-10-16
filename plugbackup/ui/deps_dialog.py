@@ -8,13 +8,14 @@ from plugbackup.i18n import _
 
 def _row(check: Check) -> Gtk.ListBoxRow:
     if check.ok:
-        icon, tip = "emblem-ok-symbolic", _("Available")
+        icon, tip, css = "emblem-ok-symbolic", _("Available"), "pb-st-ok"
     elif check.required:
-        icon, tip = "dialog-error-symbolic", _("Required component is missing")
+        icon, tip, css = "dialog-error-symbolic", _("Required component is missing"), "pb-st-error"
     else:
-        icon, tip = "dialog-warning-symbolic", _("Unavailable — the feature is turned off")
+        icon, tip, css = "dialog-warning-symbolic", _("Unavailable — the feature is turned off"), "pb-st-warnings"
 
     image = Gtk.Image.new_from_icon_name(icon, Gtk.IconSize.LARGE_TOOLBAR)
+    image.get_style_context().add_class(css)    # символьный значок окрашивается цветом из CSS
     image.set_tooltip_text(tip)
     image.set_valign(Gtk.Align.START)
 

@@ -12,7 +12,8 @@ import threading
 
 from gi.repository import GLib, Gtk
 
-from plugbackup.core import binding, devices, marker, secrets
+from plugbackup import plat
+from plugbackup.core import binding, marker
 from plugbackup.core import profiles as P
 from plugbackup.core.binding import BindingError
 from plugbackup.core.storage import StorageError
@@ -21,6 +22,9 @@ from plugbackup.ui.common import binding_error_text, confirm, message
 from plugbackup.ui.import_dialog import ImportDialog
 from plugbackup.ui.job_dialog import JobDialog
 from plugbackup.ui.profile_dialog import ProfileDialog
+
+devices = plat.devices
+secrets = plat.secrets
 
 # Поля, от которых зависит содержимое метки и копии профиля на носителе.
 _DEVICE_FIELDS = ("root", "store_profile_on_device")
@@ -465,7 +469,8 @@ class ProfileActions:
         probe.encryption = P.Encryption(mode="gocryptfs")
 
         def opened(release):
-            from plugbackup.core import gocrypt
+            from plugbackup import plat
+            gocrypt = plat.vault
             try:
                 data = marker.read_profile_copy(gocrypt.plain_dir(probe.id))
             except (marker.MarkerError, OSError, StorageError):
@@ -512,7 +517,8 @@ def _then_release(action, release) -> None:
 
 def find_vaults(volume) -> list[str]:
     """Зашифрованные папки Plug & Backup (<имя>.enc с gocryptfs.conf) в корне смонтированного носителя."""
-    from plugbackup.core import gocrypt
+    from plugbackup import plat
+    gocrypt = plat.vault
     if not volume.mounted:
         return []
     try:

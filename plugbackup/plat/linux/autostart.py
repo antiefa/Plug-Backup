@@ -1,8 +1,11 @@
 """Запуск при входе в систему: ~/.config/autostart/<ID>.desktop с ключом --hidden."""
 
+from __future__ import annotations
+
 import os
 
 from plugbackup import APP_ID, APP_NAME
+from plugbackup.plat.linux.paths import autostart_dir
 
 DESKTOP = f"""[Desktop Entry]
 Type=Application
@@ -17,8 +20,7 @@ X-GNOME-Autostart-enabled=true
 
 
 def autostart_path() -> str:
-    base = os.environ.get("XDG_CONFIG_HOME") or os.path.expanduser("~/.config")
-    return os.path.join(base, "autostart", f"{APP_ID}.desktop")
+    return os.path.join(autostart_dir(), f"{APP_ID}.desktop")
 
 
 def is_enabled() -> bool:

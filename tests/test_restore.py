@@ -55,6 +55,7 @@ class RestoreTests(unittest.TestCase):
         return runner, record
 
     def test_command_is_copy_only_and_excludes_partial_directories_at_any_depth(self):
+        """Проверяет формат команды rsync; выполнение восстановления проверяется отдельно."""
         item = self.item(self.path("copy"), self.path("target"))
         command = restore.build_command(item, "ext4", None, False, skip_newer=False)
         self.assertNotIn("--delete", command)

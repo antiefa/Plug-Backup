@@ -4,16 +4,24 @@ import unittest
 from types import SimpleNamespace
 from unittest.mock import patch
 
-import gi
-
-gi.require_version("UDisks", "2.0")
-from gi.repository import GLib, UDisks
-
-from plugbackup.core import auto, devices, profiles, secrets
+try:
+    import gi
+    gi.require_version("UDisks", "2.0")
+    from gi.repository import GLib, UDisks
+    from plugbackup import plat
+    devices, secrets = plat.devices, plat.secrets
+    GI_AVAILABLE = True
+except (ImportError, ValueError):
+    GLib = UDisks = None
+    devices = secrets = None
+    GI_AVAILABLE = False
+from plugbackup.core import auto, profiles
 from plugbackup.core.profiles import AutoSettings, DeviceBinding, Encryption, Job, Profile
 
 
-def glib_error(message="failure", code=UDisks.Error.FAILED):
+def glib_error(message="failure", code=None):
+    if code is None:
+        code = UDisks.Error.FAILED
     return GLib.Error.new_literal(UDisks.error_quark(), message, code)
 
 
@@ -38,6 +46,7 @@ class FakeSecret:
             return (name, flags, attributes)
 
 
+@unittest.skipUnless(GI_AVAILABLE, "нужен GI UDisks2")
 class SecretTests(unittest.TestCase):
     def setUp(self):
         self.secret = FakeSecret
@@ -151,6 +160,7 @@ class SecretTests(unittest.TestCase):
         self.assertEqual(secrets.service_state(), secrets.UNAVAILABLE)
 
 
+@unittest.skipUnless(GI_AVAILABLE, "нужен GI UDisks2")
 class AutoLuksTests(unittest.TestCase):
     def setUp(self):
         self.profile = Profile(
@@ -208,6 +218,7 @@ class AutoLuksTests(unittest.TestCase):
         self.assertEqual(tracker.update([self.vol], 3), [(auto.READY, self.vol)])
 
 
+@unittest.skipUnless(GI_AVAILABLE, "нужен GI UDisks2")
 class ProfileLuksTests(unittest.TestCase):
     def setUp(self):
         self.profile = Profile(id="profile", name="Test", encryption=Encryption("gocryptfs", True))
@@ -260,6 +271,7 @@ def drain_main_context(predicate, limit=1000):
     raise AssertionError("GLib callback did not arrive within the iteration limit")
 
 
+@unittest.skipUnless(GI_AVAILABLE, "нужен GI UDisks2")
 class UnlockAsyncTests(unittest.TestCase):
     def test_success_passes_passphrase_quiet_options_and_result_to_callback(self):
         observed = {}
@@ -308,6 +320,7 @@ class UnlockAsyncTests(unittest.TestCase):
         self.assertIsInstance(calls[0][1], GLib.Error)
 
 
+@unittest.skipUnless(GI_AVAILABLE, "нужен GI UDisks2")
 class WrongPassphraseTests(unittest.TestCase):
     def test_recognizes_cryptsetup_text_and_failed_error(self):
         self.assertTrue(devices.is_wrong_passphrase(glib_error("No key available with this passphrase")))

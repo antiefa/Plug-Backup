@@ -9,8 +9,11 @@ import threading
 
 from gi.repository import GLib
 
-from plugbackup.core import binding, gocrypt
+from plugbackup import plat
+from plugbackup.core import binding
 from plugbackup.i18n import _
+
+gocrypt = plat.vault
 
 
 def uses_vault(profile) -> bool:
@@ -136,10 +139,10 @@ class Vaults:
     def close_all_sync(self) -> None:
         """При выходе: закрыть все свои папки; занятые — «лениво» (закроются, как только освободятся).
         Папку профиля, который сейчас выполняется из командной строки, не трогаем."""
-        from plugbackup.core.runner import ProfileLock
+        from plugbackup import plat
 
         for plain in gocrypt.stale_mounts():
-            lock = ProfileLock(plain.rstrip("/").rsplit("/", 1)[-1])
+            lock = plat.system.ProfileLock(plain.rstrip("/").rsplit("/", 1)[-1])
             if not lock.acquire():
                 continue
             try:
@@ -157,12 +160,12 @@ class Vaults:
     def cleanup_stale(self) -> None:
         """При запуске приложения: закрыть свои папки, оставшиеся открытыми после сбоя.
         Папку профиля, который сейчас выполняется (например, из командной строки), не трогаем."""
-        from plugbackup.core.runner import ProfileLock
+        from plugbackup import plat
 
         def work():
             failed = []
             for plain in gocrypt.stale_mounts():
-                lock = ProfileLock(plain.rstrip("/").rsplit("/", 1)[-1])
+                lock = plat.system.ProfileLock(plain.rstrip("/").rsplit("/", 1)[-1])
                 if not lock.acquire():
                     continue
                 try:

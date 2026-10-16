@@ -11,8 +11,12 @@ import traceback
 
 from gi.repository import Gio, GLib, Gtk, Pango
 
-from plugbackup.core import devices, gocrypt, secrets
+from plugbackup import plat
 from plugbackup.i18n import _
+
+devices = plat.devices
+gocrypt = plat.vault
+secrets = plat.secrets
 
 MOUNTABLE_WAIT_SECONDS = 15   # сколько ждать появления файловой системы внутри открытого контейнера
 SCREEN_POLL_SECONDS = 3

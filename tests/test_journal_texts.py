@@ -1,11 +1,15 @@
 import unittest
 
-import gi
+try:
+    import gi
+    gi.require_version("Gtk", "3.0")
+    from plugbackup.ui.run_texts import nothing_changed
+    GI_AVAILABLE = True
+except (ImportError, ValueError):
+    nothing_changed = None
+    GI_AVAILABLE = False
 
-gi.require_version("Gtk", "3.0")
-
-from plugbackup.core import journal  # noqa: E402
-from plugbackup.ui.run_texts import nothing_changed  # noqa: E402
+from plugbackup.core import journal
 
 
 def rec(status=journal.OK, reason="", trigger="manual", jobs=((journal.OK, 0, 0),)):
@@ -14,6 +18,7 @@ def rec(status=journal.OK, reason="", trigger="manual", jobs=((journal.OK, 0, 0)
                                    for i, (s, c, d) in enumerate(jobs)])
 
 
+@unittest.skipUnless(GI_AVAILABLE, "нужен GTK 3")
 class NothingChangedTest(unittest.TestCase):
     def test_quiet_check_and_empty_successful_runs(self):
         self.assertTrue(nothing_changed(rec(reason="no-changes", trigger="auto")))

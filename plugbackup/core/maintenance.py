@@ -7,6 +7,7 @@
 Функции нижнего уровня (list_versions, delete_versions, excluded_in_copy, remove_paths, clear_dir)
 работают с уже проверенными путями; prepare() делает проверки носителя и метки.
 """
+from __future__ import annotations
 
 import os
 import shutil
@@ -16,6 +17,7 @@ from dataclasses import dataclass
 
 from plugbackup.core import binding, marker
 from plugbackup.core import rsync as R
+from plugbackup.core.copier import default_copier
 from plugbackup.core.binding import BindingError
 from plugbackup.core.profiles import Job, Profile, normalize_dest
 from plugbackup.core.runner import Runner, unique_versions_name, versions_dirs
@@ -100,20 +102,7 @@ def delete_versions(root: str, names: list[str]) -> list[str]:
 
 def _dry_deletions(job: Job, dest_dir: str, fs_type: str, global_excludes: list[str],
                    delete_excluded: bool) -> list[str]:
-    options = R.CommandOptions(fs_type=fs_type, global_excludes=global_excludes)
-    args = ["rsync"] + R.file_options(job, fs_type) + R.filter_options(job, options)
-    args += ["--dry-run", "--itemize-changes", "--no-human-readable", "--delete"]
-    if delete_excluded:
-        args.append("--delete-excluded")
-    args += [job.source.rstrip("/") + "/", dest_dir.rstrip("/") + "/"]
-    done = subprocess.run(args, capture_output=True, text=True, env=R.rsync_env(), encoding="utf-8",
-                          errors="surrogateescape")
-    if done.returncode not in (R.RC_OK, R.RC_VANISHED):
-        raise OSError(f"rsync {done.returncode}: {done.stderr.strip()[:300]}")
-    summary = R.ItemizeSummary()
-    for line in done.stdout.splitlines():
-        R.parse_itemize_line(line, summary)
-    return summary.deleted_files + summary.deleted_dirs
+    return default_copier().dry_deletions(job, dest_dir, fs_type, global_excludes, delete_excluded)
 
 
 def excluded_in_copy(job: Job, dest_dir: str, fs_type: str, global_excludes: list[str]) -> list[str]:

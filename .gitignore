@@ -7,3 +7,9 @@ temp/
 # Python
 __pycache__/
 *.pyc
+
+# Сборка Windows
+packaging/windows/dist/
+packaging/windows/build/
+packaging/windows/.venv-build/
+packaging/windows/locale/

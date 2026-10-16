@@ -76,11 +76,16 @@ def message(parent: Gtk.Window, title: str, text: str, error: bool = False) -> N
     dialog.destroy()
 
 
+# Цвет значка строки по её виду (классы из CSS приложения); info — синий.
+NOTE_CSS = {"error": "pb-st-error", "warning": "pb-st-warnings"}
+
+
 def note(text: str, kind: str = "info") -> Gtk.Widget:
     """Строка с иконкой: info / warning / error."""
     icon_name = {"error": "dialog-error-symbolic", "warning": "dialog-warning-symbolic"}.get(
         kind, "plugbackup-info-symbolic")
     icon = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.BUTTON)
+    icon.get_style_context().add_class(NOTE_CSS.get(kind, "pb-st-cancelled"))
     icon.set_valign(Gtk.Align.START)
     label = Gtk.Label(label=text, xalign=0, wrap=True, max_width_chars=70,
                       wrap_mode=Pango.WrapMode.WORD_CHAR)

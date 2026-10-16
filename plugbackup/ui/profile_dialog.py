@@ -6,9 +6,11 @@ import threading
 from gi.repository import GLib, Gtk
 
 from plugbackup.core import profiles as P
-from plugbackup.core import secrets
+from plugbackup import plat
 from plugbackup.i18n import _
 from plugbackup.ui.common import IssuesBox, note, section_label
+
+secrets = plat.secrets
 
 
 def _spin(value: int, lower: int, upper: int, step: int = 1) -> Gtk.SpinButton:
@@ -144,7 +146,8 @@ class ProfileDialog(Gtk.Dialog):
 
     def _folder_mode_box(self, drive_ready: bool) -> Gtk.Widget:
         """Обычный носитель: без шифрования или зашифрованная папка gocryptfs."""
-        from plugbackup.core import gocrypt
+        from plugbackup import plat
+        gocrypt = plat.vault
         from plugbackup.ui.encryption import availability_text, visibility_text
 
         current = self.profile.encryption.mode

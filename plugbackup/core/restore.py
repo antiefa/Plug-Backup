@@ -2,9 +2,10 @@
 
 Восстанавливается ТЕКУЩЕЕ содержимое копии задания. На компьютере ничего не удаляется никогда.
 При восстановлении в исходную папку файлы, которые будут перезаписаны, сначала откладываются в
-~/.local/share/plugbackup/restore-backup/<время>/<задание>/ (rsync --backup --backup-dir), а рядом
+в каталоге отложенных файлов (rsync --backup --backup-dir), а рядом
 кладётся README с описанием, откуда они и как вернуть.
 """
+from __future__ import annotations
 
 import os
 import subprocess
@@ -16,15 +17,16 @@ from plugbackup.core import journal
 from plugbackup.core import rsync as R
 from plugbackup.core.journal import CANCELLED, ERROR, OK, WARNINGS, JobResult, RunRecord
 from plugbackup.core.profiles import Job, normalize_dest
+from plugbackup.core.copier import default_copier, EngineCopier
 from plugbackup.i18n import _
+from plugbackup import plat
 
 SAMPLE = 50
 TS_FORMAT = "%Y-%m-%d_%H-%M-%S"
 
 
 def restore_backup_root() -> str:
-    base = os.environ.get("XDG_DATA_HOME") or os.path.expanduser("~/.local/share")
-    return os.path.join(base, "plugbackup", "restore-backup")
+    return plat.paths.restore_backup_root()
 
 
 def default_other_base() -> str:
@@ -79,14 +81,11 @@ def build_command(item: RestoreItem, fs_type: str, backup_dir: str | None, dry_r
 
 def plan(item: RestoreItem, fs_type: str, skip_newer: bool = True) -> RestorePlan:
     """Что сделает восстановление: какие файлы появятся и какие будут перезаписаны."""
-    done = subprocess.run(build_command(item, fs_type, None, True, skip_newer), capture_output=True, text=True,
-                          env=R.rsync_env(), encoding="utf-8", errors="surrogateescape")
-    if done.returncode not in (R.RC_OK, R.RC_VANISHED):
-        raise OSError(f"rsync {done.returncode}: {done.stderr.strip()[:300]}")
-    summary = R.ItemizeSummary()
-    for line in done.stdout.splitlines():
-        R.parse_itemize_line(line, summary)
-    return RestorePlan(summary.new_files, summary.changed_files, R.parse_stats(done.stdout).transferred_size)
+    copier = default_copier()
+    rc, summary, stats, error = copier.plan_restore(item, fs_type, skip_newer)
+    if rc not in (R.RC_OK, R.RC_VANISHED):
+        raise OSError(f"{copier.name} {rc}: {error.strip()[:300]}")
+    return RestorePlan(summary.new_files, summary.changed_files, stats.transferred_size)
 
 
 def write_readme(backup_dir: str, item: RestoreItem) -> None:
@@ -115,6 +114,7 @@ class Restorer:
         self.skip_newer = skip_newer
         self.progress = progress or (lambda info: None)
         self._cancel = threading.Event()
+        self.copier = default_copier()
         self._proc: subprocess.Popen | None = None
         self._lock = threading.Lock()
         self.backup_root = os.path.join(restore_backup_root(), time.strftime(TS_FORMAT))
@@ -153,7 +153,19 @@ class Restorer:
         if self.keep_overwritten:
             backup_dir = os.path.join(self.backup_root, normalize_dest(item.job.dest) or item.job.id)
             write_readme(backup_dir, item)
-        command = build_command(item, self.fs_type, backup_dir, False, self.skip_newer)
+        command = self.copier.restore_command(item, self.fs_type, backup_dir, False, self.skip_newer)
+        if isinstance(self.copier, EngineCopier):
+            if self._cancel.is_set():
+                result.status, result.reason = CANCELLED, "user"
+                return
+            spec = self.copier.restore_spec(item, self.fs_type, self.skip_newer, backup_dir)
+            engine_result = __import__("plugbackup.engine", fromlist=["execute"]).execute(
+                spec, self._cancel,
+                lambda info: self.progress(dict(info, index=index, count=len(self.items), job=item.job)),
+                lambda line: log.write(line + "\n"))
+            summary = engine_result.summary
+            self._finish_job(engine_result.rc, item, result, summary, backup_dir)
+            return
         log.write(f"\n=== {item.copy_dir} → {item.target_dir}\n$ {' '.join(command)}\n")
         summary = R.ItemizeSummary()
         with self._lock:

@@ -17,16 +17,6 @@ import unittest
 import uuid as uuidlib
 from pathlib import Path
 
-from plugbackup.core.devices import (
-    DeviceMonitor,
-    collect_volumes,
-    free_space,
-    mount_sync,
-    unmount_sync,
-    uuid_conflicts,
-)
-from plugbackup.core.mounts import find_mount, read_mountinfo, verify_mount
-
 try:
     import gi
 
@@ -35,8 +25,19 @@ try:
 except (ImportError, ValueError) as exc:  # pragma: no cover - environment guard
     GLib = UDisks = None
     _GI_ERROR = str(exc)
+    DeviceMonitor = collect_volumes = free_space = mount_sync = None
+    unmount_sync = uuid_conflicts = find_mount = read_mountinfo = verify_mount = None
 else:
     _GI_ERROR = ""
+    from plugbackup.plat.linux.devices import (
+        DeviceMonitor,
+        collect_volumes,
+        free_space,
+        mount_sync,
+        unmount_sync,
+        uuid_conflicts,
+    )
+    from plugbackup.plat.linux.mounts import find_mount, read_mountinfo, verify_mount
 
 
 _ENABLED = os.environ.get("PLUGBACKUP_IMAGE_TESTS") == "1"
@@ -57,7 +58,7 @@ def _available(*commands: str) -> bool:
 
 
 @unittest.skipUnless(_ENABLED, "установите PLUGBACKUP_IMAGE_TESTS=1 для loop-интеграционных тестов")
-@unittest.skipIf(_GI_ERROR, f"GI UDisks недоступен: {_GI_ERROR}")
+@unittest.skipUnless(not _GI_ERROR, f"GI UDisks недоступен: {_GI_ERROR}")
 class DeviceImageIntegrationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

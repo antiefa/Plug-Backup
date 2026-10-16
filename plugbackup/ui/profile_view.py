@@ -6,13 +6,18 @@ import time
 
 from gi.repository import Gio, GLib, Gtk, Pango
 
-from plugbackup.core import binding, devices, gocrypt, marker, secrets
+from plugbackup import plat
+from plugbackup.core import binding, marker
 from plugbackup.core import profiles as P
 from plugbackup.core.binding import BindingError
 from plugbackup.i18n import _
 from plugbackup.ui.common import MODE_TITLES, binding_error_text, note
 from plugbackup.ui.profile_actions import ProfileActions, drive_text, find_profile_copies, find_vaults
 from plugbackup.ui.volumes_view import VolumeDetails
+
+devices = plat.devices
+gocrypt = plat.vault
+secrets = plat.secrets
 
 
 def _title(text: str) -> Gtk.Label:
@@ -322,6 +327,7 @@ class ProfilePage(Gtk.Box):
     def _on_info_toggled(self, button):
         if button.get_active() and self.volume is not None:
             self.volume_details.show_volume(self.volume, False)
+            button.get_popover().queue_resize()
 
     def _start(self, preview: bool = False, job_ids=None):
         if self.profile is None or self.volume is None:
@@ -451,7 +457,9 @@ class ProfilePage(Gtk.Box):
         self.menu_actions.lookup_action("write-marker").set_enabled(volume is not None and volume.mounted)
         self.show_all()
         self.info_button.set_visible(volume is not None)
-        if volume is not None and self.info_button.get_active():
+        if volume is not None:
+            # Заполняем сведения заранее: всплывающее окно получает размер по готовому содержимому,
+            # а не пустому (иначе при первом открытии оно бывает пустым на всю высоту).
             self.volume_details.show_volume(volume, volume.uuid in conflicts)
         self.update_run_state()
 

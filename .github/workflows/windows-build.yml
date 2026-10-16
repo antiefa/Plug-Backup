@@ -1,0 +1,30 @@
+name: Windows build
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows-build:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.8'
+          architecture: x64
+      - name: Установить Inno Setup 6
+        run: choco install innosetup --version=6.7.1 --yes --no-progress
+      - name: Собрать приложение и установщик
+        shell: pwsh
+        run: .\packaging\windows\build.ps1
+      - name: Загрузить установщик и контрольную сумму
+        uses: actions/upload-artifact@v4
+        with:
+          name: PlugBackup-Windows
+          path: |
+            packaging/windows/dist/PlugBackup-*-setup.exe
+            packaging/windows/dist/SHA256SUMS
+          if-no-files-found: error

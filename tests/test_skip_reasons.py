@@ -9,6 +9,7 @@ from pathlib import Path
 from types import SimpleNamespace
 from unittest import mock
 
+from plugbackup import plat
 from plugbackup.core import binding, fsinfo, journal, rsync, runner
 from plugbackup.core.profiles import Job, Profile, Thresholds
 
@@ -80,9 +81,9 @@ class SkipReasonsIntegrationTests(unittest.TestCase):
         self.addCleanup(self.stack.stop)
         self.mount_patch = mock.patch.object(binding, "_verified_mount_point",
                                              lambda profile, volume: str(self.drive))
-        self.verify_patch = mock.patch.object(runner, "verify_mount",
+        self.verify_patch = mock.patch.object(plat.mounts, "verify_mount",
                                               lambda *a, **kw: SimpleNamespace(ok=True))
-        self.sleep_patch = mock.patch.object(runner, "inhibit_sleep", lambda reason: None)
+        self.sleep_patch = mock.patch.object(plat.system, "inhibit_sleep", lambda reason: None)
         for patcher in (self.mount_patch, self.verify_patch, self.sleep_patch):
             patcher.start()
             self.addCleanup(patcher.stop)

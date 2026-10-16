@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  linux:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Установить системные зависимости
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-gi gir1.2-gtk-3.0 gir1.2-udisks-2.0 gir1.2-notify-0.7 gir1.2-secret-1 rsync
+      - name: Проверить совместимость с Python 3.8
+        run: python3 tools/check_py38.py
+      - name: Модульные тесты
+        run: python3 -m unittest discover -v
+      - name: Модульные тесты на собственном движке копирования
+        env:
+          PLUGBACKUP_COPIER: engine
+          PLUGBACKUP_SKIP_SLOW: '1'
+        run: python3 -m unittest discover
+
+  linux-py38:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.8'
+      - name: Тесты без GTK
+        run: python -m unittest discover -v
+
+  windows:
+    runs-on: windows-2022
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.8', '3.12']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          architecture: x64
+      - name: Показать версию Python
+        run: python --version
+      - name: Модульные тесты
+        run: python -m unittest discover -v

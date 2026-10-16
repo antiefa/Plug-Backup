@@ -75,3 +75,7 @@ build-deb.sh       сборка пакета .deb
 На компьютере: `~/.config/plugbackup/` (настройки и профили), `~/.local/state/plugbackup/log/` (журнал), `~/.local/share/plugbackup/restore-backup/` (файлы, отложенные при восстановлении).
 
 На носителе: `PlugBackup/` — копии заданий, `.versions/` (корзина версий) и `.plugbackup/` (метка профиля); при шифровании папки — то же внутри `PlugBackup.enc/`.
+
+## Лицензия
+
+GPL-3.0-or-later. Полный текст — в файле [LICENSE](LICENSE).

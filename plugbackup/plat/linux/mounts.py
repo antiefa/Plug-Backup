@@ -4,6 +4,8 @@
 а не только данные UDisks2. Используется перед записью на носитель и во время запуска.
 """
 
+from __future__ import annotations
+
 import os
 from dataclasses import dataclass
 

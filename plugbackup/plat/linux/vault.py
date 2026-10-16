@@ -9,6 +9,8 @@ $XDG_RUNTIME_DIR/plugbackup/<id-профиля>/ и служит корнем к
 в отдельном потоке.
 """
 
+from __future__ import annotations
+
 import os
 import re
 import shutil
@@ -16,7 +18,7 @@ import subprocess
 import threading
 
 from plugbackup.core.config import runtime_dir
-from plugbackup.core.mounts import read_mountinfo
+from plugbackup.plat import mounts
 
 FS_TYPE = "fuse.gocryptfs"
 CIPHER_SUFFIX = ".enc"
@@ -122,7 +124,7 @@ def is_initialized(cipher: str) -> bool:
 def mounted_source(plain: str) -> str | None:
     """Зашифрованная папка, смонтированная в plain, или None, если там не gocryptfs."""
     target = os.path.normpath(plain)
-    for entry in read_mountinfo():
+    for entry in mounts.read_mountinfo():
         if entry.mount_point == target and entry.fs_type == FS_TYPE:
             return entry.source
     return None
@@ -250,5 +252,5 @@ def unmount(plain: str, lazy: bool = False) -> None:
 def stale_mounts() -> list[str]:
     """Наши точки монтирования gocryptfs (в runtime_dir), например оставшиеся после сбоя."""
     base = os.path.normpath(runtime_dir())
-    return [e.mount_point for e in read_mountinfo()
+    return [e.mount_point for e in mounts.read_mountinfo()
             if e.fs_type == FS_TYPE and os.path.dirname(e.mount_point) == base]

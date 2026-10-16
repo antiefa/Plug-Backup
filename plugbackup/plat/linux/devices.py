@@ -4,69 +4,21 @@
 LUKS сведения о файловой системе берутся из расшифрованного устройства, а привязка
 профиля идёт к UUID контейнера. Разблокировка — unlock_async.
 """
+from __future__ import annotations
 
 import os
-from dataclasses import dataclass
+from typing import Callable
 
 import gi
 
 gi.require_version("UDisks", "2.0")
 from gi.repository import GLib, GObject, UDisks  # noqa: E402
+from plugbackup.core.volume import EjectOutcome, Volume, uuid_conflicts
 
 # Разделы, смонтированные сюда, — системные; такие не показываются никогда.
 SYSTEM_MOUNT_POINTS = frozenset({"/", "/boot", "/boot/efi", "/efi", "/home", "/usr", "/var", "/opt", "/srv", "/tmp"})
 
 LUKS_TYPE = "crypto_LUKS"
-
-
-@dataclass(frozen=True)
-class Volume:
-    object_path: str
-    device: str
-    uuid: str                       # UUID ФС, а для LUKS — UUID контейнера (идентификатор привязки)
-    inner_uuid: str                 # UUID ФС внутри открытого LUKS, иначе ""
-    fs_type: str                    # vfat / exfat / ntfs / ext4 …; "" у закрытого LUKS
-    fs_version: str                 # например FAT32 / FAT16 для vfat
-    label: str
-    size: int
-    mount_points: tuple[str, ...]
-    encrypted: bool
-    locked: bool
-    filesystem_path: str            # объект UDisks2 с интерфейсом Filesystem; "" если монтировать нечего
-    drive_path: str
-    drive_vendor: str
-    drive_model: str
-    drive_serial: str
-    drive_id: str
-    connection_bus: str
-    removable: bool
-    sibling_id: str
-    is_loop: bool
-    loop_backing_file: str
-
-    @property
-    def mount_point(self) -> str:
-        return self.mount_points[0] if self.mount_points else ""
-
-    @property
-    def mounted(self) -> bool:
-        return bool(self.mount_points)
-
-    @property
-    def fs_uuid(self) -> str:
-        """UUID файловой системы, по которому проверяется точка монтирования."""
-        return self.inner_uuid if self.encrypted else self.uuid
-
-    @property
-    def display_name(self) -> str:
-        if self.label:
-            return self.label
-        model = " ".join(p for p in (self.drive_vendor, self.drive_model) if p).strip()
-        if model:
-            return model
-        if self.is_loop and self.loop_backing_file:
-            return os.path.basename(self.loop_backing_file)
-        return os.path.basename(self.device)
 
 
 def _str(value) -> str:
@@ -171,12 +123,9 @@ def collect_volumes(client: UDisks.Client, show_all: bool = False) -> list[Volum
     return volumes
 
 
-def uuid_conflicts(volumes: list[Volume]) -> set[str]:
-    """UUID, встречающиеся у нескольких подключённых носителей или пустые."""
-    seen: dict[str, int] = {}
-    for v in volumes:
-        seen[v.uuid] = seen.get(v.uuid, 0) + 1
-    return {uuid for uuid, count in seen.items() if count > 1 and uuid}
+def list_volumes(show_all: bool = True) -> list[Volume]:
+    """Получить текущие тома; создать системный клиент внутри Linux-реализации."""
+    return collect_volumes(UDisks.Client.new_sync(None), show_all=show_all)
 
 
 def free_space(path: str) -> tuple[int, int] | None:
@@ -208,7 +157,7 @@ def _already_mounted(exc: GLib.Error) -> bool:
 
 def current_mount_point(client: UDisks.Client, volume: Volume) -> str | None:
     """Точка монтирования прямо сейчас: Cinnamon может смонтировать носитель сам в любой момент."""
-    from plugbackup.core.mounts import read_mountinfo
+    from plugbackup.plat import mounts
 
     client.settle()
     filesystem = _filesystem(client, volume)
@@ -217,7 +166,7 @@ def current_mount_point(client: UDisks.Client, volume: Volume) -> str | None:
         return points[0]
     block = client.get_object(volume.filesystem_path).get_block()
     device = os.path.realpath(_str(block.props.device)) if block is not None else ""
-    for entry in read_mountinfo():
+    for entry in mounts.read_mountinfo():
         if entry.root == "/" and os.path.realpath(entry.source) == device:
             return entry.mount_point
     return None
@@ -317,25 +266,38 @@ class DeviceMonitor(GObject.Object):
         self._volumes: dict[str, Volume] = {
             v.object_path: v for v in collect_volumes(self.client, show_all)
         }
+        self._callbacks = {}
+        self._next_callback = 0
         self._handler = self.client.connect("changed", lambda _client: self.refresh())
 
     @property
     def show_all(self) -> bool:
         return self._show_all
 
-    def set_show_all(self, value: bool) -> None:
-        if value != self._show_all:
-            self._show_all = value
+    def set_show_all(self, enabled: bool) -> None:
+        if enabled != self._show_all:
+            self._show_all = enabled
             self.refresh()
 
     def volumes(self) -> list[Volume]:
         return sorted(self._volumes.values(), key=lambda v: (v.drive_path or "~", v.device))
 
-    def get(self, object_path: str) -> Volume | None:
-        return self._volumes.get(object_path)
+    def get(self, identifier: str) -> Volume | None:
+        return self._volumes.get(identifier)
 
     def find_by_uuid(self, uuid: str) -> list[Volume]:
         return [v for v in self._volumes.values() if v.uuid == uuid]
+
+    def subscribe(self, callback: Callable[[DeviceMonitor], None]) -> Callable[[], None]:
+        """Подписать callable на изменения; вернуть функцию отписки."""
+        self._next_callback += 1
+        token = self._next_callback
+        self._callbacks[token] = callback
+
+        def unsubscribe():
+            self._callbacks.pop(token, None)
+
+        return unsubscribe
 
     def refresh(self) -> None:
         current = {v.object_path: v for v in collect_volumes(self.client, self._show_all)}
@@ -354,11 +316,14 @@ class DeviceMonitor(GObject.Object):
                 changed = True
         if changed:
             self.emit("volumes-changed")
+            for callback in tuple(self._callbacks.values()):
+                callback(self)
 
     def close(self) -> None:
         if self._handler:
             self.client.disconnect(self._handler)
             self._handler = 0
+        self._callbacks.clear()
 
 
 EJECT_POWERED_OFF = "powered-off"
@@ -408,3 +373,13 @@ def eject_sync(client: UDisks.Client, volume: Volume) -> str:
         return EJECT_UNMOUNTED_ONLY
     drive.call_power_off_sync(_no_options(), None)
     return EJECT_POWERED_OFF
+
+
+def eject(volume: Volume) -> EjectOutcome:
+    """Linux-обёртка общего API над привычным извлечением UDisks."""
+    try:
+        result = eject_sync(UDisks.Client.new_sync(None), volume)
+    except Exception as exc:
+        return EjectOutcome(False, False, str(exc), "")
+    powered = result == EJECT_POWERED_OFF
+    return EjectOutcome(True, powered, result, "")

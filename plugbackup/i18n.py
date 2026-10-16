@@ -4,6 +4,7 @@
 Каталог переводов: /usr/share/locale (установленный пакет) или
 PLUGBACKUP_LOCALEDIR (сборка и тесты из исходников).
 """
+from __future__ import annotations
 
 import gettext
 import os

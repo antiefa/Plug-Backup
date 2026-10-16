@@ -1,24 +1,22 @@
-"""Настройки приложения: ~/.config/plugbackup/config.json."""
+"""Настройки приложения."""
+from __future__ import annotations
 
 import os
 from dataclasses import asdict, dataclass, field
 
+from plugbackup import plat
 from plugbackup.core.storage import StorageError, load_json, save_json
 
 SCHEMA = 1
 
 
 def config_dir() -> str:
-    base = os.environ.get("XDG_CONFIG_HOME") or os.path.expanduser("~/.config")
-    return os.path.join(base, "plugbackup")
+    return plat.paths.config_dir()
 
 
 def runtime_dir() -> str:
-    """$XDG_RUNTIME_DIR/plugbackup: блокировки запусков и точки монтирования зашифрованных папок."""
-    base = os.environ.get("XDG_RUNTIME_DIR") or f"/tmp/plugbackup-{os.getuid()}"
-    path = os.path.join(base, "plugbackup")
-    os.makedirs(path, mode=0o700, exist_ok=True)
-    return path
+    """Каталог временных данных для блокировок и зашифрованных папок."""
+    return plat.paths.runtime_dir()
 
 
 def config_path() -> str:

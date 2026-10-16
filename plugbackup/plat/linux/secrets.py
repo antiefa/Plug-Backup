@@ -4,6 +4,8 @@
 Пароль никогда не пишется в журнал, настройки и сообщения об ошибках.
 """
 
+from __future__ import annotations
+
 import gi
 from gi.repository import GLib
 

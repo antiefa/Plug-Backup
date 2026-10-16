@@ -6,6 +6,7 @@
 Функции работают с уже проверенной папкой корня копии (root_dir) и ничего не знают о носителях:
 проверку, что root_dir лежит на нужном смонтированном носителе, делает core.binding.
 """
+from __future__ import annotations
 
 import os
 from dataclasses import dataclass

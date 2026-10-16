@@ -1,4 +1,5 @@
 """Особенности файловых систем носителя: название для показа и ограничения копии."""
+from __future__ import annotations
 
 import unicodedata
 from dataclasses import dataclass, field
@@ -28,7 +29,7 @@ SUPPORTED = frozenset({"vfat", "exfat", "ntfs", "ntfs3", "ext4"})
 
 def display_name(fs_type: str, fs_version: str = "") -> str:
     if fs_type == "vfat" and fs_version:
-        return fs_version  # FAT32 / FAT16 / FAT12 — так отдаёт UDisks2
+        return fs_version  # FAT32 / FAT16 / FAT12 — вариант, сообщённый платформенным слоем
     return _NAMES.get(fs_type, fs_type or "?")
 
 

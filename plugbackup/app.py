@@ -123,7 +123,8 @@ class Application(Gtk.Application):
         if theme_mode != "system":  # «как в системе» — ничего не трогаем, тогда GTK сам следит за сменой темы
             self.apply_theme(theme_mode)
 
-        from plugbackup.core import autostart
+        from plugbackup import plat
+        autostart = plat.autostart
         autostart_action = Gio.SimpleAction.new_stateful("autostart", None,
                                                          GLib.Variant.new_boolean(autostart.is_enabled()))
         autostart_action.connect("change-state", self._on_autostart)
@@ -137,7 +138,8 @@ class Application(Gtk.Application):
         self.unlocker = Unlocker(self)
         self.vaults = Vaults(self)
         self.vaults.cleanup_stale()        # зашифрованные папки, оставшиеся открытыми после сбоя
-        from plugbackup.core import gocrypt
+        from plugbackup import plat
+        gocrypt = plat.vault
         threading.Thread(target=gocrypt.availability_cached, daemon=True).start()   # проверка gocryptfs заранее
         self.window = MainWindow(self)
         self.tray = Tray(self)
@@ -280,7 +282,8 @@ class Application(Gtk.Application):
             self.tray.set_progress(f"{name}: {info.get('percent', 0)} %")
 
     def _on_autostart(self, action, value: GLib.Variant):
-        from plugbackup.core import autostart
+        from plugbackup import plat
+        autostart = plat.autostart
         try:
             autostart.set_enabled(value.get_boolean())
         except OSError as exc:
@@ -322,7 +325,7 @@ class Application(Gtk.Application):
         from plugbackup.ui.null_monitor import NullMonitor
 
         try:
-            from plugbackup.core.devices import DeviceMonitor
+            from plugbackup.plat.linux.devices import DeviceMonitor
 
             return DeviceMonitor(show_all=show_all)
         except Exception as exc:  # нет UDisks2 — окно покажет это в проверке системы

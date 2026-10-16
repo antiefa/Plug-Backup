@@ -14,10 +14,14 @@ import threading
 
 from gi.repository import Gdk, GLib, Gtk, Pango
 
-from plugbackup.core import binding, gocrypt, marker, secrets, transfer
+from plugbackup import plat
+from plugbackup.core import binding, marker, transfer
 from plugbackup.core.binding import BindingError
 from plugbackup.i18n import _
 from plugbackup.ui.common import binding_error_text, message, note
+
+gocrypt = plat.vault
+secrets = plat.secrets
 
 
 def visibility_text() -> str:
@@ -532,9 +536,9 @@ class EncryptionChanger:
 
 
 def _free(path: str) -> int | None:
-    from plugbackup.core.runner import free_bytes
+    from plugbackup import plat
     try:
-        return free_bytes(path)
+        return plat.system.free_bytes(path)
     except OSError:
         return None
 

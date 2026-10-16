@@ -13,7 +13,8 @@ import gi
 from gi.repository import GLib
 
 from plugbackup import APP_ID, APP_NAME
-from plugbackup.core import auto, devices, gocrypt, journal
+from plugbackup import plat
+from plugbackup.core import auto, journal
 from plugbackup.core import profiles as P
 from plugbackup.core.runner import Runner, RunRequest
 from plugbackup.i18n import _
@@ -24,6 +25,9 @@ try:
     from gi.repository import Notify
 except (ValueError, ImportError):  # без libnotify — уведомлений нет, автоматика работает
     Notify = None
+
+devices = plat.devices
+gocrypt = plat.vault
 
 
 NO_CHANGES = "no-changes"

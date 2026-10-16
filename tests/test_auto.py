@@ -7,7 +7,9 @@ import unittest
 from types import SimpleNamespace
 from unittest.mock import patch
 
-from plugbackup.core import auto, autostart, journal
+from plugbackup import plat
+autostart = plat.autostart
+from plugbackup.core import auto, journal
 from plugbackup.core.profiles import AutoSettings, Job, Profile
 
 
